@@ -7,6 +7,7 @@ import { body, validationResult } from "express-validator";
 import { validateUser } from "../../validators/userValidator";
 import { generateOtp, storeOtp, verifyStoredOtp } from "../../utils/otpHandler";
 import { sendSMS } from "../../utils/sendSMS";
+import id from "zod/v4/locales/id.cjs";
  
 const prisma = new PrismaClient();
 
@@ -60,7 +61,7 @@ export async function registerUser(request: Request, response: Response) {
                 phone,
                 employee_id,
                 government_entity,
-                salary_per_month,
+                salary_per_month: parseFloat(salary_per_month),
                 loan_unit,
                 password: hashedPassword
             }

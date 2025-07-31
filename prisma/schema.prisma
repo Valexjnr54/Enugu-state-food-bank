@@ -38,7 +38,7 @@ model Product {
   slug          String   @unique
   brand         String?
   product_image String?
-  images        Json? // URLs
+  image        Json? // URLs
   basePrice     Float // Base price before variants or quantity
   currency      String   @default("NGN")
   isPerishable  Boolean  @default(false)
@@ -52,7 +52,10 @@ model Product {
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
-  variants ProductVariant[]
+  variants    ProductVariant[]
+  order_items OrderItem[]
+  cart_items  CartItem[]
+  wishlist    WishlistItem[]
 }
 
 model ProductVariant {
@@ -63,7 +66,7 @@ model ProductVariant {
   price      Float
   currency   String    @default("NGN")
   image      String?
-  attributes Json? // e.g. {"flavor": "Vanilla", "size": "500ml"}
+  attribute Json? // e.g. {"flavor": "Vanilla", "size": "500ml"}
   expiryDate DateTime? // For perishable items
   productId  String
   product    Product   @relation(fields: [productId], references: [id])
@@ -113,28 +116,28 @@ model Warehouse {
 }
 
 model User {
-  id                String         @id @default(uuid())
-  firstname         String
-  lastname          String
-  email             String?        @unique
-  phone             String         @unique
-  level             String
-  employee_id       String         @unique
-  government_entity String
-  salary_per_month  Float
-  loan_unit         Float
-  loan_amount_collected Float @default(0)
-  is_address_set    Boolean        @default(false)
-  password          String?
-  otp               Int?
-  role              Role           @default(user)
-  profile_image     String?
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
-  orders            Order[]
-  addresses         Address[]
-  cart_items        CartItem[]
-  wishlist          WishlistItem[]
+  id                    String         @id @default(uuid())
+  firstname             String
+  lastname              String
+  email                 String?        @unique
+  phone                 String         @unique
+  level                 String
+  employee_id           String         @unique
+  government_entity     String
+  salary_per_month      Float
+  loan_unit             Float
+  loan_amount_collected Float          @default(0)
+  is_address_set        Boolean        @default(false)
+  password              String?
+  otp                   Int?
+  role                  Role           @default(user)
+  profile_image         String?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  orders                Order[]
+  addresses             Address[]
+  cart_items            CartItem[]
+  wishlist              WishlistItem[]
 }
 
 model Address {
@@ -187,6 +190,8 @@ model OrderItem {
   unitPrice Float // Price at time of order
   currency  String         @default("NGN")
   total     Float
+  Product   Product?       @relation(fields: [productId], references: [id])
+  productId String?
 }
 
 model OrderTracking {
@@ -242,23 +247,33 @@ model Payment {
 }
 
 model CartItem {
-  id        String         @id @default(uuid())
-  userId    String
-  user      User           @relation(fields: [userId], references: [id])
-  variantId String
-  variant   ProductVariant @relation(fields: [variantId], references: [id])
-  quantity  Int            @default(1)
-  addedAt   DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  productId String? // NEW
+  product   Product? @relation(fields: [productId], references: [id])
+
+  variantId String? // Made optional
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+
+  quantity  Int      @default(1)
+  addedAt   DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model WishlistItem {
-  id        String         @id @default(uuid())
-  userId    String
-  user      User           @relation(fields: [userId], references: [id])
-  variantId String
-  variant   ProductVariant @relation(fields: [variantId], references: [id])
-  addedAt   DateTime       @default(now())
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  productId String? // New
+  product   Product? @relation(fields: [productId], references: [id])
+
+  variantId String? // Made optional
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+
+  addedAt DateTime @default(now())
 }
 
 enum Unit {

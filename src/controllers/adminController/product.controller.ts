@@ -82,9 +82,9 @@ export async function createProduct(request: Request, response: Response) {
             fs.unlink(filePath, () => {});
         }
 
-        // Upload multiple images
-        if (files["images"]) {
-            for (const file of files["images"]) {
+        // Upload multiple image
+        if (files["image"]) {
+            for (const file of files["image"]) {
                 const imagePath = file.path;
                 const url = await uploadImage(imagePath, "products/gallery");
 
@@ -112,7 +112,7 @@ export async function createProduct(request: Request, response: Response) {
             active: active === "true" || active === true,
             categoryId,
             product_image: productImageUrl,
-            images: imageUrls,
+            image: imageUrls,
         });
 
         return response.status(201).json({
@@ -174,9 +174,9 @@ export async function updateProduct(request: Request, response: Response) {
             return response.status(404).json({ status: "error", message: "Product not found" });
         }
 
-        // 🔒 Safely get existing images
-        const existingImageUrls: string[] = Array.isArray(existingProduct.images)
-        ? existingProduct.images.filter((item): item is string => typeof item === "string")
+        // 🔒 Safely get existing image
+        const existingImageUrls: string[] = Array.isArray(existingProduct.image)
+        ? existingProduct.image.filter((item): item is string => typeof item === "string")
         : [];
 
         let productImageUrl = existingProduct.product_image;
@@ -197,10 +197,10 @@ export async function updateProduct(request: Request, response: Response) {
         }
 
         // ✅ Handle gallery image update
-        if (files?.images?.length > 0) {
+        if (files?.image?.length > 0) {
             const newUrls: string[] = [];
 
-            for (const file of files.images) {
+            for (const file of files.image) {
                 const imagePath = file.path;
                 const url = await uploadImage(imagePath, "products/gallery");
                 fs.unlink(imagePath, () => {});
@@ -236,7 +236,7 @@ export async function updateProduct(request: Request, response: Response) {
             active: active === "true" || active === true,
             categoryId,
             product_image: productImageUrl,
-            images: imageUrls,
+            image: imageUrls,
         });
 
         return response.status(200).json({ status: "success", message: "Product updated successfully", data: updatedProduct, });

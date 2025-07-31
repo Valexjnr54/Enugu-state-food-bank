@@ -43,13 +43,13 @@ export async function getSingleProductVariant(request: Request, response: Respon
 
 export async function createProductVariant(request: Request, response: Response) {
     try {
-        // Parse attributes if sent as a string
-        if (typeof request.body.attributes === 'string') {
+        // Parse attribute if sent as a string
+        if (typeof request.body.attribute === 'string') {
             try {
-                request.body.attributes = JSON.parse(request.body.attributes);
+                request.body.attribute = JSON.parse(request.body.attribute);
             } catch (err) {
                 return response.status(400).json({
-                    errors: [{ msg: "Invalid attributes JSON format" }]
+                    errors: [{ msg: "Invalid attribute JSON format" }]
                 });
             }
         }
@@ -65,7 +65,7 @@ export async function createProductVariant(request: Request, response: Response)
             name,
             netWeight,
             price,
-            attributes,
+            attribute,
             expiryDate,
             productId
         } = request.body;
@@ -90,7 +90,7 @@ export async function createProductVariant(request: Request, response: Response)
             name,
             netWeight: netWeight ? parseFloat(netWeight) : null,
             price: parseFloat(price),
-            attributes,
+            attribute,
             expiryDate,
             productId,
             image: imageUrl,
@@ -119,13 +119,13 @@ export async function updateProductVariant(request: Request, response: Response)
     }
 
     try {
-        // Parse attributes if sent as a string
-        if (typeof request.body.attributes === 'string') {
+        // Parse attribute if sent as a string
+        if (typeof request.body.attribute === 'string') {
             try {
-                request.body.attributes = JSON.parse(request.body.attributes);
+                request.body.attribute = JSON.parse(request.body.attribute);
             } catch (err) {
                 return response.status(400).json({
-                    errors: [{ msg: "Invalid attributes JSON format" }]
+                    errors: [{ msg: "Invalid attribute JSON format" }]
                 });
             }
         }
@@ -141,7 +141,7 @@ export async function updateProductVariant(request: Request, response: Response)
             name,
             netWeight,
             price,
-            attributes,
+            attribute,
             expiryDate,
             productId
         } = request.body;
@@ -176,7 +176,7 @@ export async function updateProductVariant(request: Request, response: Response)
             name,
             netWeight: netWeight ? parseFloat(netWeight) : null,
             price: parseFloat(price),
-            attributes,
+            attribute,
             expiryDate,
             productId,
             image: productVariantImageUrl,

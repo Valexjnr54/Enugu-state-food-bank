@@ -140,7 +140,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   slug: 'slug',
   brand: 'brand',
   product_image: 'product_image',
-  images: 'images',
+  image: 'image',
   basePrice: 'basePrice',
   currency: 'currency',
   isPerishable: 'isPerishable',
@@ -161,7 +161,7 @@ exports.Prisma.ProductVariantScalarFieldEnum = {
   price: 'price',
   currency: 'currency',
   image: 'image',
-  attributes: 'attributes',
+  attribute: 'attribute',
   expiryDate: 'expiryDate',
   productId: 'productId',
   createdAt: 'createdAt',
@@ -254,7 +254,8 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   quantity: 'quantity',
   unitPrice: 'unitPrice',
   currency: 'currency',
-  total: 'total'
+  total: 'total',
+  productId: 'productId'
 };
 
 exports.Prisma.OrderTrackingScalarFieldEnum = {
@@ -307,6 +308,7 @@ exports.Prisma.PaymentScalarFieldEnum = {
 exports.Prisma.CartItemScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  productId: 'productId',
   variantId: 'variantId',
   quantity: 'quantity',
   addedAt: 'addedAt',
@@ -316,6 +318,7 @@ exports.Prisma.CartItemScalarFieldEnum = {
 exports.Prisma.WishlistItemScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  productId: 'productId',
   variantId: 'variantId',
   addedAt: 'addedAt'
 };
@@ -435,7 +438,8 @@ exports.Prisma.OrderItemOrderByRelevanceFieldEnum = {
   id: 'id',
   orderId: 'orderId',
   variantId: 'variantId',
-  currency: 'currency'
+  currency: 'currency',
+  productId: 'productId'
 };
 
 exports.Prisma.OrderTrackingOrderByRelevanceFieldEnum = {
@@ -468,12 +472,14 @@ exports.Prisma.PaymentOrderByRelevanceFieldEnum = {
 exports.Prisma.CartItemOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
+  productId: 'productId',
   variantId: 'variantId'
 };
 
 exports.Prisma.WishlistItemOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
+  productId: 'productId',
   variantId: 'variantId'
 };
 exports.Role = exports.$Enums.Role = {
