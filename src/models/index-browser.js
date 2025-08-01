@@ -133,6 +133,11 @@ exports.Prisma.AdminScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.RelationLoadStrategy = {
+  query: 'query',
+  join: 'join'
+};
+
 exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',

@@ -12,7 +12,8 @@
     "build": "rimraf disc && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
-    "seed": "prisma db seed"
+    "seed": "prisma db seed",
+    "migrate:dev": "PRISMA_MIGRATE_SKIP_DRIFT_CHECK=true prisma migrate dev"
   },
   "keywords": [],
   "author": "Valex",

@@ -1,13 +1,8 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider      = "prisma-client-js"
-  output        = "../src/models"
-  binaryTargets = ["native", "debian-openssl-1.1.x"]
+  provider        = "prisma-client-js"
+  output          = "../src/models"
+  previewFeatures = ["relationJoins"]
+  binaryTargets   = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -17,79 +12,80 @@ datasource db {
 }
 
 model admin {
-  id            Int      @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   firstname     String
   lastname      String
-  email         String   @unique
-  username      String   @unique
-  role          Role     @default(super_admin)
+  email         String      @unique
+  username      String      @unique
+  role          Role        @default(super_admin)
   profile_image String?
   password      String
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-
-  order_note OrderNote[]
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  order_note    OrderNote[]
 }
 
 model Product {
-  id            String   @id @default(uuid())
+  id            String           @id @default(uuid())
   name          String
   description   String?
-  slug          String   @unique
+  slug          String           @unique
   brand         String?
   product_image String?
-  image        Json? // URLs
-  basePrice     Float // Base price before variants or quantity
-  currency      String   @default("NGN")
-  isPerishable  Boolean  @default(false)
-  shelfLifeDays Int? // Optional, how long before expiry
-  unit          Unit     @default(PIECE)
-  packageType   String? // e.g. "Box", "Bag", "Bottle"
-  active        Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  image         Json?
+  basePrice     Float
+  currency      String           @default("NGN")
+  isPerishable  Boolean          @default(false)
+  shelfLifeDays Int?
+  unit          Unit             @default(PIECE)
+  packageType   String?
+  active        Boolean          @default(true)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  categoryId    String?
+  cart_items    CartItem[]
+  order_items   OrderItem[]
+  category      Category?        @relation(fields: [categoryId], references: [id])
+  variants      ProductVariant[]
+  wishlist      WishlistItem[]
 
-  categoryId String?
-  category   Category? @relation(fields: [categoryId], references: [id])
-
-  variants    ProductVariant[]
-  order_items OrderItem[]
-  cart_items  CartItem[]
-  wishlist    WishlistItem[]
+  @@index([categoryId], map: "Product_categoryId_fkey")
 }
 
 model ProductVariant {
-  id         String    @id @default(uuid())
-  sku        String    @unique
-  name       String
-  netWeight  Float? // e.g. 1.5 (kg), 500 (ml)
-  price      Float
-  currency   String    @default("NGN")
-  image      String?
-  attribute Json? // e.g. {"flavor": "Vanilla", "size": "500ml"}
-  expiryDate DateTime? // For perishable items
-  productId  String
-  product    Product   @relation(fields: [productId], references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-
-  inventory Inventory?
-
-  order_items OrderItem[]
+  id          String         @id @default(uuid())
+  sku         String         @unique
+  name        String
+  netWeight   Float?
+  price       Float
+  currency    String         @default("NGN")
+  image       String?
+  attribute   Json?
+  expiryDate  DateTime?
+  productId   String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
   cart_items  CartItem[]
+  inventory   Inventory?
+  order_items OrderItem[]
+  product     Product        @relation(fields: [productId], references: [id])
   wishlist    WishlistItem[]
+
+  @@index([productId], map: "ProductVariant_productId_fkey")
 }
 
 model Inventory {
   id            String         @id @default(uuid())
   variantId     String         @unique
-  variant       ProductVariant @relation(fields: [variantId], references: [id])
   quantity      Int
   lowStockLevel Int            @default(10)
-  batchNumber   String? // For traceability
+  batchNumber   String?
   warehouseId   String?
-  warehouse     Warehouse?     @relation(fields: [warehouseId], references: [id])
   updatedAt     DateTime       @updatedAt
+  variant       ProductVariant @relation(fields: [variantId], references: [id])
+  warehouse     Warehouse?     @relation(fields: [warehouseId], references: [id])
+
+  @@index([warehouseId], map: "Inventory_warehouseId_fkey")
 }
 
 model Category {
@@ -99,19 +95,19 @@ model Category {
   parentId String?
   parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
   children Category[] @relation("CategoryHierarchy")
-
   products Product[]
+
+  @@index([parentId], map: "Category_parentId_fkey")
 }
 
 model Warehouse {
-  id        String   @id @default(uuid())
-  name      String
-  address   String?
-  city      String?
-  country   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id          String      @id @default(uuid())
+  name        String
+  address     String?
+  city        String?
+  country     String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   inventories Inventory[]
 }
 
@@ -134,17 +130,16 @@ model User {
   profile_image         String?
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
-  orders                Order[]
   addresses             Address[]
   cart_items            CartItem[]
+  orders                Order[]
   wishlist              WishlistItem[]
 }
 
 model Address {
   id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  label     String // e.g. "Home", "Office"
+  label     String
   street    String
   city      String
   state     String
@@ -153,15 +148,16 @@ model Address {
   isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
   order     Order[]
+
+  @@index([userId], map: "Address_userId_fkey")
 }
 
 model Order {
   id              String          @id @default(uuid())
   userId          String
-  user            User            @relation(fields: [userId], references: [id])
   addressId       String
-  address         Address         @relation(fields: [addressId], references: [id])
   totalAmount     Float
   currency        String          @default("NGN")
   paymentStatus   PaymentStatus   @default(PENDING)
@@ -171,61 +167,76 @@ model Order {
   deliveredAt     DateTime?
   cancelledAt     DateTime?
   updatedAt       DateTime        @updatedAt
+  couponId        String?
+  discount        Float           @default(0)
+  address         Address         @relation(fields: [addressId], references: [id])
+  coupon          Coupon?         @relation(fields: [couponId], references: [id])
+  user            User            @relation(fields: [userId], references: [id])
   items           OrderItem[]
+  order_note      OrderNote[]
   trackingUpdates OrderTracking[]
   payment         Payment?
-  order_note      OrderNote[]
-  couponId        String?
-  coupon          Coupon?         @relation(fields: [couponId], references: [id])
-  discount        Float           @default(0)
+
+  @@index([addressId], map: "Order_addressId_fkey")
+  @@index([couponId], map: "Order_couponId_fkey")
+  @@index([userId], map: "Order_userId_fkey")
 }
 
 model OrderItem {
-  id        String         @id @default(uuid())
+  id        String          @id @default(uuid())
   orderId   String
-  order     Order          @relation(fields: [orderId], references: [id])
-  variantId String
-  variant   ProductVariant @relation(fields: [variantId], references: [id])
+  variantId String?
   quantity  Int
-  unitPrice Float // Price at time of order
-  currency  String         @default("NGN")
+  unitPrice Float
+  currency  String          @default("NGN")
   total     Float
-  Product   Product?       @relation(fields: [productId], references: [id])
   productId String?
+  order     Order           @relation(fields: [orderId], references: [id])
+  Product   Product?        @relation(fields: [productId], references: [id])
+  variant   ProductVariant? @relation(fields: [variantId], references: [id])
+
+  @@index([orderId], map: "OrderItem_orderId_fkey")
+  @@index([productId], map: "OrderItem_productId_fkey")
+  @@index([variantId], map: "OrderItem_variantId_fkey")
 }
 
 model OrderTracking {
   id        String      @id @default(uuid())
   orderId   String
-  order     Order       @relation(fields: [orderId], references: [id])
   status    OrderStatus
   message   String?
   location  String?
   updatedAt DateTime    @default(now())
+  order     Order       @relation(fields: [orderId], references: [id])
+
+  @@index([orderId], map: "OrderTracking_orderId_fkey")
 }
 
 model OrderNote {
   id        String   @id @default(uuid())
   orderId   String
-  order     Order    @relation(fields: [orderId], references: [id])
   adminId   Int?
-  admin     admin?   @relation(fields: [adminId], references: [id])
   note      String
   createdAt DateTime @default(now())
+  admin     admin?   @relation(fields: [adminId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
+
+  @@index([adminId], map: "OrderNote_adminId_fkey")
+  @@index([orderId], map: "OrderNote_orderId_fkey")
 }
 
 model Coupon {
   id             String       @id @default(uuid())
   code           String       @unique
   description    String?
-  discountType   DiscountType // PERCENTAGE or FIXED
+  discountType   DiscountType
   discountValue  Float
   minOrderAmount Float?
   maxDiscount    Float?
   isActive       Boolean      @default(true)
   startsAt       DateTime?
   expiresAt      DateTime?
-  usageLimit     Int? // Total allowed usage
+  usageLimit     Int?
   usedCount      Int          @default(0)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
@@ -235,45 +246,47 @@ model Coupon {
 model Payment {
   id        String        @id @default(uuid())
   orderId   String        @unique
-  order     Order         @relation(fields: [orderId], references: [id])
   amount    Float
   currency  String        @default("NGN")
-  provider  String // e.g. "Paystack", "Flutterwave"
+  provider  String
   reference String        @unique
   status    PaymentStatus @default(PENDING)
   paidAt    DateTime?
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
+  order     Order         @relation(fields: [orderId], references: [id])
 }
 
 model CartItem {
-  id     String @id @default(uuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  productId String? // NEW
-  product   Product? @relation(fields: [productId], references: [id])
-
-  variantId String? // Made optional
+  id        String          @id @default(uuid())
+  userId    String
+  productId String?
+  variantId String?
+  quantity  Int             @default(1)
+  addedAt   DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  product   Product?        @relation(fields: [productId], references: [id])
+  user      User            @relation(fields: [userId], references: [id])
   variant   ProductVariant? @relation(fields: [variantId], references: [id])
 
-  quantity  Int      @default(1)
-  addedAt   DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([productId], map: "CartItem_productId_fkey")
+  @@index([userId], map: "CartItem_userId_fkey")
+  @@index([variantId], map: "CartItem_variantId_fkey")
 }
 
 model WishlistItem {
-  id     String @id @default(uuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  productId String? // New
-  product   Product? @relation(fields: [productId], references: [id])
-
-  variantId String? // Made optional
+  id        String          @id @default(uuid())
+  userId    String
+  productId String?
+  variantId String?
+  addedAt   DateTime        @default(now())
+  product   Product?        @relation(fields: [productId], references: [id])
+  user      User            @relation(fields: [userId], references: [id])
   variant   ProductVariant? @relation(fields: [variantId], references: [id])
 
-  addedAt DateTime @default(now())
+  @@index([productId], map: "WishlistItem_productId_fkey")
+  @@index([userId], map: "WishlistItem_userId_fkey")
+  @@index([variantId], map: "WishlistItem_variantId_fkey")
 }
 
 enum Unit {
