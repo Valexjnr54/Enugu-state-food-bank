@@ -7,6 +7,7 @@ import { adminOnly } from "./middlewares/adminMiddleware";
 import { adminRouter } from "./routes/admin/admin.routes";
 import { userAuthRouter } from "./routes/auth/userAuthRoutes";
 import { userRouter } from "./routes/user/user.routes";
+import { miscRouter } from "./routes/misc/misc.routes";
 
 const app = express();
 
@@ -35,6 +36,8 @@ app.use(`${route}/auth`, userAuthRouter);
 
 app.use(`${route}/admin`, adminRouter);
 app.use(`${route}/user`,userRouter);
+
+app.use(`${route}`,miscRouter)
 
 
 app.use((error: any, request: Request, response: Response, next: NextFunction) => {
