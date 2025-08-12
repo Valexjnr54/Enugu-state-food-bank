@@ -1,6 +1,6 @@
 import express from 'express';
 import { upload } from '../../middlewares/multerMiddleware';
-import { initiateLogin, logoutUser, registerUser, setPassword, verifyOtp, verifyPassword } from '../../controllers/authControllers/userAuthController';
+import { initiateLogin, logoutUser, registerUser, resendOtp, setPassword, verifyOtp, verifyPassword } from '../../controllers/authControllers/userAuthController';
 import { userAuthenticateJWT } from '../../middlewares/userAuthenticationMiddleware';
 
 
@@ -11,4 +11,5 @@ userAuthRouter.post('/initiate-login', initiateLogin);
 userAuthRouter.post('/set-password', setPassword);
 userAuthRouter.post('/verify-password', verifyPassword);
 userAuthRouter.post('/verify-otp', verifyOtp)
+userAuthRouter.post('/resend-otp', resendOtp)
 userAuthRouter.all('/logout', userAuthenticateJWT, logoutUser)

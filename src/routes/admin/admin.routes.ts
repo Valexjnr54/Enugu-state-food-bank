@@ -9,6 +9,7 @@ import { createInventory, deleteInventory, getAllInventory, getSingleInventory, 
 import { createWarehouse, deleteWarehouse, getAllWarehouse, getSingleWarehouse, updateWarehouse } from "../../controllers/adminController/warehouse.controller";
 import { createUser, deleteUser, downloadUserTemplate, getAllUser, getSingleUser, updateUser, uploadUsersFromCSV } from "../../controllers/adminController/user.controller";
 import { uploadCSV } from "../../middlewares/uploadCSVMiddleware";
+import { all_order, single_order } from "../../controllers/adminController/order.controller";
 
 export const adminRouter = express.Router();
 
@@ -63,3 +64,8 @@ adminRouter.put('/update-user', updateUser);
 adminRouter.delete('/delete-user',deleteUser);
 adminRouter.get('/users-template', downloadUserTemplate)
 //User Route End
+
+// Order Route Starts
+adminRouter.get('/all-order', all_order)
+adminRouter.get('/single-order', single_order)
+// Order Route Ends

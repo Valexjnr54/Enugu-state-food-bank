@@ -2,7 +2,7 @@ import express from "express";
 import { userAuthenticateJWT } from "../../middlewares/userAuthenticationMiddleware";
 import { addToCart, cartItems, removeAllFromCart, removeFromCart, updateCartItem } from "../../controllers/userController/cart.controller";
 import { addToWishlist, clearWishlist, getUserWishlist, removeFromWishlist } from "../../controllers/userController/wishlist.controller";
-import { create_order } from "../../controllers/userController/order.controller";
+import { all_order, create_order, single_order } from "../../controllers/userController/order.controller";
 import { createAddress, deleteAddress, getAllAddress, getSingleAddress, updateAddress } from "../../controllers/userController/address.controller";
 
 export const userRouter = express.Router();
@@ -26,6 +26,8 @@ userRouter.delete('/wishlist/remove-all-from-wishlist', clearWishlist);
 
 // Order Route Starts
 userRouter.post('/create-order', create_order);
+userRouter.get('/all-order', all_order)
+userRouter.get('/single-order', single_order)
 // Order Route Ends
 
 // Address Route Starts

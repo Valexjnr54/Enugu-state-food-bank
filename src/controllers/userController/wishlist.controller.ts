@@ -9,32 +9,6 @@ export async function getUserWishlist(request: Request, response: Response) {
 }
 
 // Add item to wishlist
-// export async function addToWishlist(request: Request, response: Response) {
-//   const userId = request.user.user.id;
-//   const { productId, variantId } = request.body;
-
-//   if (!productId && !variantId) {
-//     return response.status(400).json({ status: "error", message: "Either productId or variantId is required." });
-//   }
-
-//   if (productId && variantId) {
-//     return response.status(400).json({ status: "error", message: "Only one of productId or variantId should be provided." });
-//   }
-
-//   if(productId === "" || variantId === ""){
-//     const productId = null
-//     const variantId = null
-//   }
-
-
-//   const item = await WishlistService.create({
-//     userId,
-//     productId: productId || undefined,
-//     variantId: variantId || undefined,
-//   });
-
-//   return response.status(201).json({ status: "success", data: item });
-// }
 export async function addToWishlist(request: Request, response: Response) {
   const userId = request.user.user.id;
   const { productId, variantId } = request.body;

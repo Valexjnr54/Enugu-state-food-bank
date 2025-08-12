@@ -292,6 +292,41 @@ export async function verifyOtp(request: Request, response: Response) {
     }
 }
 
+export async function resendOtp(request: Request, response: Response) {
+    const { userId } = request.body;
+
+    if (!userId) {
+        return response.status(400).json({
+            error: 'Missing fields',
+            message: 'userId is required'
+        });
+    }
+
+    try {
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+        if(!user){
+            return response.status(404).json("User Not Found")
+        }
+         const otp = user.otp;
+
+        const message = `Your Food Bank one-time password is: ${otp}. It expires in 10 minutes. Do not share this code with anyone.`;
+        await sendSMS(user.phone, message)
+
+        return response.status(200).json({
+            nextStep: 'verify_otp',
+            message: 'OTP has been resent to your phone',
+            userId: user.id
+        });
+
+    } catch (error) {
+        console.error('OTP verification error:', error);
+        return response.status(500).json({
+            error: 'Internal Server Error',
+            message: 'Could not verify OTP'
+        });
+    }
+}
+
 export async function logoutUser(request: Request, response: Response) {
     try {
        response.clearCookie('jwt');

@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function createOrder(userId: string, addressId: string) {
   // 1. Verify user and address
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: { id: userId },
     include: { cart_items: { include: { product: true, variant: true } }, addresses: true }
   });
@@ -56,8 +56,37 @@ export async function createOrder(userId: string, addressId: string) {
     include: { items: { include: {variant: true, Product: true}}, trackingUpdates: true }
   });
 
+  const update_loan_amount = user.loan_amount_collected + totalAmount;
+  const update_loan_unit = user.loan_unit - totalAmount;
+
+  await prisma.user.update({
+    where: {id : userId},
+    data:{
+      loan_amount_collected: update_loan_amount,
+      loan_unit: update_loan_unit
+    }
+  })
+
   // 4. Clear cart
   await prisma.cartItem.deleteMany({ where: { userId } });
 
   return order;
+}
+
+export async function allOrderByUser(userId: string) {
+  return prisma.order.findMany({
+    where: { userId },
+    // include: { items: { include: {Product: true, variant: true} } },
+  });
+}
+
+export async function singleOrderByUser(userId: string, orderId: string) {
+  try {
+    return prisma.order.findFirst({
+      where: { id:orderId, userId },
+      include: { items: { include: {Product: true, variant: true} } },
+    });
+  } catch (error) {
+    handlePrismaError(error);
+  }
 }
