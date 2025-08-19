@@ -9,7 +9,8 @@ import { createInventory, deleteInventory, getAllInventory, getSingleInventory, 
 import { createWarehouse, deleteWarehouse, getAllWarehouse, getSingleWarehouse, updateWarehouse } from "../../controllers/adminController/warehouse.controller";
 import { createUser, deleteUser, downloadUserTemplate, getAllUser, getSingleUser, updateUser, uploadUsersFromCSV } from "../../controllers/adminController/user.controller";
 import { uploadCSV } from "../../middlewares/uploadCSVMiddleware";
-import { all_order, single_order } from "../../controllers/adminController/order.controller";
+import { addNote, addTrackingUpdate, all_order, deleteNote, getNotes, getOrderTrackingHistory, single_order } from "../../controllers/adminController/order.controller";
+import { exportUsersWithLoansAsCsv } from "../../controllers/adminController/repayment.list.controller";
 
 export const adminRouter = express.Router();
 
@@ -68,4 +69,16 @@ adminRouter.get('/users-template', downloadUserTemplate)
 // Order Route Starts
 adminRouter.get('/all-order', all_order)
 adminRouter.get('/single-order', single_order)
+// Tracking routes
+adminRouter.post('/:orderId/tracking', addTrackingUpdate);
+adminRouter.get('/:orderId/tracking',  getOrderTrackingHistory);
+
+// Note routes
+adminRouter.post('/:orderId/notes',  addNote);
+adminRouter.get('/:orderId/notes',  getNotes);
+adminRouter.delete('/notes/:noteId',  deleteNote);
 // Order Route Ends
+
+// Download Users with Loan Starts
+adminRouter.get('/export-loans', exportUsersWithLoansAsCsv)
+// Download Users with Loan Ends
