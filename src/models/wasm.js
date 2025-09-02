@@ -217,6 +217,7 @@ exports.Prisma.UserScalarFieldEnum = {
   otp: 'otp',
   role: 'role',
   profile_image: 'profile_image',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -326,6 +327,15 @@ exports.Prisma.WishlistItemScalarFieldEnum = {
   productId: 'productId',
   variantId: 'variantId',
   addedAt: 'addedAt'
+};
+
+exports.Prisma.ComplianceFormScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  form_url: 'form_url',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -487,6 +497,12 @@ exports.Prisma.WishlistItemOrderByRelevanceFieldEnum = {
   productId: 'productId',
   variantId: 'variantId'
 };
+
+exports.Prisma.ComplianceFormOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  form_url: 'form_url'
+};
 exports.Role = exports.$Enums.Role = {
   super_admin: 'super_admin',
   user: 'user'
@@ -501,6 +517,13 @@ exports.Unit = exports.$Enums.Unit = {
   PACK: 'PACK',
   BOTTLE: 'BOTTLE',
   CAN: 'CAN'
+};
+
+exports.Status = exports.$Enums.Status = {
+  APPROVED: 'APPROVED',
+  DENIED: 'DENIED',
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE'
 };
 
 exports.PaymentStatus = exports.$Enums.PaymentStatus = {
@@ -540,7 +563,8 @@ exports.Prisma.ModelName = {
   Coupon: 'Coupon',
   Payment: 'Payment',
   CartItem: 'CartItem',
-  WishlistItem: 'WishlistItem'
+  WishlistItem: 'WishlistItem',
+  ComplianceForm: 'ComplianceForm'
 };
 
 /**

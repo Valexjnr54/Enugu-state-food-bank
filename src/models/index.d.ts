@@ -93,6 +93,11 @@ export type CartItem = $Result.DefaultSelection<Prisma.$CartItemPayload>
  * 
  */
 export type WishlistItem = $Result.DefaultSelection<Prisma.$WishlistItemPayload>
+/**
+ * Model ComplianceForm
+ * 
+ */
+export type ComplianceForm = $Result.DefaultSelection<Prisma.$ComplianceFormPayload>
 
 /**
  * Enums
@@ -149,6 +154,16 @@ export const DiscountType: {
 
 export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]
 
+
+export const Status: {
+  APPROVED: 'APPROVED',
+  DENIED: 'DENIED',
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE'
+};
+
+export type Status = (typeof Status)[keyof typeof Status]
+
 }
 
 export type Unit = $Enums.Unit
@@ -170,6 +185,10 @@ export const OrderStatus: typeof $Enums.OrderStatus
 export type DiscountType = $Enums.DiscountType
 
 export const DiscountType: typeof $Enums.DiscountType
+
+export type Status = $Enums.Status
+
+export const Status: typeof $Enums.Status
 
 /**
  * ##  Prisma Client ʲˢ
@@ -455,6 +474,16 @@ export class PrismaClient<
     * ```
     */
   get wishlistItem(): Prisma.WishlistItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.complianceForm`: Exposes CRUD operations for the **ComplianceForm** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ComplianceForms
+    * const complianceForms = await prisma.complianceForm.findMany()
+    * ```
+    */
+  get complianceForm(): Prisma.ComplianceFormDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -910,7 +939,8 @@ export namespace Prisma {
     Coupon: 'Coupon',
     Payment: 'Payment',
     CartItem: 'CartItem',
-    WishlistItem: 'WishlistItem'
+    WishlistItem: 'WishlistItem',
+    ComplianceForm: 'ComplianceForm'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -929,7 +959,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "admin" | "product" | "productVariant" | "inventory" | "category" | "warehouse" | "user" | "address" | "order" | "orderItem" | "orderTracking" | "orderNote" | "coupon" | "payment" | "cartItem" | "wishlistItem"
+      modelProps: "admin" | "product" | "productVariant" | "inventory" | "category" | "warehouse" | "user" | "address" | "order" | "orderItem" | "orderTracking" | "orderNote" | "coupon" | "payment" | "cartItem" | "wishlistItem" | "complianceForm"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1989,6 +2019,72 @@ export namespace Prisma {
           }
         }
       }
+      ComplianceForm: {
+        payload: Prisma.$ComplianceFormPayload<ExtArgs>
+        fields: Prisma.ComplianceFormFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ComplianceFormFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ComplianceFormFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload>
+          }
+          findFirst: {
+            args: Prisma.ComplianceFormFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ComplianceFormFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload>
+          }
+          findMany: {
+            args: Prisma.ComplianceFormFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload>[]
+          }
+          create: {
+            args: Prisma.ComplianceFormCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload>
+          }
+          createMany: {
+            args: Prisma.ComplianceFormCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ComplianceFormDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload>
+          }
+          update: {
+            args: Prisma.ComplianceFormUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload>
+          }
+          deleteMany: {
+            args: Prisma.ComplianceFormDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ComplianceFormUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ComplianceFormUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ComplianceFormPayload>
+          }
+          aggregate: {
+            args: Prisma.ComplianceFormAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateComplianceForm>
+          }
+          groupBy: {
+            args: Prisma.ComplianceFormGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ComplianceFormGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ComplianceFormCountArgs<ExtArgs>
+            result: $Utils.Optional<ComplianceFormCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2089,6 +2185,7 @@ export namespace Prisma {
     payment?: PaymentOmit
     cartItem?: CartItemOmit
     wishlistItem?: WishlistItemOmit
+    complianceForm?: ComplianceFormOmit
   }
 
   /* Types for Logging */
@@ -9062,6 +9159,7 @@ export namespace Prisma {
     otp: number | null
     role: $Enums.Role | null
     profile_image: string | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9083,6 +9181,7 @@ export namespace Prisma {
     otp: number | null
     role: $Enums.Role | null
     profile_image: string | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9104,6 +9203,7 @@ export namespace Prisma {
     otp: number
     role: number
     profile_image: number
+    status: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -9141,6 +9241,7 @@ export namespace Prisma {
     otp?: true
     role?: true
     profile_image?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9162,6 +9263,7 @@ export namespace Prisma {
     otp?: true
     role?: true
     profile_image?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9183,6 +9285,7 @@ export namespace Prisma {
     otp?: true
     role?: true
     profile_image?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -9291,6 +9394,7 @@ export namespace Prisma {
     otp: number | null
     role: $Enums.Role
     profile_image: string | null
+    status: $Enums.Status
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -9331,6 +9435,7 @@ export namespace Prisma {
     otp?: boolean
     role?: boolean
     profile_image?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     addresses?: boolean | User$addressesArgs<ExtArgs>
@@ -9359,11 +9464,12 @@ export namespace Prisma {
     otp?: boolean
     role?: boolean
     profile_image?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "phone" | "level" | "employee_id" | "government_entity" | "salary_per_month" | "loan_unit" | "loan_amount_collected" | "is_address_set" | "password" | "otp" | "role" | "profile_image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "phone" | "level" | "employee_id" | "government_entity" | "salary_per_month" | "loan_unit" | "loan_amount_collected" | "is_address_set" | "password" | "otp" | "role" | "profile_image" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     addresses?: boolean | User$addressesArgs<ExtArgs>
     cart_items?: boolean | User$cart_itemsArgs<ExtArgs>
@@ -9397,6 +9503,7 @@ export namespace Prisma {
       otp: number | null
       role: $Enums.Role
       profile_image: string | null
+      status: $Enums.Status
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -9788,6 +9895,7 @@ export namespace Prisma {
     readonly otp: FieldRef<"User", 'Int'>
     readonly role: FieldRef<"User", 'Role'>
     readonly profile_image: FieldRef<"User", 'String'>
+    readonly status: FieldRef<"User", 'Status'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -19669,6 +19777,908 @@ export namespace Prisma {
 
 
   /**
+   * Model ComplianceForm
+   */
+
+  export type AggregateComplianceForm = {
+    _count: ComplianceFormCountAggregateOutputType | null
+    _min: ComplianceFormMinAggregateOutputType | null
+    _max: ComplianceFormMaxAggregateOutputType | null
+  }
+
+  export type ComplianceFormMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    form_url: string | null
+    status: $Enums.Status | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ComplianceFormMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    form_url: string | null
+    status: $Enums.Status | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ComplianceFormCountAggregateOutputType = {
+    id: number
+    userId: number
+    form_url: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ComplianceFormMinAggregateInputType = {
+    id?: true
+    userId?: true
+    form_url?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ComplianceFormMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    form_url?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ComplianceFormCountAggregateInputType = {
+    id?: true
+    userId?: true
+    form_url?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ComplianceFormAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ComplianceForm to aggregate.
+     */
+    where?: ComplianceFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ComplianceForms to fetch.
+     */
+    orderBy?: ComplianceFormOrderByWithRelationInput | ComplianceFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ComplianceFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ComplianceForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ComplianceForms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ComplianceForms
+    **/
+    _count?: true | ComplianceFormCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ComplianceFormMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ComplianceFormMaxAggregateInputType
+  }
+
+  export type GetComplianceFormAggregateType<T extends ComplianceFormAggregateArgs> = {
+        [P in keyof T & keyof AggregateComplianceForm]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateComplianceForm[P]>
+      : GetScalarType<T[P], AggregateComplianceForm[P]>
+  }
+
+
+
+
+  export type ComplianceFormGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ComplianceFormWhereInput
+    orderBy?: ComplianceFormOrderByWithAggregationInput | ComplianceFormOrderByWithAggregationInput[]
+    by: ComplianceFormScalarFieldEnum[] | ComplianceFormScalarFieldEnum
+    having?: ComplianceFormScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ComplianceFormCountAggregateInputType | true
+    _min?: ComplianceFormMinAggregateInputType
+    _max?: ComplianceFormMaxAggregateInputType
+  }
+
+  export type ComplianceFormGroupByOutputType = {
+    id: string
+    userId: string
+    form_url: string
+    status: $Enums.Status
+    createdAt: Date
+    updatedAt: Date
+    _count: ComplianceFormCountAggregateOutputType | null
+    _min: ComplianceFormMinAggregateOutputType | null
+    _max: ComplianceFormMaxAggregateOutputType | null
+  }
+
+  type GetComplianceFormGroupByPayload<T extends ComplianceFormGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ComplianceFormGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ComplianceFormGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ComplianceFormGroupByOutputType[P]>
+            : GetScalarType<T[P], ComplianceFormGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ComplianceFormSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    form_url?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["complianceForm"]>
+
+
+
+  export type ComplianceFormSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    form_url?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ComplianceFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "form_url" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["complianceForm"]>
+
+  export type $ComplianceFormPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ComplianceForm"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      form_url: string
+      status: $Enums.Status
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["complianceForm"]>
+    composites: {}
+  }
+
+  type ComplianceFormGetPayload<S extends boolean | null | undefined | ComplianceFormDefaultArgs> = $Result.GetResult<Prisma.$ComplianceFormPayload, S>
+
+  type ComplianceFormCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ComplianceFormFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ComplianceFormCountAggregateInputType | true
+    }
+
+  export interface ComplianceFormDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ComplianceForm'], meta: { name: 'ComplianceForm' } }
+    /**
+     * Find zero or one ComplianceForm that matches the filter.
+     * @param {ComplianceFormFindUniqueArgs} args - Arguments to find a ComplianceForm
+     * @example
+     * // Get one ComplianceForm
+     * const complianceForm = await prisma.complianceForm.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ComplianceFormFindUniqueArgs>(args: SelectSubset<T, ComplianceFormFindUniqueArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ComplianceForm that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ComplianceFormFindUniqueOrThrowArgs} args - Arguments to find a ComplianceForm
+     * @example
+     * // Get one ComplianceForm
+     * const complianceForm = await prisma.complianceForm.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ComplianceFormFindUniqueOrThrowArgs>(args: SelectSubset<T, ComplianceFormFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ComplianceForm that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComplianceFormFindFirstArgs} args - Arguments to find a ComplianceForm
+     * @example
+     * // Get one ComplianceForm
+     * const complianceForm = await prisma.complianceForm.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ComplianceFormFindFirstArgs>(args?: SelectSubset<T, ComplianceFormFindFirstArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ComplianceForm that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComplianceFormFindFirstOrThrowArgs} args - Arguments to find a ComplianceForm
+     * @example
+     * // Get one ComplianceForm
+     * const complianceForm = await prisma.complianceForm.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ComplianceFormFindFirstOrThrowArgs>(args?: SelectSubset<T, ComplianceFormFindFirstOrThrowArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ComplianceForms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComplianceFormFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ComplianceForms
+     * const complianceForms = await prisma.complianceForm.findMany()
+     * 
+     * // Get first 10 ComplianceForms
+     * const complianceForms = await prisma.complianceForm.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const complianceFormWithIdOnly = await prisma.complianceForm.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ComplianceFormFindManyArgs>(args?: SelectSubset<T, ComplianceFormFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ComplianceForm.
+     * @param {ComplianceFormCreateArgs} args - Arguments to create a ComplianceForm.
+     * @example
+     * // Create one ComplianceForm
+     * const ComplianceForm = await prisma.complianceForm.create({
+     *   data: {
+     *     // ... data to create a ComplianceForm
+     *   }
+     * })
+     * 
+     */
+    create<T extends ComplianceFormCreateArgs>(args: SelectSubset<T, ComplianceFormCreateArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ComplianceForms.
+     * @param {ComplianceFormCreateManyArgs} args - Arguments to create many ComplianceForms.
+     * @example
+     * // Create many ComplianceForms
+     * const complianceForm = await prisma.complianceForm.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ComplianceFormCreateManyArgs>(args?: SelectSubset<T, ComplianceFormCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ComplianceForm.
+     * @param {ComplianceFormDeleteArgs} args - Arguments to delete one ComplianceForm.
+     * @example
+     * // Delete one ComplianceForm
+     * const ComplianceForm = await prisma.complianceForm.delete({
+     *   where: {
+     *     // ... filter to delete one ComplianceForm
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ComplianceFormDeleteArgs>(args: SelectSubset<T, ComplianceFormDeleteArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ComplianceForm.
+     * @param {ComplianceFormUpdateArgs} args - Arguments to update one ComplianceForm.
+     * @example
+     * // Update one ComplianceForm
+     * const complianceForm = await prisma.complianceForm.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ComplianceFormUpdateArgs>(args: SelectSubset<T, ComplianceFormUpdateArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ComplianceForms.
+     * @param {ComplianceFormDeleteManyArgs} args - Arguments to filter ComplianceForms to delete.
+     * @example
+     * // Delete a few ComplianceForms
+     * const { count } = await prisma.complianceForm.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ComplianceFormDeleteManyArgs>(args?: SelectSubset<T, ComplianceFormDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ComplianceForms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComplianceFormUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ComplianceForms
+     * const complianceForm = await prisma.complianceForm.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ComplianceFormUpdateManyArgs>(args: SelectSubset<T, ComplianceFormUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ComplianceForm.
+     * @param {ComplianceFormUpsertArgs} args - Arguments to update or create a ComplianceForm.
+     * @example
+     * // Update or create a ComplianceForm
+     * const complianceForm = await prisma.complianceForm.upsert({
+     *   create: {
+     *     // ... data to create a ComplianceForm
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ComplianceForm we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ComplianceFormUpsertArgs>(args: SelectSubset<T, ComplianceFormUpsertArgs<ExtArgs>>): Prisma__ComplianceFormClient<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ComplianceForms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComplianceFormCountArgs} args - Arguments to filter ComplianceForms to count.
+     * @example
+     * // Count the number of ComplianceForms
+     * const count = await prisma.complianceForm.count({
+     *   where: {
+     *     // ... the filter for the ComplianceForms we want to count
+     *   }
+     * })
+    **/
+    count<T extends ComplianceFormCountArgs>(
+      args?: Subset<T, ComplianceFormCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ComplianceFormCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ComplianceForm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComplianceFormAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ComplianceFormAggregateArgs>(args: Subset<T, ComplianceFormAggregateArgs>): Prisma.PrismaPromise<GetComplianceFormAggregateType<T>>
+
+    /**
+     * Group by ComplianceForm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ComplianceFormGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ComplianceFormGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ComplianceFormGroupByArgs['orderBy'] }
+        : { orderBy?: ComplianceFormGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ComplianceFormGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetComplianceFormGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ComplianceForm model
+   */
+  readonly fields: ComplianceFormFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ComplianceForm.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ComplianceFormClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ComplianceForm model
+   */
+  interface ComplianceFormFieldRefs {
+    readonly id: FieldRef<"ComplianceForm", 'String'>
+    readonly userId: FieldRef<"ComplianceForm", 'String'>
+    readonly form_url: FieldRef<"ComplianceForm", 'String'>
+    readonly status: FieldRef<"ComplianceForm", 'Status'>
+    readonly createdAt: FieldRef<"ComplianceForm", 'DateTime'>
+    readonly updatedAt: FieldRef<"ComplianceForm", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ComplianceForm findUnique
+   */
+  export type ComplianceFormFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Filter, which ComplianceForm to fetch.
+     */
+    where: ComplianceFormWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm findUniqueOrThrow
+   */
+  export type ComplianceFormFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Filter, which ComplianceForm to fetch.
+     */
+    where: ComplianceFormWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm findFirst
+   */
+  export type ComplianceFormFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Filter, which ComplianceForm to fetch.
+     */
+    where?: ComplianceFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ComplianceForms to fetch.
+     */
+    orderBy?: ComplianceFormOrderByWithRelationInput | ComplianceFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ComplianceForms.
+     */
+    cursor?: ComplianceFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ComplianceForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ComplianceForms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ComplianceForms.
+     */
+    distinct?: ComplianceFormScalarFieldEnum | ComplianceFormScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm findFirstOrThrow
+   */
+  export type ComplianceFormFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Filter, which ComplianceForm to fetch.
+     */
+    where?: ComplianceFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ComplianceForms to fetch.
+     */
+    orderBy?: ComplianceFormOrderByWithRelationInput | ComplianceFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ComplianceForms.
+     */
+    cursor?: ComplianceFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ComplianceForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ComplianceForms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ComplianceForms.
+     */
+    distinct?: ComplianceFormScalarFieldEnum | ComplianceFormScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm findMany
+   */
+  export type ComplianceFormFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Filter, which ComplianceForms to fetch.
+     */
+    where?: ComplianceFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ComplianceForms to fetch.
+     */
+    orderBy?: ComplianceFormOrderByWithRelationInput | ComplianceFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ComplianceForms.
+     */
+    cursor?: ComplianceFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ComplianceForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ComplianceForms.
+     */
+    skip?: number
+    distinct?: ComplianceFormScalarFieldEnum | ComplianceFormScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm create
+   */
+  export type ComplianceFormCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ComplianceForm.
+     */
+    data: XOR<ComplianceFormCreateInput, ComplianceFormUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm createMany
+   */
+  export type ComplianceFormCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ComplianceForms.
+     */
+    data: ComplianceFormCreateManyInput | ComplianceFormCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ComplianceForm update
+   */
+  export type ComplianceFormUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ComplianceForm.
+     */
+    data: XOR<ComplianceFormUpdateInput, ComplianceFormUncheckedUpdateInput>
+    /**
+     * Choose, which ComplianceForm to update.
+     */
+    where: ComplianceFormWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm updateMany
+   */
+  export type ComplianceFormUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ComplianceForms.
+     */
+    data: XOR<ComplianceFormUpdateManyMutationInput, ComplianceFormUncheckedUpdateManyInput>
+    /**
+     * Filter which ComplianceForms to update
+     */
+    where?: ComplianceFormWhereInput
+    /**
+     * Limit how many ComplianceForms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ComplianceForm upsert
+   */
+  export type ComplianceFormUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ComplianceForm to update in case it exists.
+     */
+    where: ComplianceFormWhereUniqueInput
+    /**
+     * In case the ComplianceForm found by the `where` argument doesn't exist, create a new ComplianceForm with this data.
+     */
+    create: XOR<ComplianceFormCreateInput, ComplianceFormUncheckedCreateInput>
+    /**
+     * In case the ComplianceForm was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ComplianceFormUpdateInput, ComplianceFormUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm delete
+   */
+  export type ComplianceFormDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Filter which ComplianceForm to delete.
+     */
+    where: ComplianceFormWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ComplianceForm deleteMany
+   */
+  export type ComplianceFormDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ComplianceForms to delete
+     */
+    where?: ComplianceFormWhereInput
+    /**
+     * Limit how many ComplianceForms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ComplianceForm without action
+   */
+  export type ComplianceFormDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -19800,6 +20810,7 @@ export namespace Prisma {
     otp: 'otp',
     role: 'role',
     profile_image: 'profile_image',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -19939,6 +20950,18 @@ export namespace Prisma {
   };
 
   export type WishlistItemScalarFieldEnum = (typeof WishlistItemScalarFieldEnum)[keyof typeof WishlistItemScalarFieldEnum]
+
+
+  export const ComplianceFormScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    form_url: 'form_url',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ComplianceFormScalarFieldEnum = (typeof ComplianceFormScalarFieldEnum)[keyof typeof ComplianceFormScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -20164,6 +21187,15 @@ export namespace Prisma {
   export type WishlistItemOrderByRelevanceFieldEnum = (typeof WishlistItemOrderByRelevanceFieldEnum)[keyof typeof WishlistItemOrderByRelevanceFieldEnum]
 
 
+  export const ComplianceFormOrderByRelevanceFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    form_url: 'form_url'
+  };
+
+  export type ComplianceFormOrderByRelevanceFieldEnum = (typeof ComplianceFormOrderByRelevanceFieldEnum)[keyof typeof ComplianceFormOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -20229,6 +21261,13 @@ export namespace Prisma {
    * Reference to a field of type 'Unit'
    */
   export type EnumUnitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Unit'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status'
+   */
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
     
 
 
@@ -20788,6 +21827,7 @@ export namespace Prisma {
     otp?: IntNullableFilter<"User"> | number | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     profile_image?: StringNullableFilter<"User"> | string | null
+    status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     addresses?: AddressListRelationFilter
@@ -20813,6 +21853,7 @@ export namespace Prisma {
     otp?: SortOrderInput | SortOrder
     role?: SortOrder
     profile_image?: SortOrderInput | SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     addresses?: AddressOrderByRelationAggregateInput
@@ -20842,6 +21883,7 @@ export namespace Prisma {
     otp?: IntNullableFilter<"User"> | number | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     profile_image?: StringNullableFilter<"User"> | string | null
+    status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     addresses?: AddressListRelationFilter
@@ -20867,6 +21909,7 @@ export namespace Prisma {
     otp?: SortOrderInput | SortOrder
     role?: SortOrder
     profile_image?: SortOrderInput | SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -20896,6 +21939,7 @@ export namespace Prisma {
     otp?: IntNullableWithAggregatesFilter<"User"> | number | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     profile_image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    status?: EnumStatusWithAggregatesFilter<"User"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -21633,6 +22677,64 @@ export namespace Prisma {
     addedAt?: DateTimeWithAggregatesFilter<"WishlistItem"> | Date | string
   }
 
+  export type ComplianceFormWhereInput = {
+    AND?: ComplianceFormWhereInput | ComplianceFormWhereInput[]
+    OR?: ComplianceFormWhereInput[]
+    NOT?: ComplianceFormWhereInput | ComplianceFormWhereInput[]
+    id?: StringFilter<"ComplianceForm"> | string
+    userId?: StringFilter<"ComplianceForm"> | string
+    form_url?: StringFilter<"ComplianceForm"> | string
+    status?: EnumStatusFilter<"ComplianceForm"> | $Enums.Status
+    createdAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+    updatedAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+  }
+
+  export type ComplianceFormOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    form_url?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _relevance?: ComplianceFormOrderByRelevanceInput
+  }
+
+  export type ComplianceFormWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ComplianceFormWhereInput | ComplianceFormWhereInput[]
+    OR?: ComplianceFormWhereInput[]
+    NOT?: ComplianceFormWhereInput | ComplianceFormWhereInput[]
+    userId?: StringFilter<"ComplianceForm"> | string
+    form_url?: StringFilter<"ComplianceForm"> | string
+    status?: EnumStatusFilter<"ComplianceForm"> | $Enums.Status
+    createdAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+    updatedAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+  }, "id">
+
+  export type ComplianceFormOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    form_url?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ComplianceFormCountOrderByAggregateInput
+    _max?: ComplianceFormMaxOrderByAggregateInput
+    _min?: ComplianceFormMinOrderByAggregateInput
+  }
+
+  export type ComplianceFormScalarWhereWithAggregatesInput = {
+    AND?: ComplianceFormScalarWhereWithAggregatesInput | ComplianceFormScalarWhereWithAggregatesInput[]
+    OR?: ComplianceFormScalarWhereWithAggregatesInput[]
+    NOT?: ComplianceFormScalarWhereWithAggregatesInput | ComplianceFormScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ComplianceForm"> | string
+    userId?: StringWithAggregatesFilter<"ComplianceForm"> | string
+    form_url?: StringWithAggregatesFilter<"ComplianceForm"> | string
+    status?: EnumStatusWithAggregatesFilter<"ComplianceForm"> | $Enums.Status
+    createdAt?: DateTimeWithAggregatesFilter<"ComplianceForm"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ComplianceForm"> | Date | string
+  }
+
   export type adminCreateInput = {
     firstname: string
     lastname: string
@@ -22215,6 +23317,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressCreateNestedManyWithoutUserInput
@@ -22240,6 +23343,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
@@ -22265,6 +23369,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUpdateManyWithoutUserNestedInput
@@ -22290,6 +23395,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -22315,6 +23421,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22336,6 +23443,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22357,6 +23465,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23117,6 +24226,69 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ComplianceFormCreateInput = {
+    id?: string
+    userId: string
+    form_url: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ComplianceFormUncheckedCreateInput = {
+    id?: string
+    userId: string
+    form_url: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ComplianceFormUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    form_url?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComplianceFormUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    form_url?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComplianceFormCreateManyInput = {
+    id?: string
+    userId: string
+    form_url: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ComplianceFormUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    form_url?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComplianceFormUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    form_url?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -23842,6 +25014,13 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
   export type AddressListRelationFilter = {
     every?: AddressWhereInput
     some?: AddressWhereInput
@@ -23885,6 +25064,7 @@ export namespace Prisma {
     otp?: SortOrder
     role?: SortOrder
     profile_image?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -23913,6 +25093,7 @@ export namespace Prisma {
     otp?: SortOrder
     role?: SortOrder
     profile_image?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -23934,6 +25115,7 @@ export namespace Prisma {
     otp?: SortOrder
     role?: SortOrder
     profile_image?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -23943,6 +25125,16 @@ export namespace Prisma {
     loan_unit?: SortOrder
     loan_amount_collected?: SortOrder
     otp?: SortOrder
+  }
+
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -24481,6 +25673,39 @@ export namespace Prisma {
     productId?: SortOrder
     variantId?: SortOrder
     addedAt?: SortOrder
+  }
+
+  export type ComplianceFormOrderByRelevanceInput = {
+    fields: ComplianceFormOrderByRelevanceFieldEnum | ComplianceFormOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ComplianceFormCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    form_url?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ComplianceFormMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    form_url?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ComplianceFormMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    form_url?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type OrderNoteCreateNestedManyWithoutAdminInput = {
@@ -25167,6 +26392,10 @@ export namespace Prisma {
     connectOrCreate?: WishlistItemCreateOrConnectWithoutUserInput | WishlistItemCreateOrConnectWithoutUserInput[]
     createMany?: WishlistItemCreateManyUserInputEnvelope
     connect?: WishlistItemWhereUniqueInput | WishlistItemWhereUniqueInput[]
+  }
+
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
   }
 
   export type AddressUpdateManyWithoutUserNestedInput = {
@@ -26081,6 +27310,23 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[]
+    notIn?: $Enums.Status[]
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type NestedEnumPaymentStatusFilter<$PrismaModel = never> = {
@@ -27425,6 +28671,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     cart_items?: CartItemCreateNestedManyWithoutUserInput
@@ -27449,6 +28696,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     cart_items?: CartItemUncheckedCreateNestedManyWithoutUserInput
@@ -27539,6 +28787,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cart_items?: CartItemUpdateManyWithoutUserNestedInput
@@ -27563,6 +28812,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cart_items?: CartItemUncheckedUpdateManyWithoutUserNestedInput
@@ -27675,6 +28925,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressCreateNestedManyWithoutUserInput
@@ -27699,6 +28950,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
@@ -27932,6 +29184,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUpdateManyWithoutUserNestedInput
@@ -27956,6 +29209,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -28838,6 +30092,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressCreateNestedManyWithoutUserInput
@@ -28862,6 +30117,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
@@ -29000,6 +30256,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUpdateManyWithoutUserNestedInput
@@ -29024,6 +30281,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
@@ -29146,6 +30404,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressCreateNestedManyWithoutUserInput
@@ -29170,6 +30429,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
@@ -29308,6 +30568,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUpdateManyWithoutUserNestedInput
@@ -29332,6 +30593,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput

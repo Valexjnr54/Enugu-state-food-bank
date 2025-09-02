@@ -128,6 +128,7 @@ model User {
   otp                   Int?
   role                  Role           @default(user)
   profile_image         String?
+  status Status @default(PENDING)
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
   addresses             Address[]
@@ -289,6 +290,17 @@ model WishlistItem {
   @@index([variantId], map: "WishlistItem_variantId_fkey")
 }
 
+model ComplianceForm{
+  id        String          @id @default(uuid())
+  userId          String
+  form_url  String
+  status Status @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("compliance_forms")
+}
+
 enum Unit {
   KG
   GRAM
@@ -324,4 +336,11 @@ enum OrderStatus {
 enum DiscountType {
   PERCENTAGE
   FIXED
+}
+
+enum Status {
+  APPROVED
+  DENIED
+  PENDING
+  ACTIVE
 }

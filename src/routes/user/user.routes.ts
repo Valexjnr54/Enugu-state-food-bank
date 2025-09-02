@@ -4,6 +4,8 @@ import { addToCart, cartItems, removeAllFromCart, removeFromCart, updateCartItem
 import { addToWishlist, clearWishlist, getUserWishlist, removeFromWishlist } from "../../controllers/userController/wishlist.controller";
 import { all_order, create_order, single_order } from "../../controllers/userController/order.controller";
 import { createAddress, deleteAddress, getAllAddress, getSingleAddress, updateAddress } from "../../controllers/userController/address.controller";
+import { add_compliance, get_compliance } from "../../controllers/userController/compliance.controller";
+import { upload } from "../../middlewares/multerMiddleware";
 
 export const userRouter = express.Router();
 
@@ -37,3 +39,8 @@ userRouter.get('/address/single-address', getSingleAddress)
 userRouter.patch('/address/update-address', updateAddress);
 userRouter.delete('/address/delete-address', deleteAddress);
 // Address Route Ends
+
+//Compliance Form Starts
+userRouter.get('/get-compliance', get_compliance)
+userRouter.post('/add-compliance', upload.fields([ { name: "compliance_form", maxCount: 1 } ]), add_compliance)
+// Compliance Form Ends

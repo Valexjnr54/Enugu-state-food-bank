@@ -11,6 +11,7 @@ import { createUser, deleteUser, downloadUserTemplate, getAllUser, getSingleUser
 import { uploadCSV } from "../../middlewares/uploadCSVMiddleware";
 import { addNote, addTrackingUpdate, all_order, deleteNote, getNotes, getOrderTrackingHistory, single_order } from "../../controllers/adminController/order.controller";
 import { exportUsersWithLoansAsCsv } from "../../controllers/adminController/repayment.list.controller";
+import { approve_deny_compliance, get_all_compliance, get_compliance } from "../../controllers/adminController/compliance.comtroller";
 
 export const adminRouter = express.Router();
 
@@ -82,3 +83,9 @@ adminRouter.delete('/notes/:noteId',  deleteNote);
 // Download Users with Loan Starts
 adminRouter.get('/export-loans', exportUsersWithLoansAsCsv)
 // Download Users with Loan Ends
+
+// Compliance Route Start
+adminRouter.get('/all-compliance', get_all_compliance)
+adminRouter.put('/approve-deny-compliance', approve_deny_compliance)
+adminRouter.get('/get-compliance', get_compliance)
+// Compliance Route Ends
