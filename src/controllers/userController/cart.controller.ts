@@ -30,7 +30,7 @@ export async function addToCart(request: Request, response: Response) {
     const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
 
     if(user.status == "PENDING"){
-      return response.status(400).json({status:"error", message: 'Your Account is still pending, make sure you to submit your compliance form or if you have alrady submitted wait for our Administration Verify and activate your account.' }); 
+      return response.status(400).json({status:"error", message: 'Your Account is still pending\n\n, To finalize your registration, please ensure you have completed and submitted all necessary compliance documentation. If you have already done so, please note that our team is processing your submission and will notify you promptly upon verification.' }); 
     }
 
     if(user.status == "SUSPENDED"){
