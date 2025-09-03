@@ -9169,6 +9169,7 @@ export namespace Prisma {
     otp: number | null
     role: $Enums.Role | null
     profile_image: string | null
+    is_compliance_submitted: boolean | null
     status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -9191,6 +9192,7 @@ export namespace Prisma {
     otp: number | null
     role: $Enums.Role | null
     profile_image: string | null
+    is_compliance_submitted: boolean | null
     status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -9213,6 +9215,7 @@ export namespace Prisma {
     otp: number
     role: number
     profile_image: number
+    is_compliance_submitted: number
     status: number
     createdAt: number
     updatedAt: number
@@ -9251,6 +9254,7 @@ export namespace Prisma {
     otp?: true
     role?: true
     profile_image?: true
+    is_compliance_submitted?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -9273,6 +9277,7 @@ export namespace Prisma {
     otp?: true
     role?: true
     profile_image?: true
+    is_compliance_submitted?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -9295,6 +9300,7 @@ export namespace Prisma {
     otp?: true
     role?: true
     profile_image?: true
+    is_compliance_submitted?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -9404,6 +9410,7 @@ export namespace Prisma {
     otp: number | null
     role: $Enums.Role
     profile_image: string | null
+    is_compliance_submitted: boolean
     status: $Enums.Status
     createdAt: Date
     updatedAt: Date
@@ -9445,6 +9452,7 @@ export namespace Prisma {
     otp?: boolean
     role?: boolean
     profile_image?: boolean
+    is_compliance_submitted?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -9475,12 +9483,13 @@ export namespace Prisma {
     otp?: boolean
     role?: boolean
     profile_image?: boolean
+    is_compliance_submitted?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "phone" | "level" | "employee_id" | "government_entity" | "salary_per_month" | "loan_unit" | "loan_amount_collected" | "is_address_set" | "password" | "otp" | "role" | "profile_image" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "phone" | "level" | "employee_id" | "government_entity" | "salary_per_month" | "loan_unit" | "loan_amount_collected" | "is_address_set" | "password" | "otp" | "role" | "profile_image" | "is_compliance_submitted" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     addresses?: boolean | User$addressesArgs<ExtArgs>
     cart_items?: boolean | User$cart_itemsArgs<ExtArgs>
@@ -9516,6 +9525,7 @@ export namespace Prisma {
       otp: number | null
       role: $Enums.Role
       profile_image: string | null
+      is_compliance_submitted: boolean
       status: $Enums.Status
       createdAt: Date
       updatedAt: Date
@@ -9909,6 +9919,7 @@ export namespace Prisma {
     readonly otp: FieldRef<"User", 'Int'>
     readonly role: FieldRef<"User", 'Role'>
     readonly profile_image: FieldRef<"User", 'String'>
+    readonly is_compliance_submitted: FieldRef<"User", 'Boolean'>
     readonly status: FieldRef<"User", 'Status'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -20895,6 +20906,7 @@ export namespace Prisma {
     otp: 'otp',
     role: 'role',
     profile_image: 'profile_image',
+    is_compliance_submitted: 'is_compliance_submitted',
     status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -21912,6 +21924,7 @@ export namespace Prisma {
     otp?: IntNullableFilter<"User"> | number | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     profile_image?: StringNullableFilter<"User"> | string | null
+    is_compliance_submitted?: BoolFilter<"User"> | boolean
     status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -21939,6 +21952,7 @@ export namespace Prisma {
     otp?: SortOrderInput | SortOrder
     role?: SortOrder
     profile_image?: SortOrderInput | SortOrder
+    is_compliance_submitted?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -21970,6 +21984,7 @@ export namespace Prisma {
     otp?: IntNullableFilter<"User"> | number | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     profile_image?: StringNullableFilter<"User"> | string | null
+    is_compliance_submitted?: BoolFilter<"User"> | boolean
     status?: EnumStatusFilter<"User"> | $Enums.Status
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -21997,6 +22012,7 @@ export namespace Prisma {
     otp?: SortOrderInput | SortOrder
     role?: SortOrder
     profile_image?: SortOrderInput | SortOrder
+    is_compliance_submitted?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22027,6 +22043,7 @@ export namespace Prisma {
     otp?: IntNullableWithAggregatesFilter<"User"> | number | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     profile_image?: StringNullableWithAggregatesFilter<"User"> | string | null
+    is_compliance_submitted?: BoolWithAggregatesFilter<"User"> | boolean
     status?: EnumStatusWithAggregatesFilter<"User"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -23408,6 +23425,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23435,6 +23453,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23462,6 +23481,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23489,6 +23509,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23516,6 +23537,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23538,6 +23560,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23560,6 +23583,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25168,6 +25192,7 @@ export namespace Prisma {
     otp?: SortOrder
     role?: SortOrder
     profile_image?: SortOrder
+    is_compliance_submitted?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25197,6 +25222,7 @@ export namespace Prisma {
     otp?: SortOrder
     role?: SortOrder
     profile_image?: SortOrder
+    is_compliance_submitted?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25219,6 +25245,7 @@ export namespace Prisma {
     otp?: SortOrder
     role?: SortOrder
     profile_image?: SortOrder
+    is_compliance_submitted?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -28885,6 +28912,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28911,6 +28939,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29003,6 +29032,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29029,6 +29059,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29143,6 +29174,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29169,6 +29201,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29404,6 +29437,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -29430,6 +29464,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30314,6 +30349,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30340,6 +30376,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30480,6 +30517,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30506,6 +30544,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30630,6 +30669,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30656,6 +30696,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30796,6 +30837,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30822,6 +30864,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30895,6 +30938,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30921,6 +30965,7 @@ export namespace Prisma {
     otp?: number | null
     role?: $Enums.Role
     profile_image?: string | null
+    is_compliance_submitted?: boolean
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -30963,6 +31008,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30989,6 +31035,7 @@ export namespace Prisma {
     otp?: NullableIntFieldUpdateOperationsInput | number | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_compliance_submitted?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

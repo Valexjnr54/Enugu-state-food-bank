@@ -217,6 +217,7 @@ exports.Prisma.UserScalarFieldEnum = {
   otp: 'otp',
   role: 'role',
   profile_image: 'profile_image',
+  is_compliance_submitted: 'is_compliance_submitted',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

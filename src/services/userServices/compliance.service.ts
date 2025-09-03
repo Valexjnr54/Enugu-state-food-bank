@@ -100,3 +100,14 @@ export const updateUserStatus = async (id: string, status: 'PENDING' | 'ACTIVE' 
         handlePrismaError(error);
     }
 };
+
+export const updateUserSubmission = async (id: string) => {
+    try {
+        return prisma.user.update({
+            where: { id },
+            data: { is_compliance_submitted: true}
+        })
+    } catch (error) {
+        handlePrismaError(error)
+    }
+}

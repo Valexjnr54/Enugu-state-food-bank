@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { uploadImage } from "../../utils/cloudinary";
 import fs from "fs";
 import * as ComplianceFormService from "../../services/userServices/compliance.service"
+import { update } from '../../services/userServices/compliance.service';
 
 export async function add_compliance(request: Request, response: Response) {
     const userId = request.user.user.id;
@@ -24,8 +25,9 @@ export async function add_compliance(request: Request, response: Response) {
         const compliance_form = await ComplianceFormService.createOrUpdate({
             userId,
             form_url
-            
         });
+
+        await ComplianceFormService.updateUserSubmission(userId)
     
         return response.status(201).json({
             status: "success",

@@ -128,6 +128,7 @@ model User {
   otp                   Int?
   role                  Role           @default(user)
   profile_image         String?
+  is_compliance_submitted Boolean @default(false)
   status Status @default(PENDING)
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
