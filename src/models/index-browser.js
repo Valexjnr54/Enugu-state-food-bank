@@ -523,7 +523,8 @@ exports.Status = exports.$Enums.Status = {
   APPROVED: 'APPROVED',
   DENIED: 'DENIED',
   PENDING: 'PENDING',
-  ACTIVE: 'ACTIVE'
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED'
 };
 
 exports.PaymentStatus = exports.$Enums.PaymentStatus = {

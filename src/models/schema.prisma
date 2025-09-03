@@ -112,29 +112,30 @@ model Warehouse {
 }
 
 model User {
-  id                    String         @id @default(uuid())
+  id                    String           @id @default(uuid())
   firstname             String
   lastname              String
-  email                 String?        @unique
-  phone                 String         @unique
+  email                 String?          @unique
+  phone                 String           @unique
   level                 String
-  employee_id           String         @unique
+  employee_id           String           @unique
   government_entity     String
   salary_per_month      Float
   loan_unit             Float
-  loan_amount_collected Float          @default(0)
-  is_address_set        Boolean        @default(false)
+  loan_amount_collected Float            @default(0)
+  is_address_set        Boolean          @default(false)
   password              String?
   otp                   Int?
-  role                  Role           @default(user)
+  role                  Role             @default(user)
   profile_image         String?
-  status                Status         @default(PENDING)
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @updatedAt
+  status                Status           @default(PENDING)
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
   addresses             Address[]
   cart_items            CartItem[]
   orders                Order[]
   wishlist              WishlistItem[]
+  compliance_form       ComplianceForm[]
 }
 
 model Address {
@@ -297,6 +298,7 @@ model ComplianceForm {
   status    Status   @default(PENDING)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("compliance_forms")
 }
@@ -343,4 +345,5 @@ enum Status {
   DENIED
   PENDING
   ACTIVE
+  SUSPENDED
 }

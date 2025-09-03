@@ -135,6 +135,7 @@ model User {
   cart_items            CartItem[]
   orders                Order[]
   wishlist              WishlistItem[]
+  compliance_form   ComplianceForm[]
 }
 
 model Address {
@@ -297,6 +298,7 @@ model ComplianceForm{
   status Status @default(PENDING)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User            @relation(fields: [userId], references: [id])
 
   @@map("compliance_forms")
 }
@@ -343,4 +345,5 @@ enum Status {
   DENIED
   PENDING
   ACTIVE
+  SUSPENDED
 }

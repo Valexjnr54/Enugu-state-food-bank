@@ -159,7 +159,8 @@ export const Status: {
   APPROVED: 'APPROVED',
   DENIED: 'DENIED',
   PENDING: 'PENDING',
-  ACTIVE: 'ACTIVE'
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED'
 };
 
 export type Status = (typeof Status)[keyof typeof Status]
@@ -2493,6 +2494,7 @@ export namespace Prisma {
     cart_items: number
     orders: number
     wishlist: number
+    compliance_form: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2500,6 +2502,7 @@ export namespace Prisma {
     cart_items?: boolean | UserCountOutputTypeCountCart_itemsArgs
     orders?: boolean | UserCountOutputTypeCountOrdersArgs
     wishlist?: boolean | UserCountOutputTypeCountWishlistArgs
+    compliance_form?: boolean | UserCountOutputTypeCountCompliance_formArgs
   }
 
   // Custom InputTypes
@@ -2539,6 +2542,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWishlistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WishlistItemWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCompliance_formArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ComplianceFormWhereInput
   }
 
 
@@ -9442,6 +9452,7 @@ export namespace Prisma {
     cart_items?: boolean | User$cart_itemsArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     wishlist?: boolean | User$wishlistArgs<ExtArgs>
+    compliance_form?: boolean | User$compliance_formArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -9475,6 +9486,7 @@ export namespace Prisma {
     cart_items?: boolean | User$cart_itemsArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     wishlist?: boolean | User$wishlistArgs<ExtArgs>
+    compliance_form?: boolean | User$compliance_formArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -9485,6 +9497,7 @@ export namespace Prisma {
       cart_items: Prisma.$CartItemPayload<ExtArgs>[]
       orders: Prisma.$OrderPayload<ExtArgs>[]
       wishlist: Prisma.$WishlistItemPayload<ExtArgs>[]
+      compliance_form: Prisma.$ComplianceFormPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9850,6 +9863,7 @@ export namespace Prisma {
     cart_items<T extends User$cart_itemsArgs<ExtArgs> = {}>(args?: Subset<T, User$cart_itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     orders<T extends User$ordersArgs<ExtArgs> = {}>(args?: Subset<T, User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wishlist<T extends User$wishlistArgs<ExtArgs> = {}>(args?: Subset<T, User$wishlistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WishlistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    compliance_form<T extends User$compliance_formArgs<ExtArgs> = {}>(args?: Subset<T, User$compliance_formArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComplianceFormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10343,6 +10357,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WishlistItemScalarFieldEnum | WishlistItemScalarFieldEnum[]
+  }
+
+  /**
+   * User.compliance_form
+   */
+  export type User$compliance_formArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplianceForm
+     */
+    select?: ComplianceFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ComplianceForm
+     */
+    omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
+    where?: ComplianceFormWhereInput
+    orderBy?: ComplianceFormOrderByWithRelationInput | ComplianceFormOrderByWithRelationInput[]
+    cursor?: ComplianceFormWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ComplianceFormScalarFieldEnum | ComplianceFormScalarFieldEnum[]
   }
 
   /**
@@ -19948,6 +19986,7 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["complianceForm"]>
 
 
@@ -19962,10 +20001,15 @@ export namespace Prisma {
   }
 
   export type ComplianceFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "form_url" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["complianceForm"]>
+  export type ComplianceFormInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $ComplianceFormPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ComplianceForm"
-    objects: {}
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
@@ -20313,6 +20357,7 @@ export namespace Prisma {
    */
   export interface Prisma__ComplianceFormClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20365,6 +20410,10 @@ export namespace Prisma {
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
+    /**
      * Filter, which ComplianceForm to fetch.
      */
     where: ComplianceFormWhereUniqueInput
@@ -20384,6 +20433,10 @@ export namespace Prisma {
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
+    /**
      * Filter, which ComplianceForm to fetch.
      */
     where: ComplianceFormWhereUniqueInput
@@ -20402,6 +20455,10 @@ export namespace Prisma {
      * Omit specific fields from the ComplianceForm
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
     /**
      * Filter, which ComplianceForm to fetch.
      */
@@ -20452,6 +20509,10 @@ export namespace Prisma {
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
+    /**
      * Filter, which ComplianceForm to fetch.
      */
     where?: ComplianceFormWhereInput
@@ -20501,6 +20562,10 @@ export namespace Prisma {
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
+    /**
      * Filter, which ComplianceForms to fetch.
      */
     where?: ComplianceFormWhereInput
@@ -20545,6 +20610,10 @@ export namespace Prisma {
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
+    /**
      * The data needed to create a ComplianceForm.
      */
     data: XOR<ComplianceFormCreateInput, ComplianceFormUncheckedCreateInput>
@@ -20574,6 +20643,10 @@ export namespace Prisma {
      * Omit specific fields from the ComplianceForm
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
     /**
      * The data needed to update a ComplianceForm.
      */
@@ -20616,6 +20689,10 @@ export namespace Prisma {
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
+    /**
      * The filter to search for the ComplianceForm to update in case it exists.
      */
     where: ComplianceFormWhereUniqueInput
@@ -20642,6 +20719,10 @@ export namespace Prisma {
      * Omit specific fields from the ComplianceForm
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
     /**
      * Filter which ComplianceForm to delete.
      */
@@ -20675,6 +20756,10 @@ export namespace Prisma {
      * Omit specific fields from the ComplianceForm
      */
     omit?: ComplianceFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplianceFormInclude<ExtArgs> | null
   }
 
 
@@ -21834,6 +21919,7 @@ export namespace Prisma {
     cart_items?: CartItemListRelationFilter
     orders?: OrderListRelationFilter
     wishlist?: WishlistItemListRelationFilter
+    compliance_form?: ComplianceFormListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -21860,6 +21946,7 @@ export namespace Prisma {
     cart_items?: CartItemOrderByRelationAggregateInput
     orders?: OrderOrderByRelationAggregateInput
     wishlist?: WishlistItemOrderByRelationAggregateInput
+    compliance_form?: ComplianceFormOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -21890,6 +21977,7 @@ export namespace Prisma {
     cart_items?: CartItemListRelationFilter
     orders?: OrderListRelationFilter
     wishlist?: WishlistItemListRelationFilter
+    compliance_form?: ComplianceFormListRelationFilter
   }, "id" | "email" | "phone" | "employee_id">
 
   export type UserOrderByWithAggregationInput = {
@@ -22687,6 +22775,7 @@ export namespace Prisma {
     status?: EnumStatusFilter<"ComplianceForm"> | $Enums.Status
     createdAt?: DateTimeFilter<"ComplianceForm"> | Date | string
     updatedAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type ComplianceFormOrderByWithRelationInput = {
@@ -22696,6 +22785,7 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
     _relevance?: ComplianceFormOrderByRelevanceInput
   }
 
@@ -22709,6 +22799,7 @@ export namespace Prisma {
     status?: EnumStatusFilter<"ComplianceForm"> | $Enums.Status
     createdAt?: DateTimeFilter<"ComplianceForm"> | Date | string
     updatedAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type ComplianceFormOrderByWithAggregationInput = {
@@ -23324,6 +23415,7 @@ export namespace Prisma {
     cart_items?: CartItemCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -23350,6 +23442,7 @@ export namespace Prisma {
     cart_items?: CartItemUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemUncheckedCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -23376,6 +23469,7 @@ export namespace Prisma {
     cart_items?: CartItemUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -23402,6 +23496,7 @@ export namespace Prisma {
     cart_items?: CartItemUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -24228,11 +24323,11 @@ export namespace Prisma {
 
   export type ComplianceFormCreateInput = {
     id?: string
-    userId: string
     form_url: string
     status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCompliance_formInput
   }
 
   export type ComplianceFormUncheckedCreateInput = {
@@ -24246,11 +24341,11 @@ export namespace Prisma {
 
   export type ComplianceFormUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     form_url?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCompliance_formNestedInput
   }
 
   export type ComplianceFormUncheckedUpdateInput = {
@@ -24273,7 +24368,6 @@ export namespace Prisma {
 
   export type ComplianceFormUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
     form_url?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25033,11 +25127,21 @@ export namespace Prisma {
     none?: OrderWhereInput
   }
 
+  export type ComplianceFormListRelationFilter = {
+    every?: ComplianceFormWhereInput
+    some?: ComplianceFormWhereInput
+    none?: ComplianceFormWhereInput
+  }
+
   export type AddressOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type OrderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ComplianceFormOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -26366,6 +26470,13 @@ export namespace Prisma {
     connect?: WishlistItemWhereUniqueInput | WishlistItemWhereUniqueInput[]
   }
 
+  export type ComplianceFormCreateNestedManyWithoutUserInput = {
+    create?: XOR<ComplianceFormCreateWithoutUserInput, ComplianceFormUncheckedCreateWithoutUserInput> | ComplianceFormCreateWithoutUserInput[] | ComplianceFormUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ComplianceFormCreateOrConnectWithoutUserInput | ComplianceFormCreateOrConnectWithoutUserInput[]
+    createMany?: ComplianceFormCreateManyUserInputEnvelope
+    connect?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+  }
+
   export type AddressUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AddressCreateWithoutUserInput, AddressUncheckedCreateWithoutUserInput> | AddressCreateWithoutUserInput[] | AddressUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AddressCreateOrConnectWithoutUserInput | AddressCreateOrConnectWithoutUserInput[]
@@ -26392,6 +26503,13 @@ export namespace Prisma {
     connectOrCreate?: WishlistItemCreateOrConnectWithoutUserInput | WishlistItemCreateOrConnectWithoutUserInput[]
     createMany?: WishlistItemCreateManyUserInputEnvelope
     connect?: WishlistItemWhereUniqueInput | WishlistItemWhereUniqueInput[]
+  }
+
+  export type ComplianceFormUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ComplianceFormCreateWithoutUserInput, ComplianceFormUncheckedCreateWithoutUserInput> | ComplianceFormCreateWithoutUserInput[] | ComplianceFormUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ComplianceFormCreateOrConnectWithoutUserInput | ComplianceFormCreateOrConnectWithoutUserInput[]
+    createMany?: ComplianceFormCreateManyUserInputEnvelope
+    connect?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
   }
 
   export type EnumStatusFieldUpdateOperationsInput = {
@@ -26454,6 +26572,20 @@ export namespace Prisma {
     deleteMany?: WishlistItemScalarWhereInput | WishlistItemScalarWhereInput[]
   }
 
+  export type ComplianceFormUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ComplianceFormCreateWithoutUserInput, ComplianceFormUncheckedCreateWithoutUserInput> | ComplianceFormCreateWithoutUserInput[] | ComplianceFormUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ComplianceFormCreateOrConnectWithoutUserInput | ComplianceFormCreateOrConnectWithoutUserInput[]
+    upsert?: ComplianceFormUpsertWithWhereUniqueWithoutUserInput | ComplianceFormUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ComplianceFormCreateManyUserInputEnvelope
+    set?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    disconnect?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    delete?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    connect?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    update?: ComplianceFormUpdateWithWhereUniqueWithoutUserInput | ComplianceFormUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ComplianceFormUpdateManyWithWhereWithoutUserInput | ComplianceFormUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ComplianceFormScalarWhereInput | ComplianceFormScalarWhereInput[]
+  }
+
   export type AddressUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AddressCreateWithoutUserInput, AddressUncheckedCreateWithoutUserInput> | AddressCreateWithoutUserInput[] | AddressUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AddressCreateOrConnectWithoutUserInput | AddressCreateOrConnectWithoutUserInput[]
@@ -26508,6 +26640,20 @@ export namespace Prisma {
     update?: WishlistItemUpdateWithWhereUniqueWithoutUserInput | WishlistItemUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: WishlistItemUpdateManyWithWhereWithoutUserInput | WishlistItemUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: WishlistItemScalarWhereInput | WishlistItemScalarWhereInput[]
+  }
+
+  export type ComplianceFormUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ComplianceFormCreateWithoutUserInput, ComplianceFormUncheckedCreateWithoutUserInput> | ComplianceFormCreateWithoutUserInput[] | ComplianceFormUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ComplianceFormCreateOrConnectWithoutUserInput | ComplianceFormCreateOrConnectWithoutUserInput[]
+    upsert?: ComplianceFormUpsertWithWhereUniqueWithoutUserInput | ComplianceFormUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ComplianceFormCreateManyUserInputEnvelope
+    set?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    disconnect?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    delete?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    connect?: ComplianceFormWhereUniqueInput | ComplianceFormWhereUniqueInput[]
+    update?: ComplianceFormUpdateWithWhereUniqueWithoutUserInput | ComplianceFormUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ComplianceFormUpdateManyWithWhereWithoutUserInput | ComplianceFormUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ComplianceFormScalarWhereInput | ComplianceFormScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAddressesInput = {
@@ -27016,6 +27162,20 @@ export namespace Prisma {
     delete?: ProductVariantWhereInput | boolean
     connect?: ProductVariantWhereUniqueInput
     update?: XOR<XOR<ProductVariantUpdateToOneWithWhereWithoutWishlistInput, ProductVariantUpdateWithoutWishlistInput>, ProductVariantUncheckedUpdateWithoutWishlistInput>
+  }
+
+  export type UserCreateNestedOneWithoutCompliance_formInput = {
+    create?: XOR<UserCreateWithoutCompliance_formInput, UserUncheckedCreateWithoutCompliance_formInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCompliance_formInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutCompliance_formNestedInput = {
+    create?: XOR<UserCreateWithoutCompliance_formInput, UserUncheckedCreateWithoutCompliance_formInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCompliance_formInput
+    upsert?: UserUpsertWithoutCompliance_formInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCompliance_formInput, UserUpdateWithoutCompliance_formInput>, UserUncheckedUpdateWithoutCompliance_formInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -28553,6 +28713,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ComplianceFormCreateWithoutUserInput = {
+    id?: string
+    form_url: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ComplianceFormUncheckedCreateWithoutUserInput = {
+    id?: string
+    form_url: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ComplianceFormCreateOrConnectWithoutUserInput = {
+    where: ComplianceFormWhereUniqueInput
+    create: XOR<ComplianceFormCreateWithoutUserInput, ComplianceFormUncheckedCreateWithoutUserInput>
+  }
+
+  export type ComplianceFormCreateManyUserInputEnvelope = {
+    data: ComplianceFormCreateManyUserInput | ComplianceFormCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AddressUpsertWithWhereUniqueWithoutUserInput = {
     where: AddressWhereUniqueInput
     update: XOR<AddressUpdateWithoutUserInput, AddressUncheckedUpdateWithoutUserInput>
@@ -28654,6 +28840,34 @@ export namespace Prisma {
     data: XOR<WishlistItemUpdateManyMutationInput, WishlistItemUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type ComplianceFormUpsertWithWhereUniqueWithoutUserInput = {
+    where: ComplianceFormWhereUniqueInput
+    update: XOR<ComplianceFormUpdateWithoutUserInput, ComplianceFormUncheckedUpdateWithoutUserInput>
+    create: XOR<ComplianceFormCreateWithoutUserInput, ComplianceFormUncheckedCreateWithoutUserInput>
+  }
+
+  export type ComplianceFormUpdateWithWhereUniqueWithoutUserInput = {
+    where: ComplianceFormWhereUniqueInput
+    data: XOR<ComplianceFormUpdateWithoutUserInput, ComplianceFormUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ComplianceFormUpdateManyWithWhereWithoutUserInput = {
+    where: ComplianceFormScalarWhereInput
+    data: XOR<ComplianceFormUpdateManyMutationInput, ComplianceFormUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ComplianceFormScalarWhereInput = {
+    AND?: ComplianceFormScalarWhereInput | ComplianceFormScalarWhereInput[]
+    OR?: ComplianceFormScalarWhereInput[]
+    NOT?: ComplianceFormScalarWhereInput | ComplianceFormScalarWhereInput[]
+    id?: StringFilter<"ComplianceForm"> | string
+    userId?: StringFilter<"ComplianceForm"> | string
+    form_url?: StringFilter<"ComplianceForm"> | string
+    status?: EnumStatusFilter<"ComplianceForm"> | $Enums.Status
+    createdAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+    updatedAt?: DateTimeFilter<"ComplianceForm"> | Date | string
+  }
+
   export type UserCreateWithoutAddressesInput = {
     id?: string
     firstname: string
@@ -28677,6 +28891,7 @@ export namespace Prisma {
     cart_items?: CartItemCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAddressesInput = {
@@ -28702,6 +28917,7 @@ export namespace Prisma {
     cart_items?: CartItemUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemUncheckedCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAddressesInput = {
@@ -28793,6 +29009,7 @@ export namespace Prisma {
     cart_items?: CartItemUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAddressesInput = {
@@ -28818,6 +29035,7 @@ export namespace Prisma {
     cart_items?: CartItemUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutAddressInput = {
@@ -28931,6 +29149,7 @@ export namespace Prisma {
     addresses?: AddressCreateNestedManyWithoutUserInput
     cart_items?: CartItemCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -28956,6 +29175,7 @@ export namespace Prisma {
     addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
     cart_items?: CartItemUncheckedCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemUncheckedCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -29190,6 +29410,7 @@ export namespace Prisma {
     addresses?: AddressUpdateManyWithoutUserNestedInput
     cart_items?: CartItemUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -29215,6 +29436,7 @@ export namespace Prisma {
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
     cart_items?: CartItemUncheckedUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderItemUpsertWithWhereUniqueWithoutOrderInput = {
@@ -30098,6 +30320,7 @@ export namespace Prisma {
     addresses?: AddressCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCart_itemsInput = {
@@ -30123,6 +30346,7 @@ export namespace Prisma {
     addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
     wishlist?: WishlistItemUncheckedCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCart_itemsInput = {
@@ -30262,6 +30486,7 @@ export namespace Prisma {
     addresses?: AddressUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCart_itemsInput = {
@@ -30287,6 +30512,7 @@ export namespace Prisma {
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
     wishlist?: WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductVariantUpsertWithoutCart_itemsInput = {
@@ -30410,6 +30636,7 @@ export namespace Prisma {
     addresses?: AddressCreateNestedManyWithoutUserInput
     cart_items?: CartItemCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWishlistInput = {
@@ -30435,6 +30662,7 @@ export namespace Prisma {
     addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
     cart_items?: CartItemUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    compliance_form?: ComplianceFormUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWishlistInput = {
@@ -30574,6 +30802,7 @@ export namespace Prisma {
     addresses?: AddressUpdateManyWithoutUserNestedInput
     cart_items?: CartItemUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWishlistInput = {
@@ -30599,6 +30828,7 @@ export namespace Prisma {
     addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
     cart_items?: CartItemUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    compliance_form?: ComplianceFormUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductVariantUpsertWithoutWishlistInput = {
@@ -30646,6 +30876,126 @@ export namespace Prisma {
     cart_items?: CartItemUncheckedUpdateManyWithoutVariantNestedInput
     inventory?: InventoryUncheckedUpdateOneWithoutVariantNestedInput
     order_items?: OrderItemUncheckedUpdateManyWithoutVariantNestedInput
+  }
+
+  export type UserCreateWithoutCompliance_formInput = {
+    id?: string
+    firstname: string
+    lastname: string
+    email?: string | null
+    phone: string
+    level: string
+    employee_id: string
+    government_entity: string
+    salary_per_month: number
+    loan_unit: number
+    loan_amount_collected?: number
+    is_address_set?: boolean
+    password?: string | null
+    otp?: number | null
+    role?: $Enums.Role
+    profile_image?: string | null
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    cart_items?: CartItemCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    wishlist?: WishlistItemCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCompliance_formInput = {
+    id?: string
+    firstname: string
+    lastname: string
+    email?: string | null
+    phone: string
+    level: string
+    employee_id: string
+    government_entity: string
+    salary_per_month: number
+    loan_unit: number
+    loan_amount_collected?: number
+    is_address_set?: boolean
+    password?: string | null
+    otp?: number | null
+    role?: $Enums.Role
+    profile_image?: string | null
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    cart_items?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    wishlist?: WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCompliance_formInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCompliance_formInput, UserUncheckedCreateWithoutCompliance_formInput>
+  }
+
+  export type UserUpsertWithoutCompliance_formInput = {
+    update: XOR<UserUpdateWithoutCompliance_formInput, UserUncheckedUpdateWithoutCompliance_formInput>
+    create: XOR<UserCreateWithoutCompliance_formInput, UserUncheckedCreateWithoutCompliance_formInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCompliance_formInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCompliance_formInput, UserUncheckedUpdateWithoutCompliance_formInput>
+  }
+
+  export type UserUpdateWithoutCompliance_formInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
+    level?: StringFieldUpdateOperationsInput | string
+    employee_id?: StringFieldUpdateOperationsInput | string
+    government_entity?: StringFieldUpdateOperationsInput | string
+    salary_per_month?: FloatFieldUpdateOperationsInput | number
+    loan_unit?: FloatFieldUpdateOperationsInput | number
+    loan_amount_collected?: FloatFieldUpdateOperationsInput | number
+    is_address_set?: BoolFieldUpdateOperationsInput | boolean
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    cart_items?: CartItemUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    wishlist?: WishlistItemUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCompliance_formInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
+    level?: StringFieldUpdateOperationsInput | string
+    employee_id?: StringFieldUpdateOperationsInput | string
+    government_entity?: StringFieldUpdateOperationsInput | string
+    salary_per_month?: FloatFieldUpdateOperationsInput | number
+    loan_unit?: FloatFieldUpdateOperationsInput | number
+    loan_amount_collected?: FloatFieldUpdateOperationsInput | number
+    is_address_set?: BoolFieldUpdateOperationsInput | boolean
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    otp?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    cart_items?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    wishlist?: WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderNoteCreateManyAdminInput = {
@@ -31141,6 +31491,14 @@ export namespace Prisma {
     addedAt?: Date | string
   }
 
+  export type ComplianceFormCreateManyUserInput = {
+    id?: string
+    form_url: string
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AddressUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
@@ -31284,6 +31642,30 @@ export namespace Prisma {
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     variantId?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComplianceFormUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    form_url?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComplianceFormUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    form_url?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ComplianceFormUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    form_url?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OrderCreateManyAddressInput = {
