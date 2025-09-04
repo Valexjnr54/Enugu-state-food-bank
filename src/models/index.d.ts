@@ -9160,6 +9160,7 @@ export namespace Prisma {
     phone: string | null
     level: string | null
     employee_id: string | null
+    verification_id: string | null
     government_entity: string | null
     salary_per_month: number | null
     loan_unit: number | null
@@ -9183,6 +9184,7 @@ export namespace Prisma {
     phone: string | null
     level: string | null
     employee_id: string | null
+    verification_id: string | null
     government_entity: string | null
     salary_per_month: number | null
     loan_unit: number | null
@@ -9206,6 +9208,7 @@ export namespace Prisma {
     phone: number
     level: number
     employee_id: number
+    verification_id: number
     government_entity: number
     salary_per_month: number
     loan_unit: number
@@ -9245,6 +9248,7 @@ export namespace Prisma {
     phone?: true
     level?: true
     employee_id?: true
+    verification_id?: true
     government_entity?: true
     salary_per_month?: true
     loan_unit?: true
@@ -9268,6 +9272,7 @@ export namespace Prisma {
     phone?: true
     level?: true
     employee_id?: true
+    verification_id?: true
     government_entity?: true
     salary_per_month?: true
     loan_unit?: true
@@ -9291,6 +9296,7 @@ export namespace Prisma {
     phone?: true
     level?: true
     employee_id?: true
+    verification_id?: true
     government_entity?: true
     salary_per_month?: true
     loan_unit?: true
@@ -9401,6 +9407,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -9443,6 +9450,7 @@ export namespace Prisma {
     phone?: boolean
     level?: boolean
     employee_id?: boolean
+    verification_id?: boolean
     government_entity?: boolean
     salary_per_month?: boolean
     loan_unit?: boolean
@@ -9474,6 +9482,7 @@ export namespace Prisma {
     phone?: boolean
     level?: boolean
     employee_id?: boolean
+    verification_id?: boolean
     government_entity?: boolean
     salary_per_month?: boolean
     loan_unit?: boolean
@@ -9489,7 +9498,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "phone" | "level" | "employee_id" | "government_entity" | "salary_per_month" | "loan_unit" | "loan_amount_collected" | "is_address_set" | "password" | "otp" | "role" | "profile_image" | "is_compliance_submitted" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "phone" | "level" | "employee_id" | "verification_id" | "government_entity" | "salary_per_month" | "loan_unit" | "loan_amount_collected" | "is_address_set" | "password" | "otp" | "role" | "profile_image" | "is_compliance_submitted" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     addresses?: boolean | User$addressesArgs<ExtArgs>
     cart_items?: boolean | User$cart_itemsArgs<ExtArgs>
@@ -9516,6 +9525,7 @@ export namespace Prisma {
       phone: string
       level: string
       employee_id: string
+      verification_id: string
       government_entity: string
       salary_per_month: number
       loan_unit: number
@@ -9910,6 +9920,7 @@ export namespace Prisma {
     readonly phone: FieldRef<"User", 'String'>
     readonly level: FieldRef<"User", 'String'>
     readonly employee_id: FieldRef<"User", 'String'>
+    readonly verification_id: FieldRef<"User", 'String'>
     readonly government_entity: FieldRef<"User", 'String'>
     readonly salary_per_month: FieldRef<"User", 'Float'>
     readonly loan_unit: FieldRef<"User", 'Float'>
@@ -11462,11 +11473,13 @@ export namespace Prisma {
   export type OrderAvgAggregateOutputType = {
     totalAmount: number | null
     discount: number | null
+    order_confirmation_otp: number | null
   }
 
   export type OrderSumAggregateOutputType = {
     totalAmount: number | null
     discount: number | null
+    order_confirmation_otp: number | null
   }
 
   export type OrderMinAggregateOutputType = {
@@ -11484,6 +11497,7 @@ export namespace Prisma {
     updatedAt: Date | null
     couponId: string | null
     discount: number | null
+    order_confirmation_otp: number | null
   }
 
   export type OrderMaxAggregateOutputType = {
@@ -11501,6 +11515,7 @@ export namespace Prisma {
     updatedAt: Date | null
     couponId: string | null
     discount: number | null
+    order_confirmation_otp: number | null
   }
 
   export type OrderCountAggregateOutputType = {
@@ -11518,6 +11533,7 @@ export namespace Prisma {
     updatedAt: number
     couponId: number
     discount: number
+    order_confirmation_otp: number
     _all: number
   }
 
@@ -11525,11 +11541,13 @@ export namespace Prisma {
   export type OrderAvgAggregateInputType = {
     totalAmount?: true
     discount?: true
+    order_confirmation_otp?: true
   }
 
   export type OrderSumAggregateInputType = {
     totalAmount?: true
     discount?: true
+    order_confirmation_otp?: true
   }
 
   export type OrderMinAggregateInputType = {
@@ -11547,6 +11565,7 @@ export namespace Prisma {
     updatedAt?: true
     couponId?: true
     discount?: true
+    order_confirmation_otp?: true
   }
 
   export type OrderMaxAggregateInputType = {
@@ -11564,6 +11583,7 @@ export namespace Prisma {
     updatedAt?: true
     couponId?: true
     discount?: true
+    order_confirmation_otp?: true
   }
 
   export type OrderCountAggregateInputType = {
@@ -11581,6 +11601,7 @@ export namespace Prisma {
     updatedAt?: true
     couponId?: true
     discount?: true
+    order_confirmation_otp?: true
     _all?: true
   }
 
@@ -11685,6 +11706,7 @@ export namespace Prisma {
     updatedAt: Date
     couponId: string | null
     discount: number
+    order_confirmation_otp: number | null
     _count: OrderCountAggregateOutputType | null
     _avg: OrderAvgAggregateOutputType | null
     _sum: OrderSumAggregateOutputType | null
@@ -11721,6 +11743,7 @@ export namespace Prisma {
     updatedAt?: boolean
     couponId?: boolean
     discount?: boolean
+    order_confirmation_otp?: boolean
     address?: boolean | AddressDefaultArgs<ExtArgs>
     coupon?: boolean | Order$couponArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -11748,9 +11771,10 @@ export namespace Prisma {
     updatedAt?: boolean
     couponId?: boolean
     discount?: boolean
+    order_confirmation_otp?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "addressId" | "totalAmount" | "currency" | "paymentStatus" | "orderStatus" | "trackingCode" | "placedAt" | "deliveredAt" | "cancelledAt" | "updatedAt" | "couponId" | "discount", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "addressId" | "totalAmount" | "currency" | "paymentStatus" | "orderStatus" | "trackingCode" | "placedAt" | "deliveredAt" | "cancelledAt" | "updatedAt" | "couponId" | "discount" | "order_confirmation_otp", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     address?: boolean | AddressDefaultArgs<ExtArgs>
     coupon?: boolean | Order$couponArgs<ExtArgs>
@@ -11788,6 +11812,7 @@ export namespace Prisma {
       updatedAt: Date
       couponId: string | null
       discount: number
+      order_confirmation_otp: number | null
     }, ExtArgs["result"]["order"]>
     composites: {}
   }
@@ -12178,6 +12203,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"Order", 'DateTime'>
     readonly couponId: FieldRef<"Order", 'String'>
     readonly discount: FieldRef<"Order", 'Float'>
+    readonly order_confirmation_otp: FieldRef<"Order", 'Int'>
   }
     
 
@@ -20897,6 +20923,7 @@ export namespace Prisma {
     phone: 'phone',
     level: 'level',
     employee_id: 'employee_id',
+    verification_id: 'verification_id',
     government_entity: 'government_entity',
     salary_per_month: 'salary_per_month',
     loan_unit: 'loan_unit',
@@ -20946,7 +20973,8 @@ export namespace Prisma {
     cancelledAt: 'cancelledAt',
     updatedAt: 'updatedAt',
     couponId: 'couponId',
-    discount: 'discount'
+    discount: 'discount',
+    order_confirmation_otp: 'order_confirmation_otp'
   };
 
   export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -21180,6 +21208,7 @@ export namespace Prisma {
     phone: 'phone',
     level: 'level',
     employee_id: 'employee_id',
+    verification_id: 'verification_id',
     government_entity: 'government_entity',
     password: 'password',
     profile_image: 'profile_image'
@@ -21915,6 +21944,7 @@ export namespace Prisma {
     phone?: StringFilter<"User"> | string
     level?: StringFilter<"User"> | string
     employee_id?: StringFilter<"User"> | string
+    verification_id?: StringFilter<"User"> | string
     government_entity?: StringFilter<"User"> | string
     salary_per_month?: FloatFilter<"User"> | number
     loan_unit?: FloatFilter<"User"> | number
@@ -21943,6 +21973,7 @@ export namespace Prisma {
     phone?: SortOrder
     level?: SortOrder
     employee_id?: SortOrder
+    verification_id?: SortOrder
     government_entity?: SortOrder
     salary_per_month?: SortOrder
     loan_unit?: SortOrder
@@ -21969,6 +22000,7 @@ export namespace Prisma {
     email?: string
     phone?: string
     employee_id?: string
+    verification_id?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -21993,7 +22025,7 @@ export namespace Prisma {
     orders?: OrderListRelationFilter
     wishlist?: WishlistItemListRelationFilter
     compliance_form?: ComplianceFormListRelationFilter
-  }, "id" | "email" | "phone" | "employee_id">
+  }, "id" | "email" | "phone" | "employee_id" | "verification_id">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -22003,6 +22035,7 @@ export namespace Prisma {
     phone?: SortOrder
     level?: SortOrder
     employee_id?: SortOrder
+    verification_id?: SortOrder
     government_entity?: SortOrder
     salary_per_month?: SortOrder
     loan_unit?: SortOrder
@@ -22034,6 +22067,7 @@ export namespace Prisma {
     phone?: StringWithAggregatesFilter<"User"> | string
     level?: StringWithAggregatesFilter<"User"> | string
     employee_id?: StringWithAggregatesFilter<"User"> | string
+    verification_id?: StringWithAggregatesFilter<"User"> | string
     government_entity?: StringWithAggregatesFilter<"User"> | string
     salary_per_month?: FloatWithAggregatesFilter<"User"> | number
     loan_unit?: FloatWithAggregatesFilter<"User"> | number
@@ -22156,6 +22190,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     couponId?: StringNullableFilter<"Order"> | string | null
     discount?: FloatFilter<"Order"> | number
+    order_confirmation_otp?: IntNullableFilter<"Order"> | number | null
     address?: XOR<AddressScalarRelationFilter, AddressWhereInput>
     coupon?: XOR<CouponNullableScalarRelationFilter, CouponWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -22180,6 +22215,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     couponId?: SortOrderInput | SortOrder
     discount?: SortOrder
+    order_confirmation_otp?: SortOrderInput | SortOrder
     address?: AddressOrderByWithRelationInput
     coupon?: CouponOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
@@ -22208,6 +22244,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     couponId?: StringNullableFilter<"Order"> | string | null
     discount?: FloatFilter<"Order"> | number
+    order_confirmation_otp?: IntNullableFilter<"Order"> | number | null
     address?: XOR<AddressScalarRelationFilter, AddressWhereInput>
     coupon?: XOR<CouponNullableScalarRelationFilter, CouponWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -22232,6 +22269,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     couponId?: SortOrderInput | SortOrder
     discount?: SortOrder
+    order_confirmation_otp?: SortOrderInput | SortOrder
     _count?: OrderCountOrderByAggregateInput
     _avg?: OrderAvgOrderByAggregateInput
     _max?: OrderMaxOrderByAggregateInput
@@ -22257,6 +22295,7 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     couponId?: StringNullableWithAggregatesFilter<"Order"> | string | null
     discount?: FloatWithAggregatesFilter<"Order"> | number
+    order_confirmation_otp?: IntNullableWithAggregatesFilter<"Order"> | number | null
   }
 
   export type OrderItemWhereInput = {
@@ -23416,6 +23455,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -23444,6 +23484,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -23472,6 +23513,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -23500,6 +23542,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -23528,6 +23571,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -23551,6 +23595,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -23574,6 +23619,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -23702,6 +23748,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     address: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
@@ -23726,6 +23773,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteUncheckedCreateNestedManyWithoutOrderInput
     trackingUpdates?: OrderTrackingUncheckedCreateNestedManyWithoutOrderInput
@@ -23744,6 +23792,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     address?: AddressUpdateOneRequiredWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
@@ -23768,6 +23817,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUncheckedUpdateManyWithoutOrderNestedInput
     trackingUpdates?: OrderTrackingUncheckedUpdateManyWithoutOrderNestedInput
@@ -23789,6 +23839,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
   }
 
   export type OrderUpdateManyMutationInput = {
@@ -23803,6 +23854,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type OrderUncheckedUpdateManyInput = {
@@ -23820,6 +23872,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type OrderItemCreateInput = {
@@ -25183,6 +25236,7 @@ export namespace Prisma {
     phone?: SortOrder
     level?: SortOrder
     employee_id?: SortOrder
+    verification_id?: SortOrder
     government_entity?: SortOrder
     salary_per_month?: SortOrder
     loan_unit?: SortOrder
@@ -25213,6 +25267,7 @@ export namespace Prisma {
     phone?: SortOrder
     level?: SortOrder
     employee_id?: SortOrder
+    verification_id?: SortOrder
     government_entity?: SortOrder
     salary_per_month?: SortOrder
     loan_unit?: SortOrder
@@ -25236,6 +25291,7 @@ export namespace Prisma {
     phone?: SortOrder
     level?: SortOrder
     employee_id?: SortOrder
+    verification_id?: SortOrder
     government_entity?: SortOrder
     salary_per_month?: SortOrder
     loan_unit?: SortOrder
@@ -25381,11 +25437,13 @@ export namespace Prisma {
     updatedAt?: SortOrder
     couponId?: SortOrder
     discount?: SortOrder
+    order_confirmation_otp?: SortOrder
   }
 
   export type OrderAvgOrderByAggregateInput = {
     totalAmount?: SortOrder
     discount?: SortOrder
+    order_confirmation_otp?: SortOrder
   }
 
   export type OrderMaxOrderByAggregateInput = {
@@ -25403,6 +25461,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     couponId?: SortOrder
     discount?: SortOrder
+    order_confirmation_otp?: SortOrder
   }
 
   export type OrderMinOrderByAggregateInput = {
@@ -25420,11 +25479,13 @@ export namespace Prisma {
     updatedAt?: SortOrder
     couponId?: SortOrder
     discount?: SortOrder
+    order_confirmation_otp?: SortOrder
   }
 
   export type OrderSumOrderByAggregateInput = {
     totalAmount?: SortOrder
     discount?: SortOrder
+    order_confirmation_otp?: SortOrder
   }
 
   export type EnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -28678,6 +28739,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     address: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -28700,6 +28762,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteUncheckedCreateNestedManyWithoutOrderInput
     trackingUpdates?: OrderTrackingUncheckedCreateNestedManyWithoutOrderInput
@@ -28849,6 +28912,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     couponId?: StringNullableFilter<"Order"> | string | null
     discount?: FloatFilter<"Order"> | number
+    order_confirmation_otp?: IntNullableFilter<"Order"> | number | null
   }
 
   export type WishlistItemUpsertWithWhereUniqueWithoutUserInput = {
@@ -28903,6 +28967,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -28930,6 +28995,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -28966,6 +29032,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -28988,6 +29055,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteUncheckedCreateNestedManyWithoutOrderInput
     trackingUpdates?: OrderTrackingUncheckedCreateNestedManyWithoutOrderInput
@@ -29023,6 +29091,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -29050,6 +29119,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -29165,6 +29235,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -29192,6 +29263,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -29428,6 +29500,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -29455,6 +29528,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -29581,6 +29655,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     address: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
@@ -29604,6 +29679,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
     order_note?: OrderNoteUncheckedCreateNestedManyWithoutOrderInput
     trackingUpdates?: OrderTrackingUncheckedCreateNestedManyWithoutOrderInput
     payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -29729,6 +29805,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     address?: AddressUpdateOneRequiredWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
@@ -29752,6 +29829,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     order_note?: OrderNoteUncheckedUpdateManyWithoutOrderNestedInput
     trackingUpdates?: OrderTrackingUncheckedUpdateManyWithoutOrderNestedInput
     payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -29873,6 +29951,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     address: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
@@ -29896,6 +29975,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteUncheckedCreateNestedManyWithoutOrderInput
     payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -29929,6 +30009,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     address?: AddressUpdateOneRequiredWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
@@ -29952,6 +30033,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUncheckedUpdateManyWithoutOrderNestedInput
     payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -29999,6 +30081,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     address: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
@@ -30022,6 +30105,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     trackingUpdates?: OrderTrackingUncheckedCreateNestedManyWithoutOrderInput
     payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
@@ -30091,6 +30175,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     address?: AddressUpdateOneRequiredWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
@@ -30114,6 +30199,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     trackingUpdates?: OrderTrackingUncheckedUpdateManyWithoutOrderNestedInput
     payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
@@ -30131,6 +30217,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     address: AddressCreateNestedOneWithoutOrderInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -30153,6 +30240,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteUncheckedCreateNestedManyWithoutOrderInput
     trackingUpdates?: OrderTrackingUncheckedCreateNestedManyWithoutOrderInput
@@ -30197,6 +30285,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
     address: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
@@ -30220,6 +30309,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteUncheckedCreateNestedManyWithoutOrderInput
     trackingUpdates?: OrderTrackingUncheckedCreateNestedManyWithoutOrderInput
@@ -30253,6 +30343,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     address?: AddressUpdateOneRequiredWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
@@ -30276,6 +30367,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUncheckedUpdateManyWithoutOrderNestedInput
     trackingUpdates?: OrderTrackingUncheckedUpdateManyWithoutOrderNestedInput
@@ -30340,6 +30432,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -30367,6 +30460,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -30508,6 +30602,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -30535,6 +30630,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -30660,6 +30756,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -30687,6 +30784,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -30828,6 +30926,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -30855,6 +30954,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -30929,6 +31029,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -30956,6 +31057,7 @@ export namespace Prisma {
     phone: string
     level: string
     employee_id: string
+    verification_id: string
     government_entity: string
     salary_per_month: number
     loan_unit: number
@@ -30999,6 +31101,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -31026,6 +31129,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
+    verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
     loan_unit?: FloatFieldUpdateOperationsInput | number
@@ -31529,6 +31633,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
   }
 
   export type WishlistItemCreateManyUserInput = {
@@ -31626,6 +31731,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     address?: AddressUpdateOneRequiredWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -31648,6 +31754,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUncheckedUpdateManyWithoutOrderNestedInput
     trackingUpdates?: OrderTrackingUncheckedUpdateManyWithoutOrderNestedInput
@@ -31668,6 +31775,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type WishlistItemUpdateWithoutUserInput = {
@@ -31729,6 +31837,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     couponId?: string | null
     discount?: number
+    order_confirmation_otp?: number | null
   }
 
   export type OrderUpdateWithoutAddressInput = {
@@ -31743,6 +31852,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -31765,6 +31875,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUncheckedUpdateManyWithoutOrderNestedInput
     trackingUpdates?: OrderTrackingUncheckedUpdateManyWithoutOrderNestedInput
@@ -31785,6 +31896,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     couponId?: NullableStringFieldUpdateOperationsInput | string | null
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type OrderItemCreateManyOrderInput = {
@@ -31901,6 +32013,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     updatedAt?: Date | string
     discount?: number
+    order_confirmation_otp?: number | null
   }
 
   export type OrderUpdateWithoutCouponInput = {
@@ -31915,6 +32028,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     address?: AddressUpdateOneRequiredWithoutOrderNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -31937,6 +32051,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUncheckedUpdateManyWithoutOrderNestedInput
     trackingUpdates?: OrderTrackingUncheckedUpdateManyWithoutOrderNestedInput
@@ -31957,6 +32072,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
+    order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

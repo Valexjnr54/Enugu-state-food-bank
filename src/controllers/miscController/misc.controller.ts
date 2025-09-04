@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "../../models";
 import * as ProductService from '../../services/adminServices/product.service';
+import { singleOrder, singleOrderByUser } from "../../services/userServices/order.service";
+import { generateOtp, verifyOrderStoredOtp } from "../../utils/otpHandler";
+import { sendSMS } from "../../utils/sendSMS";
 
 const prisma = new PrismaClient;
 
@@ -27,6 +30,117 @@ export async function singleProduct(request: Request, response: Response) {
     try {
         const singleProduct = await ProductService.getOne(id)
         return response.status(200).json({message: 'Product fetched', data: singleProduct });
+    } catch (error: any) {
+        const status = error.statusCode || 500;
+        response.status(status).json({
+        status: "error",
+        message: error.message || "Unexpected error",
+        });
+    }
+}
+
+export async function single_order(request: Request, response: Response) {
+  const id: string = request.query.order_id as string;
+  
+  if (!id) {
+    return response.status(400).json({status:"error", message: 'Order ID is expected' }); 
+  }
+  
+  try {
+    const single_order = await singleOrder(id)
+    return response.status(200).json({message: 'Order fetched', data: single_order });
+  } catch (error: any) {
+    const status = error.statusCode || 500;
+    response.status(status).json({
+      status: "error",
+      message: error.message || "Unexpected error",
+    });
+  }
+}
+
+export async function confirm_user(request: Request, response: Response) {
+    const { identifier, order_id } = request.body;
+
+    if (!identifier) {
+        return response.status(400).json({
+            error: 'Missing identifier',
+            message: 'You must provide an identifier (email, phone, or employee_id)',
+        });
+    }
+
+    if (!order_id) {
+        return response.status(400).json({status:"error", message: 'Order ID is expected' }); 
+    }
+
+    try {
+        const user = await prisma.user.findFirst({
+            where: {
+                OR: [
+                    { email: identifier },
+                    { employee_id: identifier },
+                    {verification_id: identifier},
+                    { phone: identifier }
+                ],
+            },
+        });
+
+        if (!user) {
+            return response.status(404).json({
+                error: 'User Not Found',
+                message: 'No user found with provided identifier'
+            });
+        }
+
+        const user_id = user.id;
+
+        const order = await singleOrderByUser(user_id, order_id);
+        if (!order) {
+            return response.status(400).json({status:"error", message: 'Order from this user could not be found/ Order does not belong to this user' }); 
+        }
+
+        const otp = await generateOtp();
+
+        const updated_order= await prisma.order.update({ where: { id: order_id, userId: user_id }, data:{ order_confirmation_otp:  parseInt(otp, 10) }});
+        const message = `Your Food Bank one-time password (OTP) is: ${otp}. Please provide this code to the dispatch rider upon delivery to confirm your order. The code expires in 10 minutes. Do not share it with anyone else.`;
+        await sendSMS(order.user.phone, message);
+
+        return response.status(200).json({message: 'Order User Confirmed', nextStep: 'confirm_order', data: updated_order });
+    } catch (error: any) {
+        const status = error.statusCode || 500;
+        response.status(status).json({
+        status: "error",
+        message: error.message || "Unexpected error",
+        });
+    }
+}
+
+export async function confirm_delivery_order(request: Request, response: Response) {
+    const { user_id, order_id, otp } = request.body;
+
+    if (!user_id) {
+        return response.status(400).json({status:"error", message: 'User ID is expected' }); 
+    }
+
+    if (!order_id) {
+        return response.status(400).json({status:"error", message: 'Order ID is expected' }); 
+    }
+
+    if (!otp) {
+        return response.status(400).json({status:"error", message: 'One-Time Password(OTP) is expected' }); 
+    }
+
+    try {
+        const isValid = await verifyOrderStoredOtp(user_id ,order_id, otp);
+        
+        if (!isValid) {
+            return response.status(401).json({
+                error: 'Invalid OTP',
+                message: 'The OTP provided is incorrect or has expired'
+            });
+        }
+
+        const order = await prisma.order.update({ where:{id: order_id, userId: user_id}, data:{ orderStatus: "DELIVERED", deliveredAt: new Date() } });
+        return response.status(200).json({message: 'Order has been delivered', data: order });
     } catch (error: any) {
         const status = error.statusCode || 500;
         response.status(status).json({

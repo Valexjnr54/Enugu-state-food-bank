@@ -208,6 +208,7 @@ exports.Prisma.UserScalarFieldEnum = {
   phone: 'phone',
   level: 'level',
   employee_id: 'employee_id',
+  verification_id: 'verification_id',
   government_entity: 'government_entity',
   salary_per_month: 'salary_per_month',
   loan_unit: 'loan_unit',
@@ -251,7 +252,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   cancelledAt: 'cancelledAt',
   updatedAt: 'updatedAt',
   couponId: 'couponId',
-  discount: 'discount'
+  discount: 'discount',
+  order_confirmation_otp: 'order_confirmation_otp'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
@@ -425,6 +427,7 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   phone: 'phone',
   level: 'level',
   employee_id: 'employee_id',
+  verification_id: 'verification_id',
   government_entity: 'government_entity',
   password: 'password',
   profile_image: 'profile_image'

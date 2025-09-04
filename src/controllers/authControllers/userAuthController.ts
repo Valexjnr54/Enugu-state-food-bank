@@ -27,6 +27,7 @@ export async function registerUser(request: Request, response: Response) {
             phone,
             level,
             employee_id,
+            verification_id,
             government_entity,
             salary_per_month,
             password
@@ -60,6 +61,7 @@ export async function registerUser(request: Request, response: Response) {
                 level,
                 phone,
                 employee_id,
+                verification_id,
                 government_entity,
                 salary_per_month: parseFloat(salary_per_month),
                 loan_unit,
@@ -98,6 +100,7 @@ export async function initiateLogin(request: Request, response: Response) {
                 OR: [
                     { email: identifier },
                     { employee_id: identifier },
+                    {verification_id: identifier},
                     { phone: identifier }
                 ],
             },

@@ -119,6 +119,7 @@ model User {
   phone                   String           @unique
   level                   String
   employee_id             String           @unique
+  verification_id         String           @unique
   government_entity       String
   salary_per_month        Float
   loan_unit               Float
@@ -158,27 +159,28 @@ model Address {
 }
 
 model Order {
-  id              String          @id @default(uuid())
-  userId          String
-  addressId       String
-  totalAmount     Float
-  currency        String          @default("NGN")
-  paymentStatus   PaymentStatus   @default(PENDING)
-  orderStatus     OrderStatus     @default(PENDING)
-  trackingCode    String?         @unique
-  placedAt        DateTime        @default(now())
-  deliveredAt     DateTime?
-  cancelledAt     DateTime?
-  updatedAt       DateTime        @updatedAt
-  couponId        String?
-  discount        Float           @default(0)
-  address         Address         @relation(fields: [addressId], references: [id])
-  coupon          Coupon?         @relation(fields: [couponId], references: [id])
-  user            User            @relation(fields: [userId], references: [id])
-  items           OrderItem[]
-  order_note      OrderNote[]
-  trackingUpdates OrderTracking[]
-  payment         Payment?
+  id                     String          @id @default(uuid())
+  userId                 String
+  addressId              String
+  totalAmount            Float
+  currency               String          @default("NGN")
+  paymentStatus          PaymentStatus   @default(PENDING)
+  orderStatus            OrderStatus     @default(PENDING)
+  trackingCode           String?         @unique
+  placedAt               DateTime        @default(now())
+  deliveredAt            DateTime?
+  cancelledAt            DateTime?
+  updatedAt              DateTime        @updatedAt
+  couponId               String?
+  discount               Float           @default(0)
+  order_confirmation_otp Int?
+  address                Address         @relation(fields: [addressId], references: [id])
+  coupon                 Coupon?         @relation(fields: [couponId], references: [id])
+  user                   User            @relation(fields: [userId], references: [id])
+  items                  OrderItem[]
+  order_note             OrderNote[]
+  trackingUpdates        OrderTracking[]
+  payment                Payment?
 
   @@index([addressId], map: "Order_addressId_fkey")
   @@index([couponId], map: "Order_couponId_fkey")

@@ -12,6 +12,7 @@ export const validateUser = [
     .isMobilePhone("any").withMessage("Invalid phone number"),
   body("level").notEmpty().withMessage("Level is required"),
   body("employee_id").notEmpty().withMessage("Employee ID is required"),
+  body("verification_id").notEmpty().withMessage("Verification Number is required"),
   body("government_entity").notEmpty().withMessage("Government entity is required"),
   body("salary_per_month")
     .notEmpty().withMessage("Salary is required")
