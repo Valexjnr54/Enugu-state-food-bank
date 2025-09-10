@@ -25,6 +25,20 @@ model admin {
   order_note    OrderNote[]
 }
 
+model fulfillment_officers {
+  id            Int         @id @default(autoincrement())
+  firstname     String
+  lastname      String
+  email         String      @unique
+  username      String      @unique
+  role          Role        @default(fulfillment_officer)
+  profile_image String?
+  password      String
+  is_temp_password Boolean @default(true)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+}
+
 model Product {
   id            String           @id @default(uuid())
   name          String
@@ -332,6 +346,7 @@ enum Unit {
 enum Role {
   super_admin
   user
+  fulfillment_officer
 }
 
 enum PaymentStatus {

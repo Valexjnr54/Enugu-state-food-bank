@@ -25,6 +25,20 @@ model admin {
   order_note    OrderNote[]
 }
 
+model fulfillment_officers {
+  id               Int      @id @default(autoincrement())
+  firstname        String
+  lastname         String
+  email            String   @unique
+  username         String   @unique
+  role             Role     @default(fulfillment_officer)
+  profile_image    String?
+  password         String
+  is_temp_password Boolean  @default(true)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+}
+
 model Product {
   id            String           @id @default(uuid())
   name          String
@@ -138,6 +152,7 @@ model User {
   orders                  Order[]
   wishlist                WishlistItem[]
   compliance_form         ComplianceForm[]
+  order_feedback          OrderFeedback[]
 }
 
 model Address {
@@ -180,6 +195,7 @@ model Order {
   items                  OrderItem[]
   order_note             OrderNote[]
   trackingUpdates        OrderTracking[]
+  order_feedback         OrderFeedback[]
   payment                Payment?
 
   @@index([addressId], map: "Order_addressId_fkey")
@@ -228,6 +244,16 @@ model OrderNote {
 
   @@index([adminId], map: "OrderNote_adminId_fkey")
   @@index([orderId], map: "OrderNote_orderId_fkey")
+}
+
+model OrderFeedback {
+  id        String   @id @default(uuid())
+  orderId   String
+  userId    String
+  note      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
 }
 
 model Coupon {
@@ -320,6 +346,7 @@ enum Unit {
 enum Role {
   super_admin
   user
+  fulfillment_officer
 }
 
 enum PaymentStatus {

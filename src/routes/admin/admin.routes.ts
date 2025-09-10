@@ -12,6 +12,7 @@ import { uploadCSV } from "../../middlewares/uploadCSVMiddleware";
 import { addNote, addTrackingUpdate, all_order, deleteNote, getNotes, getOrderTrackingHistory, single_order } from "../../controllers/adminController/order.controller";
 import { exportUsersWithLoansAsCsv } from "../../controllers/adminController/repayment.list.controller";
 import { approve_deny_compliance, get_all_compliance, get_compliance } from "../../controllers/adminController/compliance.comtroller";
+import { createOfficer } from "../../controllers/adminController/fulfillment.officer.controller";
 
 export const adminRouter = express.Router();
 
@@ -89,3 +90,11 @@ adminRouter.get('/all-compliance', get_all_compliance)
 adminRouter.put('/approve-deny-compliance', approve_deny_compliance)
 adminRouter.get('/get-compliance', get_compliance)
 // Compliance Route Ends
+
+//Fulfillment Route Start
+adminRouter.get('/fulfillment-officers', getAllUser);
+adminRouter.get('/fulfillment-officer', getSingleUser);
+adminRouter.post('/create-fulfillment-officer', createOfficer)
+adminRouter.put('/update-fulfillment-officer', updateUser);
+adminRouter.delete('/delete-fulfillment-officer',deleteUser);
+//Fulfillment Route End

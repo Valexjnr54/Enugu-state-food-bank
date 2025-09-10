@@ -4,6 +4,7 @@ import * as ProductService from '../../services/adminServices/product.service';
 import { singleOrder, singleOrderByUser } from "../../services/userServices/order.service";
 import { generateOtp, verifyOrderStoredOtp } from "../../utils/otpHandler";
 import { sendSMS } from "../../utils/sendSMS";
+import QRCode from 'qrcode';
 
 const prisma = new PrismaClient;
 
@@ -148,4 +149,35 @@ export async function confirm_delivery_order(request: Request, response: Respons
         message: error.message || "Unexpected error",
         });
     }
+}
+
+export async function generateQr(request: Request, response: Response): Promise<void> {
+    const id: string = request.query.order_id as string;
+
+  try {
+    const single_order = await singleOrder(id)
+    /* 3. render PNG ------------------------------------------------- */
+    const url = `https://enugu-state-food-bank.onrender.com/api/v1/generate-qr-code?order_id=${id}`
+    const pngBuffer = await QRCode.toBuffer(url, {
+      type: 'png',
+      width: 300,
+      margin: 2,
+      color: { dark: '#000', light: '#FFF' },
+    });
+
+    /* 4. return image ----------------------------------------------- */
+    response.setHeader('Content-Type', 'image/png');
+    response.setHeader('Content-Disposition', `inline; filename="qr-${single_order}.png"`);
+    response.send(pngBuffer);
+  } catch (error: any) {
+    /* duplicate payload → return existing QR */
+    if (error.code === 'P2002') {
+      const existing = await singleOrder(id)
+      const url = `https://enugu-state-food-bank.onrender.com/api/v1/generate-qr-code?order_id=${id}`
+      const png = await QRCode.toBuffer(url, { type: 'png', width: 300 });
+      response.setHeader('Content-Type', 'image/png');
+      response.send(png);
+    }
+    response.status(500).json({ error: 'QR generation failed' });
+  }
 }

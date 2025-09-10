@@ -138,6 +138,20 @@ exports.Prisma.RelationLoadStrategy = {
   join: 'join'
 };
 
+exports.Prisma.Fulfillment_officersScalarFieldEnum = {
+  id: 'id',
+  firstname: 'firstname',
+  lastname: 'lastname',
+  email: 'email',
+  username: 'username',
+  role: 'role',
+  profile_image: 'profile_image',
+  password: 'password',
+  is_temp_password: 'is_temp_password',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -284,6 +298,14 @@ exports.Prisma.OrderNoteScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OrderFeedbackScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  userId: 'userId',
+  note: 'note',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CouponScalarFieldEnum = {
   id: 'id',
   code: 'code',
@@ -357,6 +379,15 @@ exports.Prisma.NullsOrder = {
 };
 
 exports.Prisma.adminOrderByRelevanceFieldEnum = {
+  firstname: 'firstname',
+  lastname: 'lastname',
+  email: 'email',
+  username: 'username',
+  profile_image: 'profile_image',
+  password: 'password'
+};
+
+exports.Prisma.fulfillment_officersOrderByRelevanceFieldEnum = {
   firstname: 'firstname',
   lastname: 'lastname',
   email: 'email',
@@ -474,6 +505,13 @@ exports.Prisma.OrderNoteOrderByRelevanceFieldEnum = {
   note: 'note'
 };
 
+exports.Prisma.OrderFeedbackOrderByRelevanceFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  userId: 'userId',
+  note: 'note'
+};
+
 exports.Prisma.CouponOrderByRelevanceFieldEnum = {
   id: 'id',
   code: 'code',
@@ -509,7 +547,8 @@ exports.Prisma.ComplianceFormOrderByRelevanceFieldEnum = {
 };
 exports.Role = exports.$Enums.Role = {
   super_admin: 'super_admin',
-  user: 'user'
+  user: 'user',
+  fulfillment_officer: 'fulfillment_officer'
 };
 
 exports.Unit = exports.$Enums.Unit = {
@@ -554,6 +593,7 @@ exports.DiscountType = exports.$Enums.DiscountType = {
 
 exports.Prisma.ModelName = {
   admin: 'admin',
+  fulfillment_officers: 'fulfillment_officers',
   Product: 'Product',
   ProductVariant: 'ProductVariant',
   Inventory: 'Inventory',
@@ -565,6 +605,7 @@ exports.Prisma.ModelName = {
   OrderItem: 'OrderItem',
   OrderTracking: 'OrderTracking',
   OrderNote: 'OrderNote',
+  OrderFeedback: 'OrderFeedback',
   Coupon: 'Coupon',
   Payment: 'Payment',
   CartItem: 'CartItem',
