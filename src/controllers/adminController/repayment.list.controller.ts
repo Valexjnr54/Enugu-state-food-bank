@@ -24,6 +24,7 @@ export async function exportUsersWithLoansAsCsv(request: Request, response: Resp
                 phone: true,
                 level: true,
                 employee_id: true,
+                verification_id: true,
                 government_entity: true,
                 salary_per_month: true,
                 loan_unit: true,
@@ -39,43 +40,61 @@ export async function exportUsersWithLoansAsCsv(request: Request, response: Resp
             return response.status(404).json({ message: 'No users with loan amounts collected found' });
         }
 
+        // Static values
+        const deductionName = "EN-FOOD SCHEME";
+        const valueType = 2;
+        const durationType = 1;
+
+        // Dates
+        const startDate = new Date();
+        const endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 5);
+
+        // Format as YYYY-MM-DD
+        const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
         // Set headers for CSV download
         response.setHeader('Content-Type', 'text/csv');
         response.setHeader('Content-Disposition', 'attachment; filename=users_with_loans.csv');
 
         // Define CSV columns
         const columns = {
-            firstname: 'First Name',
-            lastname: 'Last Name',
-            email: 'Email',
-            phone: 'Phone',
-            level: 'Level',
-            employee_id: 'Employee ID',
-            government_entity: 'Government Entity',
-            salary_per_month: 'Salary Per Month',
-            loan_unit: 'Loan Unit',
-            loan_amount_collected: 'Loan Amount Collected',
+            verification_id: 'PSN',
+            deductionName: 'DeductionName',
+            valueType: 'ValueType',
+            loan_amount_collected: 'Amount',
+            durationType: 'DurationType',
+            startDate: 'StartDate',
+            endDate: 'EndDate'
         };
 
         // Create CSV stringifier
         const stringifier = stringify({
             header: true,
-            columns: columns
+            columns
         });
+
+        // Add constants + dates into each row
+        const rows = users.map(user => ({
+            verification_id: user.verification_id,
+            deductionName,
+            valueType,
+            loan_amount_collected: user.loan_amount_collected,
+            durationType,
+            startDate: formatDate(startDate),
+            endDate: formatDate(endDate)
+        }));
 
         // Pipe the data through the stringifier to the response
         await pipelineAsync(
-            users.map(user => ({
-                ...user,
-                createdAt: user.createdAt.toISOString()
-            })),
+            rows,
             stringifier,
             response
         );
 
     } catch (error) {
         console.error('Error exporting users with loans:', error);
-        response.status(500).json({ message: 'Failed to export users with loans', error: error });
+        response.status(500).json({ message: 'Failed to export users with loans', error });
     } finally {
         await prisma.$disconnect();
     }
