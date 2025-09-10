@@ -157,7 +157,7 @@ export async function generateQr(request: Request, response: Response): Promise<
   try {
     const single_order = await singleOrder(id)
     /* 3. render PNG ------------------------------------------------- */
-    const url = `https://enugu-state-food-bank.onrender.com/api/v1/generate-qr-code?order_id=${id}`
+    const url = `https://enugu-state-food-bank.onrender.com/api/v1/delivery_order?order_id=${id}`
     const pngBuffer = await QRCode.toBuffer(url, {
       type: 'png',
       width: 300,
@@ -173,7 +173,7 @@ export async function generateQr(request: Request, response: Response): Promise<
     /* duplicate payload → return existing QR */
     if (error.code === 'P2002') {
       const existing = await singleOrder(id)
-      const url = `https://enugu-state-food-bank.onrender.com/api/v1/generate-qr-code?order_id=${id}`
+      const url = `https://enugu-state-food-bank.onrender.com/api/v1/delivery_order?order_id=${id}`
       const png = await QRCode.toBuffer(url, { type: 'png', width: 300 });
       response.setHeader('Content-Type', 'image/png');
       response.send(png);
