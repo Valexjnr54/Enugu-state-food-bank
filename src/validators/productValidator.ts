@@ -31,7 +31,7 @@ export const validateProduct = [
 
   body("unit")
     .optional()
-    .isIn(["PIECE", "KG", "LITRE", "PACK", "SET"]) // Adjust to match your enum
+    .isIn(["KG","GRAM","LITER","ML","PIECE","PACK","BOTTLE","CAN","JAR","BOX","BAG", "PAINTER"]) // Adjust to match your enum
     .withMessage("Invalid unit type."),
 
   body("packageType")
