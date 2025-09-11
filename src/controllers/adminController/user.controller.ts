@@ -56,6 +56,7 @@ export async function createUser(request: Request, response: Response) {
             phone,
             level,
             employee_id,
+            verification_id,
             government_entity,
             salary_per_month,
         } = request.body;
@@ -71,6 +72,7 @@ export async function createUser(request: Request, response: Response) {
             phone,
             level,
             employee_id,
+            verification_id,
             government_entity,
             salary_per_month,
             loan_unit
