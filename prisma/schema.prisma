@@ -42,7 +42,7 @@ model fulfillment_officers {
 model Product {
   id            String           @id @default(uuid())
   name          String
-  description   String?
+  description   String?          @db.Text
   slug          String           @unique
   brand         String?
   product_image String?
@@ -237,7 +237,7 @@ model OrderNote {
   id        String   @id @default(uuid())
   orderId   String
   adminId   Int?
-  note      String
+  note      String   @db.Text
   createdAt DateTime @default(now())
   admin     admin?   @relation(fields: [adminId], references: [id])
   order     Order    @relation(fields: [orderId], references: [id])
@@ -250,7 +250,7 @@ model OrderFeedback {
   id        String   @id @default(uuid())
   orderId   String
   userId   String
-  note      String
+  note      String   @db.Text
   createdAt DateTime @default(now())
   user      User            @relation(fields: [userId], references: [id])
   order     Order    @relation(fields: [orderId], references: [id])
@@ -341,6 +341,10 @@ enum Unit {
   PACK
   BOTTLE
   CAN
+  JAR
+  BOX
+  BAG
+  PAINTER
 }
 
 enum Role {

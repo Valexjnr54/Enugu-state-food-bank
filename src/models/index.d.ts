@@ -121,7 +121,11 @@ export namespace $Enums {
   PIECE: 'PIECE',
   PACK: 'PACK',
   BOTTLE: 'BOTTLE',
-  CAN: 'CAN'
+  CAN: 'CAN',
+  JAR: 'JAR',
+  BOX: 'BOX',
+  BAG: 'BAG',
+  PAINTER: 'PAINTER'
 };
 
 export type Unit = (typeof Unit)[keyof typeof Unit]

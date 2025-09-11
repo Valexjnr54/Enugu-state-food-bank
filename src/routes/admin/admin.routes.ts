@@ -16,7 +16,7 @@ import { createOfficer } from "../../controllers/adminController/fulfillment.off
 
 export const adminRouter = express.Router();
 
-adminRouter.use(authenticateJWT, adminOnly);
+// adminRouter.use(authenticateJWT, adminOnly);
 
 //Product Route Start
 adminRouter.get('/products', getAllProduct);

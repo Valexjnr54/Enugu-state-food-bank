@@ -559,7 +559,11 @@ exports.Unit = exports.$Enums.Unit = {
   PIECE: 'PIECE',
   PACK: 'PACK',
   BOTTLE: 'BOTTLE',
-  CAN: 'CAN'
+  CAN: 'CAN',
+  JAR: 'JAR',
+  BOX: 'BOX',
+  BAG: 'BAG',
+  PAINTER: 'PAINTER'
 };
 
 exports.Status = exports.$Enums.Status = {
