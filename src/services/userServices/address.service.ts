@@ -3,7 +3,7 @@ import { handlePrismaError } from '../../utils/handlePrismaErrors';
 const prisma = new PrismaClient();
 
 export const getAllByUser = async (id: string) => {
-  return prisma.address.findMany({ include: {user: true} });
+  return prisma.address.findMany({ where: {userId:id},include: {user: true} });
 };
 
 export const getOne = async (id: string) => {

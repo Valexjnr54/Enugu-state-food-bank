@@ -103,6 +103,9 @@ export async function confirm_user(request: Request, response: Response) {
 
         const updated_order= await prisma.order.update({ where: { id: order_id, userId: user_id }, data:{ order_confirmation_otp:  parseInt(otp, 10) }});
         const message = `Your Food Bank one-time password (OTP) is: ${otp}. Please provide this code to the dispatch rider upon delivery to confirm your order. The code expires in 10 minutes. Do not share it with anyone else.`;
+        if (!order.user.phone) {
+            return response.status(400).json({ status: "error", message: "User phone number is missing" });
+        }
         await sendSMS(order.user.phone, message);
 
         return response.status(200).json({message: 'Order User Confirmed', nextStep: 'confirm_order', data: updated_order });

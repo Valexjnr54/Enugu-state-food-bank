@@ -130,7 +130,7 @@ model User {
   firstname             String
   lastname              String
   email                 String?        @unique
-  phone                 String         @unique
+  phone                 String?         @unique
   level                 String
   employee_id           String         @unique
   verification_id       String        @unique

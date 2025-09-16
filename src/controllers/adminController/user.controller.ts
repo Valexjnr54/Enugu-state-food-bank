@@ -184,7 +184,74 @@ const runValidation = async (data: any, validations: ValidationChain[]) => {
   return result;
 };
 
-export async function uploadUsersFromCSV(request: Request, response: Response){
+// export async function uploadUsersFromCSV(request: Request, response: Response){
+//     if (!request.file) {
+//         return response.status(400).json({ error: "CSV file is required" });
+//     }
+
+//     const results: any[] = [];
+//     const errors: any[] = [];
+
+//     const content = request.file.buffer.toString("utf-8");
+//     const rows = content.split("\n").map((line) => line.trim()).filter(Boolean);
+//     const headers = rows[0].split(",").map((h) => h.trim());
+
+//     const percent = 30/100
+
+//     for (let i = 1; i < rows.length; i++) {
+//         const values = rows[i].split(",").map((v) => v.trim());
+//         const rowData: any = {};
+
+//         headers.forEach((header, index) => {
+//             rowData[header] = values[index];
+//         });
+
+//         // Set email to null if empty
+//         if (!rowData.email || rowData.email === "") {
+//             rowData.email = null;
+//         }
+
+//         // Convert float fields
+//         rowData.salary_per_month = parseFloat(rowData.salary_per_month);
+        
+//         const loan_unit  = (percent * parseFloat(rowData.salary_per_month));
+        
+//         // // Run validation on this row
+//         const result = await runValidation(rowData, validateUser);
+
+//         if (!result.isEmpty()) {
+//             errors.push({
+//                 row: i + 1,
+//                 errors: result.array(),
+//         });
+//             continue;
+//         }
+
+//         try {
+//             const userData = {
+//                 ...rowData,
+//                 loan_unit,
+//             };
+
+//             const savedUser = await UserService.create(userData);
+//             results.push(savedUser);
+//         } catch (err: any) {
+//             if (err instanceof PrismaClientKnownRequestError) {
+//                 errors.push({ row: i + 1, message: err.message });
+//             } else {
+//                 errors.push({ row: i + 1, message: "Unknown error" });
+//             }
+//         }
+//     }
+
+//     return response.status(201).json({
+//         message: `${results.length} user(s) uploaded successfully.`,
+//         success: results,
+//         failed: errors,
+//     });
+// }
+
+export async function uploadUsersFromCSV(request: Request, response: Response) {
     if (!request.file) {
         return response.status(400).json({ error: "CSV file is required" });
     }
@@ -196,7 +263,11 @@ export async function uploadUsersFromCSV(request: Request, response: Response){
     const rows = content.split("\n").map((line) => line.trim()).filter(Boolean);
     const headers = rows[0].split(",").map((h) => h.trim());
 
-    const percent = 30/100
+    const percent = 30 / 100;
+
+    // Use batch size for large uploads
+    const BATCH_SIZE = 100;
+    let batch: any[] = [];
 
     for (let i = 1; i < rows.length; i++) {
         const values = rows[i].split(",").map((v) => v.trim());
@@ -213,39 +284,68 @@ export async function uploadUsersFromCSV(request: Request, response: Response){
 
         // Convert float fields
         rowData.salary_per_month = parseFloat(rowData.salary_per_month);
-        
-        const loan_unit  = (percent * parseFloat(rowData.salary_per_month));
-        
-        // // Run validation on this row
+
+        const loan_unit = percent * rowData.salary_per_month;
+
+        // Run validation on this row
         const result = await runValidation(rowData, validateUser);
 
         if (!result.isEmpty()) {
             errors.push({
                 row: i + 1,
                 errors: result.array(),
-        });
+            });
             continue;
         }
 
-        try {
-            const userData = {
-                ...rowData,
-                loan_unit,
-            };
+        batch.push({ ...rowData, loan_unit });
 
-            const savedUser = await UserService.create(userData);
-            results.push(savedUser);
-        } catch (err: any) {
-            if (err instanceof PrismaClientKnownRequestError) {
-                errors.push({ row: i + 1, message: err.message });
-            } else {
-                errors.push({ row: i + 1, message: "Unknown error" });
-            }
+        // Process batch if batch size reached or last row
+        if (batch.length === BATCH_SIZE || i === rows.length - 1) {
+            // Use Promise.allSettled for concurrency
+            const batchResults = await Promise.allSettled(
+                batch.map(async (userData) => {
+                    try {
+                        // Check for existing user by verification_id
+                        const existingUser = await prisma.user.findUnique({
+                            where: { verification_id: userData.verification_id },
+                        });
+
+                        if (existingUser) {
+                            if (existingUser.loan_amount_collected > 0) {
+                                // Skip if loan_amount_collected > 0
+                                return { skipped: true, verification_id: userData.verification_id };
+                            } else {
+                                // Update if loan_amount_collected == 0
+                                const updated = await prisma.user.update({
+                                    where: { verification_id: userData.verification_id },
+                                    data: userData,
+                                });
+                                results.push(updated);
+                                return { updated: true, verification_id: userData.verification_id };
+                            }
+                        } else {
+                            // Create new user
+                            const savedUser = await UserService.create(userData);
+                            results.push(savedUser);
+                            return { created: true, verification_id: userData.verification_id };
+                        }
+                    } catch (err: any) {
+                        if (err instanceof PrismaClientKnownRequestError) {
+                            errors.push({ row: i + 1, message: err.message });
+                        } else {
+                            errors.push({ row: i + 1, message: "Unknown error" });
+                        }
+                        return { error: true, verification_id: userData.verification_id };
+                    }
+                })
+            );
+            batch = [];
         }
     }
 
     return response.status(201).json({
-        message: `${results.length} user(s) uploaded successfully.`,
+        message: `${results.length} user(s) uploaded/updated successfully.`,
         success: results,
         failed: errors,
     });

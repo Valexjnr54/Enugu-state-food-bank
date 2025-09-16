@@ -10584,7 +10584,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email: string | null
-    phone: string
+    phone: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -10705,7 +10705,7 @@ export namespace Prisma {
       firstname: string
       lastname: string
       email: string | null
-      phone: string
+      phone: string | null
       level: string
       employee_id: string
       verification_id: string
@@ -24254,7 +24254,7 @@ export namespace Prisma {
     firstname?: StringFilter<"User"> | string
     lastname?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
-    phone?: StringFilter<"User"> | string
+    phone?: StringNullableFilter<"User"> | string | null
     level?: StringFilter<"User"> | string
     employee_id?: StringFilter<"User"> | string
     verification_id?: StringFilter<"User"> | string
@@ -24284,7 +24284,7 @@ export namespace Prisma {
     firstname?: SortOrder
     lastname?: SortOrder
     email?: SortOrderInput | SortOrder
-    phone?: SortOrder
+    phone?: SortOrderInput | SortOrder
     level?: SortOrder
     employee_id?: SortOrder
     verification_id?: SortOrder
@@ -24348,7 +24348,7 @@ export namespace Prisma {
     firstname?: SortOrder
     lastname?: SortOrder
     email?: SortOrderInput | SortOrder
-    phone?: SortOrder
+    phone?: SortOrderInput | SortOrder
     level?: SortOrder
     employee_id?: SortOrder
     verification_id?: SortOrder
@@ -24380,7 +24380,7 @@ export namespace Prisma {
     firstname?: StringWithAggregatesFilter<"User"> | string
     lastname?: StringWithAggregatesFilter<"User"> | string
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
-    phone?: StringWithAggregatesFilter<"User"> | string
+    phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     level?: StringWithAggregatesFilter<"User"> | string
     employee_id?: StringWithAggregatesFilter<"User"> | string
     verification_id?: StringWithAggregatesFilter<"User"> | string
@@ -25925,7 +25925,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -25955,7 +25955,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -25985,7 +25985,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -26015,7 +26015,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -26045,7 +26045,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -26069,7 +26069,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -26093,7 +26093,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -31760,7 +31760,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -31789,7 +31789,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -31888,7 +31888,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -31917,7 +31917,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -32034,7 +32034,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -32063,7 +32063,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -32325,7 +32325,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -32354,7 +32354,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -33068,7 +33068,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -33097,7 +33097,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -33191,7 +33191,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -33220,7 +33220,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -33529,7 +33529,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -33558,7 +33558,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -33701,7 +33701,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -33730,7 +33730,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -33857,7 +33857,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -33886,7 +33886,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -34029,7 +34029,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -34058,7 +34058,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -34134,7 +34134,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -34163,7 +34163,7 @@ export namespace Prisma {
     firstname: string
     lastname: string
     email?: string | null
-    phone: string
+    phone?: string | null
     level: string
     employee_id: string
     verification_id: string
@@ -34208,7 +34208,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string
@@ -34237,7 +34237,7 @@ export namespace Prisma {
     firstname?: StringFieldUpdateOperationsInput | string
     lastname?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
     employee_id?: StringFieldUpdateOperationsInput | string
     verification_id?: StringFieldUpdateOperationsInput | string

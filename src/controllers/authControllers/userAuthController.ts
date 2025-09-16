@@ -189,7 +189,14 @@ export async function setPassword(request: Request, response: Response) {
         // console.log(user.phone);
         
         await storeOtp(user.id, otp);
-        await sendSMS(user.phone, message);
+        if (user.phone) {
+            await sendSMS(user.phone, message);
+        } else {
+            return response.status(400).json({
+                error: 'Missing phone number',
+                message: 'User does not have a phone number on record'
+            });
+        }
 
         return response.status(200).json({
             nextStep: 'verify_otp',
@@ -238,7 +245,14 @@ export async function verifyPassword(request: Request, response: Response) {
         const otp = await generateOtp();
         const message = `Your Food Bank one-time password is: ${otp}. It expires in 10 minutes. Do not share this code with anyone.`;
         await storeOtp(user.id, otp);
-        await sendSMS(user.phone, message)
+        if (user.phone) {
+            await sendSMS(user.phone, message);
+        } else {
+            return response.status(400).json({
+                error: 'Missing phone number',
+                message: 'User does not have a phone number on record'
+            });
+        }
 
         return response.status(200).json({
             nextStep: 'verify_otp',
@@ -313,7 +327,14 @@ export async function resendOtp(request: Request, response: Response) {
          const otp = user.otp;
 
         const message = `Your Food Bank one-time password is: ${otp}. It expires in 10 minutes. Do not share this code with anyone.`;
-        await sendSMS(user.phone, message)
+        if (user.phone) {
+            await sendSMS(user.phone, message);
+        } else {
+            return response.status(400).json({
+                error: 'Missing phone number',
+                message: 'User does not have a phone number on record'
+            });
+        }
 
         return response.status(200).json({
             nextStep: 'verify_otp',

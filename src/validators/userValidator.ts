@@ -8,7 +8,7 @@ export const validateUser = [
   .isEmail().withMessage("Invalid email address"),
 
   body("phone")
-    .notEmpty().withMessage("Phone number is required")
+    .optional({ nullable: true, checkFalsy: true }) // accept null, "", or undefined
     .isMobilePhone("any").withMessage("Invalid phone number"),
   body("level").notEmpty().withMessage("Level is required"),
   body("employee_id").notEmpty().withMessage("Employee ID is required"),
