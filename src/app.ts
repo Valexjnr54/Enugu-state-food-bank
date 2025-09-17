@@ -39,7 +39,7 @@ app.use(`${route}/auth`, fulfillmentAuthRouter)
 
 app.use(`${route}/admin`, adminRouter);
 app.use(`${route}/user`,userRouter);
-app.use(`${route}/fulfillment-officer`, fulfillmentRouter)
+app.use(`${route}/agent`, fulfillmentRouter)
 
 app.use(`${route}`,miscRouter)
 

@@ -113,6 +113,14 @@ export async function initiateLogin(request: Request, response: Response) {
             });
         }
 
+        if(!user.phone){
+            return response.status(200).json({
+                nextStep: 'set_phone_number',
+                message: 'User must set a new phone number',
+                userId: user.id
+            });
+        }
+
         if (!user.password) {
             return response.status(200).json({
                 nextStep: 'set_password',
@@ -201,6 +209,54 @@ export async function setPassword(request: Request, response: Response) {
         return response.status(200).json({
             nextStep: 'verify_otp',
             message: 'OTP has been sent to your phone',
+            userId: user.id
+        });
+
+    } catch (error) {
+        console.error('Set password error:', error);
+        return response.status(500).json({
+            error: 'Internal Server Error',
+            message: 'Could not set password'
+        });
+    }
+}
+
+export async function setPhoneNumber(request: Request, response: Response) {
+    const { userId, phone_number } = request.body;
+
+    if (!userId || !phone_number) {
+        return response.status(400).json({
+            error: 'Missing fields',
+            message: 'userId and phone number are required'
+        });
+    }
+
+    try {
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+
+        if (!user) {
+            return response.status(404).json({
+                error: 'User Not Found',
+                message: 'No user found with the provided ID'
+            });
+        }
+
+        await prisma.user.update({
+            where: { id: userId },
+            data: { phone: phone_number }
+        });
+
+        if (!user.password) {
+            return response.status(200).json({
+                nextStep: 'set_password',
+                message: 'User must set a new password',
+                userId: user.id
+            });
+        }
+
+        return response.status(200).json({
+            nextStep: 'verify_password',
+            message: 'User must verify password',
             userId: user.id
         });
 
