@@ -10,6 +10,8 @@ import { userRouter } from "./routes/user/user.routes";
 import { miscRouter } from "./routes/misc/misc.routes";
 import { fulfillmentRouter } from "./routes/fulfillment/fulfillment.routes";
 import { fulfillmentAuthRouter } from "./routes/auth/fulfillmentAuthRoutes";
+import { cashierAuthRouter } from "./routes/auth/cashierAuthRoutes";
+import { cashierRouter } from "./routes/cashier/cashier.routes";
 
 const app = express();
 
@@ -35,11 +37,13 @@ app.get(`${route}`, (_request: Request, response: Response) => {
 
 app.use(`${route}/auth`, adminAuthRouter);
 app.use(`${route}/auth`, userAuthRouter);
-app.use(`${route}/auth`, fulfillmentAuthRouter)
+app.use(`${route}/auth`, fulfillmentAuthRouter);
+app.use(`${route}/auth`, cashierAuthRouter);
 
 app.use(`${route}/admin`, adminRouter);
 app.use(`${route}/user`,userRouter);
-app.use(`${route}/agent`, fulfillmentRouter)
+app.use(`${route}/agent`, fulfillmentRouter);
+app.use(`${route}/cashier`, cashierRouter);
 
 app.use(`${route}`,miscRouter)
 

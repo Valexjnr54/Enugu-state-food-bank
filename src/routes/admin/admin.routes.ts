@@ -11,8 +11,9 @@ import { createUser, deleteUser, downloadUserTemplate, getAllUser, getSingleUser
 import { uploadCSV } from "../../middlewares/uploadCSVMiddleware";
 import { addNote, addTrackingUpdate, all_order, deleteNote, getNotes, getOrderTrackingHistory, single_order } from "../../controllers/adminController/order.controller";
 import { exportUsersWithLoansAsCsv } from "../../controllers/adminController/repayment.list.controller";
-import { approve_deny_compliance, get_all_compliance, get_compliance } from "../../controllers/adminController/compliance.comtroller";
-import { createOfficer } from "../../controllers/adminController/fulfillment.officer.controller";
+import { approve_deny_compliance, get_all_compliance, get_compliance } from "../../controllers/adminController/compliance.controller";
+import { createOfficer, deleteOfficer, getAllOfficer, getSingleOfficer, updateOfficer } from "../../controllers/adminController/fulfillment.officer.controller";
+import { createCashier, deleteCashier, getAllCashier, getSingleCashier, updateCashier } from "../../controllers/adminController/cashier.controller";
 
 export const adminRouter = express.Router();
 
@@ -92,9 +93,17 @@ adminRouter.get('/get-compliance', get_compliance)
 // Compliance Route Ends
 
 //Fulfillment Route Start
-adminRouter.get('/fulfillment-officers', getAllUser);
-adminRouter.get('/fulfillment-officer', getSingleUser);
+adminRouter.get('/fulfillment-officers', getAllOfficer);
+adminRouter.get('/fulfillment-officer', getSingleOfficer);
 adminRouter.post('/create-fulfillment-officer', createOfficer)
-adminRouter.put('/update-fulfillment-officer', updateUser);
-adminRouter.delete('/delete-fulfillment-officer',deleteUser);
+adminRouter.put('/update-fulfillment-officer', updateOfficer);
+adminRouter.delete('/delete-fulfillment-officer',deleteOfficer);
+//Fulfillment Route End
+
+//Fulfillment Route Start
+adminRouter.get('/cashiers', getAllCashier);
+adminRouter.get('/cashier', getSingleCashier);
+adminRouter.post('/create-cashier', createCashier)
+adminRouter.put('/update-cashier', updateCashier);
+adminRouter.delete('/delete-cashier',deleteCashier);
 //Fulfillment Route End

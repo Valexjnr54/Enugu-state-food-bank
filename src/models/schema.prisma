@@ -176,7 +176,7 @@ model Address {
 model Order {
   id                     String          @id @default(uuid())
   userId                 String
-  addressId              String
+  addressId              String?
   totalAmount            Float
   currency               String          @default("NGN")
   paymentStatus          PaymentStatus   @default(PENDING)
@@ -189,7 +189,7 @@ model Order {
   couponId               String?
   discount               Float           @default(0)
   order_confirmation_otp Int?
-  address                Address         @relation(fields: [addressId], references: [id])
+  address                Address?        @relation(fields: [addressId], references: [id])
   coupon                 Coupon?         @relation(fields: [couponId], references: [id])
   user                   User            @relation(fields: [userId], references: [id])
   items                  OrderItem[]
@@ -332,6 +332,19 @@ model ComplianceForm {
   @@map("compliance_forms")
 }
 
+model cashier {
+  id            Int      @id @default(autoincrement())
+  firstname     String
+  lastname      String
+  email         String   @unique
+  username      String   @unique
+  role          Role     @default(cashier)
+  profile_image String?
+  password      String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
 enum Unit {
   KG
   GRAM
@@ -351,6 +364,7 @@ enum Role {
   super_admin
   user
   fulfillment_officer
+  cashier
 }
 
 enum PaymentStatus {

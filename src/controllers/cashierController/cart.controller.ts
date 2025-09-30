@@ -16,8 +16,7 @@ function validateProductOrVariant(productId?: string, variantId?: string) {
 
 // POST /cart
 export async function addToCart(request: Request, response: Response) {
-  const { productId, variantId, quantity = 1, paymentMethod = "loan" } = request.body;
-  const userId = request.user.user.id;
+  const { productId, variantId, quantity = 1, paymentMethod = "loan", userId } = request.body;
 
   if(productId === "" || variantId === ""){
     const productId = null
@@ -30,7 +29,7 @@ export async function addToCart(request: Request, response: Response) {
     const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
 
     if(user.status == "PENDING"){
-      return response.status(400).json({status:"error", message: 'Your Account is still pending\n\n, To finalize your registration, please ensure you have completed and submitted all necessary consent documentation. If you have already done so, please note that our team is processing your submission and will notify you promptly upon verification.' }); 
+      return response.status(400).json({status:"error", message: 'Your Account is still pending\n\n, To finalize your registration, please ensure you have completed and submitted all necessary compliance documentation. If you have already done so, please note that our team is processing your submission and will notify you promptly upon verification.' }); 
     }
 
     if(user.status == "SUSPENDED"){
@@ -93,8 +92,10 @@ export async function addToCart(request: Request, response: Response) {
 // PUT /cart/:id
 export async function updateCartItem(request: Request, response: Response) {
   const cartItemId = request.params.id;
-  const { quantity, paymentMethod = "loan" } = request.body;
-  const userId = request.user.user.id;
+  const { quantity, paymentMethod = "loan", userId } = request.body;
+
+  console.log("Request Body:", request.body);
+  console.log("Cart Item ID:", cartItemId);
 
   if (typeof quantity !== "number" || quantity < 0) {
     return response.status(400).json({
@@ -154,7 +155,7 @@ export async function updateCartItem(request: Request, response: Response) {
 // GET /cart
 export async function cartItems(request: Request, response: Response) {
   try {
-    const userId = request.user.user.id;
+    const { userId } = request.body;
     const items = await CartService.getAllByUser(userId);
 
     return response.status(200).json({
@@ -185,7 +186,7 @@ export async function removeFromCart(request: Request, response: Response) {
 
 // DELETE /cart
 export async function removeAllFromCart(request: Request, response: Response) {
-  const userId = request.user.user.id;
+  const { userId } = request.body;
 
   try {
     await prisma.cartItem.deleteMany({ where: { userId } });

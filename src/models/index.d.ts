@@ -108,6 +108,11 @@ export type WishlistItem = $Result.DefaultSelection<Prisma.$WishlistItemPayload>
  * 
  */
 export type ComplianceForm = $Result.DefaultSelection<Prisma.$ComplianceFormPayload>
+/**
+ * Model cashier
+ * 
+ */
+export type cashier = $Result.DefaultSelection<Prisma.$cashierPayload>
 
 /**
  * Enums
@@ -134,7 +139,8 @@ export type Unit = (typeof Unit)[keyof typeof Unit]
 export const Role: {
   super_admin: 'super_admin',
   user: 'user',
-  fulfillment_officer: 'fulfillment_officer'
+  fulfillment_officer: 'fulfillment_officer',
+  cashier: 'cashier'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]
@@ -520,6 +526,16 @@ export class PrismaClient<
     * ```
     */
   get complianceForm(): Prisma.ComplianceFormDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cashier`: Exposes CRUD operations for the **cashier** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cashiers
+    * const cashiers = await prisma.cashier.findMany()
+    * ```
+    */
+  get cashier(): Prisma.cashierDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -978,7 +994,8 @@ export namespace Prisma {
     Payment: 'Payment',
     CartItem: 'CartItem',
     WishlistItem: 'WishlistItem',
-    ComplianceForm: 'ComplianceForm'
+    ComplianceForm: 'ComplianceForm',
+    cashier: 'cashier'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -997,7 +1014,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "admin" | "fulfillment_officers" | "product" | "productVariant" | "inventory" | "category" | "warehouse" | "user" | "address" | "order" | "orderItem" | "orderTracking" | "orderNote" | "orderFeedback" | "coupon" | "payment" | "cartItem" | "wishlistItem" | "complianceForm"
+      modelProps: "admin" | "fulfillment_officers" | "product" | "productVariant" | "inventory" | "category" | "warehouse" | "user" | "address" | "order" | "orderItem" | "orderTracking" | "orderNote" | "orderFeedback" | "coupon" | "payment" | "cartItem" | "wishlistItem" | "complianceForm" | "cashier"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2255,6 +2272,72 @@ export namespace Prisma {
           }
         }
       }
+      cashier: {
+        payload: Prisma.$cashierPayload<ExtArgs>
+        fields: Prisma.cashierFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.cashierFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.cashierFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload>
+          }
+          findFirst: {
+            args: Prisma.cashierFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.cashierFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload>
+          }
+          findMany: {
+            args: Prisma.cashierFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload>[]
+          }
+          create: {
+            args: Prisma.cashierCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload>
+          }
+          createMany: {
+            args: Prisma.cashierCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.cashierDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload>
+          }
+          update: {
+            args: Prisma.cashierUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload>
+          }
+          deleteMany: {
+            args: Prisma.cashierDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.cashierUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.cashierUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$cashierPayload>
+          }
+          aggregate: {
+            args: Prisma.CashierAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCashier>
+          }
+          groupBy: {
+            args: Prisma.cashierGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CashierGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.cashierCountArgs<ExtArgs>
+            result: $Utils.Optional<CashierCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2358,6 +2441,7 @@ export namespace Prisma {
     cartItem?: CartItemOmit
     wishlistItem?: WishlistItemOmit
     complianceForm?: ComplianceFormOmit
+    cashier?: cashierOmit
   }
 
   /* Types for Logging */
@@ -12902,7 +12986,7 @@ export namespace Prisma {
   export type OrderGroupByOutputType = {
     id: string
     userId: string
-    addressId: string
+    addressId: string | null
     totalAmount: number
     currency: string
     paymentStatus: $Enums.PaymentStatus
@@ -12952,7 +13036,7 @@ export namespace Prisma {
     couponId?: boolean
     discount?: boolean
     order_confirmation_otp?: boolean
-    address?: boolean | AddressDefaultArgs<ExtArgs>
+    address?: boolean | Order$addressArgs<ExtArgs>
     coupon?: boolean | Order$couponArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
@@ -12985,7 +13069,7 @@ export namespace Prisma {
 
   export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "addressId" | "totalAmount" | "currency" | "paymentStatus" | "orderStatus" | "trackingCode" | "placedAt" | "deliveredAt" | "cancelledAt" | "updatedAt" | "couponId" | "discount" | "order_confirmation_otp", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    address?: boolean | AddressDefaultArgs<ExtArgs>
+    address?: boolean | Order$addressArgs<ExtArgs>
     coupon?: boolean | Order$couponArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
@@ -12999,7 +13083,7 @@ export namespace Prisma {
   export type $OrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Order"
     objects: {
-      address: Prisma.$AddressPayload<ExtArgs>
+      address: Prisma.$AddressPayload<ExtArgs> | null
       coupon: Prisma.$CouponPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs>
       items: Prisma.$OrderItemPayload<ExtArgs>[]
@@ -13011,7 +13095,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
-      addressId: string
+      addressId: string | null
       totalAmount: number
       currency: string
       paymentStatus: $Enums.PaymentStatus
@@ -13364,7 +13448,7 @@ export namespace Prisma {
    */
   export interface Prisma__OrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    address<T extends AddressDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AddressDefaultArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    address<T extends Order$addressArgs<ExtArgs> = {}>(args?: Subset<T, Order$addressArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     coupon<T extends Order$couponArgs<ExtArgs> = {}>(args?: Subset<T, Order$couponArgs<ExtArgs>>): Prisma__CouponClient<$Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     items<T extends Order$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -13765,6 +13849,25 @@ export namespace Prisma {
      * Limit how many Orders to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Order.address
+   */
+  export type Order$addressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Address
+     */
+    select?: AddressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Address
+     */
+    omit?: AddressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AddressInclude<ExtArgs> | null
+    where?: AddressWhereInput
   }
 
   /**
@@ -22979,6 +23082,986 @@ export namespace Prisma {
 
 
   /**
+   * Model cashier
+   */
+
+  export type AggregateCashier = {
+    _count: CashierCountAggregateOutputType | null
+    _avg: CashierAvgAggregateOutputType | null
+    _sum: CashierSumAggregateOutputType | null
+    _min: CashierMinAggregateOutputType | null
+    _max: CashierMaxAggregateOutputType | null
+  }
+
+  export type CashierAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CashierSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CashierMinAggregateOutputType = {
+    id: number | null
+    firstname: string | null
+    lastname: string | null
+    email: string | null
+    username: string | null
+    role: $Enums.Role | null
+    profile_image: string | null
+    password: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type CashierMaxAggregateOutputType = {
+    id: number | null
+    firstname: string | null
+    lastname: string | null
+    email: string | null
+    username: string | null
+    role: $Enums.Role | null
+    profile_image: string | null
+    password: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type CashierCountAggregateOutputType = {
+    id: number
+    firstname: number
+    lastname: number
+    email: number
+    username: number
+    role: number
+    profile_image: number
+    password: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type CashierAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type CashierSumAggregateInputType = {
+    id?: true
+  }
+
+  export type CashierMinAggregateInputType = {
+    id?: true
+    firstname?: true
+    lastname?: true
+    email?: true
+    username?: true
+    role?: true
+    profile_image?: true
+    password?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type CashierMaxAggregateInputType = {
+    id?: true
+    firstname?: true
+    lastname?: true
+    email?: true
+    username?: true
+    role?: true
+    profile_image?: true
+    password?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type CashierCountAggregateInputType = {
+    id?: true
+    firstname?: true
+    lastname?: true
+    email?: true
+    username?: true
+    role?: true
+    profile_image?: true
+    password?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type CashierAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which cashier to aggregate.
+     */
+    where?: cashierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cashiers to fetch.
+     */
+    orderBy?: cashierOrderByWithRelationInput | cashierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: cashierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cashiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cashiers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned cashiers
+    **/
+    _count?: true | CashierCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CashierAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CashierSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CashierMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CashierMaxAggregateInputType
+  }
+
+  export type GetCashierAggregateType<T extends CashierAggregateArgs> = {
+        [P in keyof T & keyof AggregateCashier]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCashier[P]>
+      : GetScalarType<T[P], AggregateCashier[P]>
+  }
+
+
+
+
+  export type cashierGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: cashierWhereInput
+    orderBy?: cashierOrderByWithAggregationInput | cashierOrderByWithAggregationInput[]
+    by: CashierScalarFieldEnum[] | CashierScalarFieldEnum
+    having?: cashierScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CashierCountAggregateInputType | true
+    _avg?: CashierAvgAggregateInputType
+    _sum?: CashierSumAggregateInputType
+    _min?: CashierMinAggregateInputType
+    _max?: CashierMaxAggregateInputType
+  }
+
+  export type CashierGroupByOutputType = {
+    id: number
+    firstname: string
+    lastname: string
+    email: string
+    username: string
+    role: $Enums.Role
+    profile_image: string | null
+    password: string
+    created_at: Date
+    updated_at: Date
+    _count: CashierCountAggregateOutputType | null
+    _avg: CashierAvgAggregateOutputType | null
+    _sum: CashierSumAggregateOutputType | null
+    _min: CashierMinAggregateOutputType | null
+    _max: CashierMaxAggregateOutputType | null
+  }
+
+  type GetCashierGroupByPayload<T extends cashierGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CashierGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CashierGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CashierGroupByOutputType[P]>
+            : GetScalarType<T[P], CashierGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type cashierSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    firstname?: boolean
+    lastname?: boolean
+    email?: boolean
+    username?: boolean
+    role?: boolean
+    profile_image?: boolean
+    password?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }, ExtArgs["result"]["cashier"]>
+
+
+
+  export type cashierSelectScalar = {
+    id?: boolean
+    firstname?: boolean
+    lastname?: boolean
+    email?: boolean
+    username?: boolean
+    role?: boolean
+    profile_image?: boolean
+    password?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type cashierOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstname" | "lastname" | "email" | "username" | "role" | "profile_image" | "password" | "created_at" | "updated_at", ExtArgs["result"]["cashier"]>
+
+  export type $cashierPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "cashier"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      firstname: string
+      lastname: string
+      email: string
+      username: string
+      role: $Enums.Role
+      profile_image: string | null
+      password: string
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["cashier"]>
+    composites: {}
+  }
+
+  type cashierGetPayload<S extends boolean | null | undefined | cashierDefaultArgs> = $Result.GetResult<Prisma.$cashierPayload, S>
+
+  type cashierCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<cashierFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: CashierCountAggregateInputType | true
+    }
+
+  export interface cashierDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['cashier'], meta: { name: 'cashier' } }
+    /**
+     * Find zero or one Cashier that matches the filter.
+     * @param {cashierFindUniqueArgs} args - Arguments to find a Cashier
+     * @example
+     * // Get one Cashier
+     * const cashier = await prisma.cashier.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends cashierFindUniqueArgs>(args: SelectSubset<T, cashierFindUniqueArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Cashier that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {cashierFindUniqueOrThrowArgs} args - Arguments to find a Cashier
+     * @example
+     * // Get one Cashier
+     * const cashier = await prisma.cashier.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends cashierFindUniqueOrThrowArgs>(args: SelectSubset<T, cashierFindUniqueOrThrowArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cashier that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cashierFindFirstArgs} args - Arguments to find a Cashier
+     * @example
+     * // Get one Cashier
+     * const cashier = await prisma.cashier.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends cashierFindFirstArgs>(args?: SelectSubset<T, cashierFindFirstArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cashier that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cashierFindFirstOrThrowArgs} args - Arguments to find a Cashier
+     * @example
+     * // Get one Cashier
+     * const cashier = await prisma.cashier.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends cashierFindFirstOrThrowArgs>(args?: SelectSubset<T, cashierFindFirstOrThrowArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Cashiers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cashierFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cashiers
+     * const cashiers = await prisma.cashier.findMany()
+     * 
+     * // Get first 10 Cashiers
+     * const cashiers = await prisma.cashier.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cashierWithIdOnly = await prisma.cashier.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends cashierFindManyArgs>(args?: SelectSubset<T, cashierFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Cashier.
+     * @param {cashierCreateArgs} args - Arguments to create a Cashier.
+     * @example
+     * // Create one Cashier
+     * const Cashier = await prisma.cashier.create({
+     *   data: {
+     *     // ... data to create a Cashier
+     *   }
+     * })
+     * 
+     */
+    create<T extends cashierCreateArgs>(args: SelectSubset<T, cashierCreateArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Cashiers.
+     * @param {cashierCreateManyArgs} args - Arguments to create many Cashiers.
+     * @example
+     * // Create many Cashiers
+     * const cashier = await prisma.cashier.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends cashierCreateManyArgs>(args?: SelectSubset<T, cashierCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Cashier.
+     * @param {cashierDeleteArgs} args - Arguments to delete one Cashier.
+     * @example
+     * // Delete one Cashier
+     * const Cashier = await prisma.cashier.delete({
+     *   where: {
+     *     // ... filter to delete one Cashier
+     *   }
+     * })
+     * 
+     */
+    delete<T extends cashierDeleteArgs>(args: SelectSubset<T, cashierDeleteArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Cashier.
+     * @param {cashierUpdateArgs} args - Arguments to update one Cashier.
+     * @example
+     * // Update one Cashier
+     * const cashier = await prisma.cashier.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends cashierUpdateArgs>(args: SelectSubset<T, cashierUpdateArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Cashiers.
+     * @param {cashierDeleteManyArgs} args - Arguments to filter Cashiers to delete.
+     * @example
+     * // Delete a few Cashiers
+     * const { count } = await prisma.cashier.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends cashierDeleteManyArgs>(args?: SelectSubset<T, cashierDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cashiers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cashierUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cashiers
+     * const cashier = await prisma.cashier.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends cashierUpdateManyArgs>(args: SelectSubset<T, cashierUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Cashier.
+     * @param {cashierUpsertArgs} args - Arguments to update or create a Cashier.
+     * @example
+     * // Update or create a Cashier
+     * const cashier = await prisma.cashier.upsert({
+     *   create: {
+     *     // ... data to create a Cashier
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cashier we want to update
+     *   }
+     * })
+     */
+    upsert<T extends cashierUpsertArgs>(args: SelectSubset<T, cashierUpsertArgs<ExtArgs>>): Prisma__cashierClient<$Result.GetResult<Prisma.$cashierPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Cashiers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cashierCountArgs} args - Arguments to filter Cashiers to count.
+     * @example
+     * // Count the number of Cashiers
+     * const count = await prisma.cashier.count({
+     *   where: {
+     *     // ... the filter for the Cashiers we want to count
+     *   }
+     * })
+    **/
+    count<T extends cashierCountArgs>(
+      args?: Subset<T, cashierCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CashierCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cashier.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashierAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CashierAggregateArgs>(args: Subset<T, CashierAggregateArgs>): Prisma.PrismaPromise<GetCashierAggregateType<T>>
+
+    /**
+     * Group by Cashier.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {cashierGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends cashierGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: cashierGroupByArgs['orderBy'] }
+        : { orderBy?: cashierGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, cashierGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCashierGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the cashier model
+   */
+  readonly fields: cashierFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for cashier.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__cashierClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the cashier model
+   */
+  interface cashierFieldRefs {
+    readonly id: FieldRef<"cashier", 'Int'>
+    readonly firstname: FieldRef<"cashier", 'String'>
+    readonly lastname: FieldRef<"cashier", 'String'>
+    readonly email: FieldRef<"cashier", 'String'>
+    readonly username: FieldRef<"cashier", 'String'>
+    readonly role: FieldRef<"cashier", 'Role'>
+    readonly profile_image: FieldRef<"cashier", 'String'>
+    readonly password: FieldRef<"cashier", 'String'>
+    readonly created_at: FieldRef<"cashier", 'DateTime'>
+    readonly updated_at: FieldRef<"cashier", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * cashier findUnique
+   */
+  export type cashierFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * Filter, which cashier to fetch.
+     */
+    where: cashierWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier findUniqueOrThrow
+   */
+  export type cashierFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * Filter, which cashier to fetch.
+     */
+    where: cashierWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier findFirst
+   */
+  export type cashierFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * Filter, which cashier to fetch.
+     */
+    where?: cashierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cashiers to fetch.
+     */
+    orderBy?: cashierOrderByWithRelationInput | cashierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for cashiers.
+     */
+    cursor?: cashierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cashiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cashiers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of cashiers.
+     */
+    distinct?: CashierScalarFieldEnum | CashierScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier findFirstOrThrow
+   */
+  export type cashierFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * Filter, which cashier to fetch.
+     */
+    where?: cashierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cashiers to fetch.
+     */
+    orderBy?: cashierOrderByWithRelationInput | cashierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for cashiers.
+     */
+    cursor?: cashierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cashiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cashiers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of cashiers.
+     */
+    distinct?: CashierScalarFieldEnum | CashierScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier findMany
+   */
+  export type cashierFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * Filter, which cashiers to fetch.
+     */
+    where?: cashierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of cashiers to fetch.
+     */
+    orderBy?: cashierOrderByWithRelationInput | cashierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing cashiers.
+     */
+    cursor?: cashierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` cashiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` cashiers.
+     */
+    skip?: number
+    distinct?: CashierScalarFieldEnum | CashierScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier create
+   */
+  export type cashierCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * The data needed to create a cashier.
+     */
+    data: XOR<cashierCreateInput, cashierUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier createMany
+   */
+  export type cashierCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many cashiers.
+     */
+    data: cashierCreateManyInput | cashierCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * cashier update
+   */
+  export type cashierUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * The data needed to update a cashier.
+     */
+    data: XOR<cashierUpdateInput, cashierUncheckedUpdateInput>
+    /**
+     * Choose, which cashier to update.
+     */
+    where: cashierWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier updateMany
+   */
+  export type cashierUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update cashiers.
+     */
+    data: XOR<cashierUpdateManyMutationInput, cashierUncheckedUpdateManyInput>
+    /**
+     * Filter which cashiers to update
+     */
+    where?: cashierWhereInput
+    /**
+     * Limit how many cashiers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * cashier upsert
+   */
+  export type cashierUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * The filter to search for the cashier to update in case it exists.
+     */
+    where: cashierWhereUniqueInput
+    /**
+     * In case the cashier found by the `where` argument doesn't exist, create a new cashier with this data.
+     */
+    create: XOR<cashierCreateInput, cashierUncheckedCreateInput>
+    /**
+     * In case the cashier was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<cashierUpdateInput, cashierUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier delete
+   */
+  export type cashierDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+    /**
+     * Filter which cashier to delete.
+     */
+    where: cashierWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * cashier deleteMany
+   */
+  export type cashierDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which cashiers to delete
+     */
+    where?: cashierWhereInput
+    /**
+     * Limit how many cashiers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * cashier without action
+   */
+  export type cashierDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the cashier
+     */
+    select?: cashierSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the cashier
+     */
+    omit?: cashierOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -23295,6 +24378,22 @@ export namespace Prisma {
   export type ComplianceFormScalarFieldEnum = (typeof ComplianceFormScalarFieldEnum)[keyof typeof ComplianceFormScalarFieldEnum]
 
 
+  export const CashierScalarFieldEnum: {
+    id: 'id',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'email',
+    username: 'username',
+    role: 'role',
+    profile_image: 'profile_image',
+    password: 'password',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type CashierScalarFieldEnum = (typeof CashierScalarFieldEnum)[keyof typeof CashierScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -23548,6 +24647,18 @@ export namespace Prisma {
   };
 
   export type ComplianceFormOrderByRelevanceFieldEnum = (typeof ComplianceFormOrderByRelevanceFieldEnum)[keyof typeof ComplianceFormOrderByRelevanceFieldEnum]
+
+
+  export const cashierOrderByRelevanceFieldEnum: {
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'email',
+    username: 'username',
+    profile_image: 'profile_image',
+    password: 'password'
+  };
+
+  export type cashierOrderByRelevanceFieldEnum = (typeof cashierOrderByRelevanceFieldEnum)[keyof typeof cashierOrderByRelevanceFieldEnum]
 
 
   /**
@@ -24494,7 +25605,7 @@ export namespace Prisma {
     NOT?: OrderWhereInput | OrderWhereInput[]
     id?: StringFilter<"Order"> | string
     userId?: StringFilter<"Order"> | string
-    addressId?: StringFilter<"Order"> | string
+    addressId?: StringNullableFilter<"Order"> | string | null
     totalAmount?: FloatFilter<"Order"> | number
     currency?: StringFilter<"Order"> | string
     paymentStatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
@@ -24507,7 +25618,7 @@ export namespace Prisma {
     couponId?: StringNullableFilter<"Order"> | string | null
     discount?: FloatFilter<"Order"> | number
     order_confirmation_otp?: IntNullableFilter<"Order"> | number | null
-    address?: XOR<AddressScalarRelationFilter, AddressWhereInput>
+    address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     coupon?: XOR<CouponNullableScalarRelationFilter, CouponWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     items?: OrderItemListRelationFilter
@@ -24520,7 +25631,7 @@ export namespace Prisma {
   export type OrderOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    addressId?: SortOrder
+    addressId?: SortOrderInput | SortOrder
     totalAmount?: SortOrder
     currency?: SortOrder
     paymentStatus?: SortOrder
@@ -24551,7 +25662,7 @@ export namespace Prisma {
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
     userId?: StringFilter<"Order"> | string
-    addressId?: StringFilter<"Order"> | string
+    addressId?: StringNullableFilter<"Order"> | string | null
     totalAmount?: FloatFilter<"Order"> | number
     currency?: StringFilter<"Order"> | string
     paymentStatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
@@ -24563,7 +25674,7 @@ export namespace Prisma {
     couponId?: StringNullableFilter<"Order"> | string | null
     discount?: FloatFilter<"Order"> | number
     order_confirmation_otp?: IntNullableFilter<"Order"> | number | null
-    address?: XOR<AddressScalarRelationFilter, AddressWhereInput>
+    address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     coupon?: XOR<CouponNullableScalarRelationFilter, CouponWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     items?: OrderItemListRelationFilter
@@ -24576,7 +25687,7 @@ export namespace Prisma {
   export type OrderOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    addressId?: SortOrder
+    addressId?: SortOrderInput | SortOrder
     totalAmount?: SortOrder
     currency?: SortOrder
     paymentStatus?: SortOrder
@@ -24602,7 +25713,7 @@ export namespace Prisma {
     NOT?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Order"> | string
     userId?: StringWithAggregatesFilter<"Order"> | string
-    addressId?: StringWithAggregatesFilter<"Order"> | string
+    addressId?: StringNullableWithAggregatesFilter<"Order"> | string | null
     totalAmount?: FloatWithAggregatesFilter<"Order"> | number
     currency?: StringWithAggregatesFilter<"Order"> | string
     paymentStatus?: EnumPaymentStatusWithAggregatesFilter<"Order"> | $Enums.PaymentStatus
@@ -25258,6 +26369,86 @@ export namespace Prisma {
     status?: EnumStatusWithAggregatesFilter<"ComplianceForm"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"ComplianceForm"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ComplianceForm"> | Date | string
+  }
+
+  export type cashierWhereInput = {
+    AND?: cashierWhereInput | cashierWhereInput[]
+    OR?: cashierWhereInput[]
+    NOT?: cashierWhereInput | cashierWhereInput[]
+    id?: IntFilter<"cashier"> | number
+    firstname?: StringFilter<"cashier"> | string
+    lastname?: StringFilter<"cashier"> | string
+    email?: StringFilter<"cashier"> | string
+    username?: StringFilter<"cashier"> | string
+    role?: EnumRoleFilter<"cashier"> | $Enums.Role
+    profile_image?: StringNullableFilter<"cashier"> | string | null
+    password?: StringFilter<"cashier"> | string
+    created_at?: DateTimeFilter<"cashier"> | Date | string
+    updated_at?: DateTimeFilter<"cashier"> | Date | string
+  }
+
+  export type cashierOrderByWithRelationInput = {
+    id?: SortOrder
+    firstname?: SortOrder
+    lastname?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    profile_image?: SortOrderInput | SortOrder
+    password?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _relevance?: cashierOrderByRelevanceInput
+  }
+
+  export type cashierWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    username?: string
+    AND?: cashierWhereInput | cashierWhereInput[]
+    OR?: cashierWhereInput[]
+    NOT?: cashierWhereInput | cashierWhereInput[]
+    firstname?: StringFilter<"cashier"> | string
+    lastname?: StringFilter<"cashier"> | string
+    role?: EnumRoleFilter<"cashier"> | $Enums.Role
+    profile_image?: StringNullableFilter<"cashier"> | string | null
+    password?: StringFilter<"cashier"> | string
+    created_at?: DateTimeFilter<"cashier"> | Date | string
+    updated_at?: DateTimeFilter<"cashier"> | Date | string
+  }, "id" | "email" | "username">
+
+  export type cashierOrderByWithAggregationInput = {
+    id?: SortOrder
+    firstname?: SortOrder
+    lastname?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    profile_image?: SortOrderInput | SortOrder
+    password?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: cashierCountOrderByAggregateInput
+    _avg?: cashierAvgOrderByAggregateInput
+    _max?: cashierMaxOrderByAggregateInput
+    _min?: cashierMinOrderByAggregateInput
+    _sum?: cashierSumOrderByAggregateInput
+  }
+
+  export type cashierScalarWhereWithAggregatesInput = {
+    AND?: cashierScalarWhereWithAggregatesInput | cashierScalarWhereWithAggregatesInput[]
+    OR?: cashierScalarWhereWithAggregatesInput[]
+    NOT?: cashierScalarWhereWithAggregatesInput | cashierScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"cashier"> | number
+    firstname?: StringWithAggregatesFilter<"cashier"> | string
+    lastname?: StringWithAggregatesFilter<"cashier"> | string
+    email?: StringWithAggregatesFilter<"cashier"> | string
+    username?: StringWithAggregatesFilter<"cashier"> | string
+    role?: EnumRoleWithAggregatesFilter<"cashier"> | $Enums.Role
+    profile_image?: StringNullableWithAggregatesFilter<"cashier"> | string | null
+    password?: StringWithAggregatesFilter<"cashier"> | string
+    created_at?: DateTimeWithAggregatesFilter<"cashier"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"cashier"> | Date | string
   }
 
   export type adminCreateInput = {
@@ -26226,7 +27417,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -26239,7 +27430,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -26272,7 +27463,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -26285,7 +27476,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -26308,7 +27499,7 @@ export namespace Prisma {
   export type OrderCreateManyInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -26341,7 +27532,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -26993,6 +28184,94 @@ export namespace Prisma {
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type cashierCreateInput = {
+    firstname: string
+    lastname: string
+    email: string
+    username: string
+    role?: $Enums.Role
+    profile_image?: string | null
+    password: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type cashierUncheckedCreateInput = {
+    id?: number
+    firstname: string
+    lastname: string
+    email: string
+    username: string
+    role?: $Enums.Role
+    profile_image?: string | null
+    password: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type cashierUpdateInput = {
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type cashierUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type cashierCreateManyInput = {
+    id?: number
+    firstname: string
+    lastname: string
+    email: string
+    username: string
+    role?: $Enums.Role
+    profile_image?: string | null
+    password: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type cashierUpdateManyMutationInput = {
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type cashierUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstname?: StringFieldUpdateOperationsInput | string
+    lastname?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profile_image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -27992,9 +29271,9 @@ export namespace Prisma {
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
-  export type AddressScalarRelationFilter = {
-    is?: AddressWhereInput
-    isNot?: AddressWhereInput
+  export type AddressNullableScalarRelationFilter = {
+    is?: AddressWhereInput | null
+    isNot?: AddressWhereInput | null
   }
 
   export type CouponNullableScalarRelationFilter = {
@@ -28529,6 +29808,59 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type cashierOrderByRelevanceInput = {
+    fields: cashierOrderByRelevanceFieldEnum | cashierOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type cashierCountOrderByAggregateInput = {
+    id?: SortOrder
+    firstname?: SortOrder
+    lastname?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    profile_image?: SortOrder
+    password?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type cashierAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type cashierMaxOrderByAggregateInput = {
+    id?: SortOrder
+    firstname?: SortOrder
+    lastname?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    profile_image?: SortOrder
+    password?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type cashierMinOrderByAggregateInput = {
+    id?: SortOrder
+    firstname?: SortOrder
+    lastname?: SortOrder
+    email?: SortOrder
+    username?: SortOrder
+    role?: SortOrder
+    profile_image?: SortOrder
+    password?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type cashierSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type OrderNoteCreateNestedManyWithoutAdminInput = {
@@ -29567,10 +30899,12 @@ export namespace Prisma {
     set?: $Enums.OrderStatus
   }
 
-  export type AddressUpdateOneRequiredWithoutOrderNestedInput = {
+  export type AddressUpdateOneWithoutOrderNestedInput = {
     create?: XOR<AddressCreateWithoutOrderInput, AddressUncheckedCreateWithoutOrderInput>
     connectOrCreate?: AddressCreateOrConnectWithoutOrderInput
     upsert?: AddressUpsertWithoutOrderInput
+    disconnect?: AddressWhereInput | boolean
+    delete?: AddressWhereInput | boolean
     connect?: AddressWhereUniqueInput
     update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutOrderInput, AddressUpdateWithoutOrderInput>, AddressUncheckedUpdateWithoutOrderInput>
   }
@@ -31483,7 +32817,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteCreateNestedManyWithoutOrderInput
@@ -31494,7 +32828,7 @@ export namespace Prisma {
 
   export type OrderUncheckedCreateWithoutUserInput = {
     id?: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -31669,7 +33003,7 @@ export namespace Prisma {
     NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
     id?: StringFilter<"Order"> | string
     userId?: StringFilter<"Order"> | string
-    addressId?: StringFilter<"Order"> | string
+    addressId?: StringNullableFilter<"Order"> | string | null
     totalAmount?: FloatFilter<"Order"> | number
     currency?: StringFilter<"Order"> | string
     paymentStatus?: EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
@@ -32502,7 +33836,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
     order_note?: OrderNoteCreateNestedManyWithoutOrderInput
@@ -32514,7 +33848,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutItemsInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -32654,7 +33988,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     order_note?: OrderNoteUpdateManyWithoutOrderNestedInput
@@ -32666,7 +34000,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -32802,7 +34136,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -32814,7 +34148,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutTrackingUpdatesInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -32862,7 +34196,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -32874,7 +34208,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutTrackingUpdatesInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -32936,7 +34270,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -32948,7 +34282,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutOrder_noteInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -33032,7 +34366,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -33044,7 +34378,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutOrder_noteInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -33139,7 +34473,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -33151,7 +34485,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutOrder_feedbackInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -33268,7 +34602,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -33280,7 +34614,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutOrder_feedbackInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -33312,7 +34646,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     order_note?: OrderNoteCreateNestedManyWithoutOrderInput
@@ -33324,7 +34658,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutCouponInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -33382,7 +34716,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     discount?: number
     order_confirmation_otp?: number | null
-    address: AddressCreateNestedOneWithoutOrderInput
+    address?: AddressCreateNestedOneWithoutOrderInput
     coupon?: CouponCreateNestedOneWithoutOrdersInput
     user: UserCreateNestedOneWithoutOrdersInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
@@ -33394,7 +34728,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutPaymentInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -33442,7 +34776,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
@@ -33454,7 +34788,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutPaymentInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -34733,7 +36067,7 @@ export namespace Prisma {
 
   export type OrderCreateManyUserInput = {
     id?: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -34851,7 +36185,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     coupon?: CouponUpdateOneWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUpdateManyWithoutOrderNestedInput
@@ -34862,7 +36196,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -34884,7 +36218,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -35174,7 +36508,7 @@ export namespace Prisma {
   export type OrderCreateManyCouponInput = {
     id?: string
     userId: string
-    addressId: string
+    addressId?: string | null
     totalAmount: number
     currency?: string
     paymentStatus?: $Enums.PaymentStatus
@@ -35201,7 +36535,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     discount?: FloatFieldUpdateOperationsInput | number
     order_confirmation_otp?: NullableIntFieldUpdateOperationsInput | number | null
-    address?: AddressUpdateOneRequiredWithoutOrderNestedInput
+    address?: AddressUpdateOneWithoutOrderNestedInput
     user?: UserUpdateOneRequiredWithoutOrdersNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     order_note?: OrderNoteUpdateManyWithoutOrderNestedInput
@@ -35213,7 +36547,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutCouponInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -35235,7 +36569,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateManyWithoutCouponInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    addressId?: StringFieldUpdateOperationsInput | string
+    addressId?: NullableStringFieldUpdateOperationsInput | string | null
     totalAmount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus

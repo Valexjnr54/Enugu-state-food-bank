@@ -5,7 +5,7 @@ import { handlePrismaError } from "../../utils/handlePrismaErrors";
 
 const prisma = new PrismaClient();
 
-export async function createOrder(userId: string, addressId: string) {
+export async function createOrder(userId: string, addressId?: string) {
   // 1. Verify user and address
   const user = await prisma.user.findFirst({
     where: { id: userId },
@@ -13,10 +13,10 @@ export async function createOrder(userId: string, addressId: string) {
   });
 
   if (!user) throw new NotFoundError("User not found");
-  if (!user.is_address_set) throw new BadRequestError("Please set your address first");
+  // if (!user.is_address_set) throw new BadRequestError("Please set your address first");
 
-  const addressExists = user.addresses.some(addr => addr.id === addressId);
-  if (!addressExists) throw new BadRequestError("Invalid address");
+  // const addressExists = user.addresses.some(addr => addr.id === addressId);
+  // if (!addressExists) throw new BadRequestError("Invalid address");
 
   const cartItems = user.cart_items;
   if (cartItems.length === 0) throw new BadRequestError("Your cart is empty");

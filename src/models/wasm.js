@@ -363,6 +363,19 @@ exports.Prisma.ComplianceFormScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CashierScalarFieldEnum = {
+  id: 'id',
+  firstname: 'firstname',
+  lastname: 'lastname',
+  email: 'email',
+  username: 'username',
+  role: 'role',
+  profile_image: 'profile_image',
+  password: 'password',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -545,10 +558,20 @@ exports.Prisma.ComplianceFormOrderByRelevanceFieldEnum = {
   userId: 'userId',
   form_url: 'form_url'
 };
+
+exports.Prisma.cashierOrderByRelevanceFieldEnum = {
+  firstname: 'firstname',
+  lastname: 'lastname',
+  email: 'email',
+  username: 'username',
+  profile_image: 'profile_image',
+  password: 'password'
+};
 exports.Role = exports.$Enums.Role = {
   super_admin: 'super_admin',
   user: 'user',
-  fulfillment_officer: 'fulfillment_officer'
+  fulfillment_officer: 'fulfillment_officer',
+  cashier: 'cashier'
 };
 
 exports.Unit = exports.$Enums.Unit = {
@@ -614,7 +637,8 @@ exports.Prisma.ModelName = {
   Payment: 'Payment',
   CartItem: 'CartItem',
   WishlistItem: 'WishlistItem',
-  ComplianceForm: 'ComplianceForm'
+  ComplianceForm: 'ComplianceForm',
+  cashier: 'cashier'
 };
 
 /**
