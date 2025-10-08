@@ -5,3 +5,5 @@ node_modules
 /src/generated/prisma
 /public/civil_servants
 /public/civil_servants_2
+dist.zip
+dist/*
