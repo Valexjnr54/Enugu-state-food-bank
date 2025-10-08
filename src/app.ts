@@ -15,6 +15,8 @@ import { cashierRouter } from "./routes/cashier/cashier.routes";
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
 app.use(rateLimiter);

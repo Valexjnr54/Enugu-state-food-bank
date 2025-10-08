@@ -4,7 +4,7 @@ import { PrismaClient } from "../../models";
 const prisma = new PrismaClient;
 
 export async function getSingleUser(request: Request, response: Response) {
-    const { identifier } = request.body;
+    const identifier  = request.params.query;
 
     if (!identifier) {
         return response.status(400).json({
