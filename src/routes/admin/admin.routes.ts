@@ -17,7 +17,7 @@ import { createCashier, deleteCashier, getAllCashier, getSingleCashier, updateCa
 
 export const adminRouter = express.Router();
 
-// adminRouter.use(authenticateJWT, adminOnly);
+adminRouter.use(authenticateJWT, adminOnly);
 
 //Product Route Start
 adminRouter.get('/products', getAllProduct);

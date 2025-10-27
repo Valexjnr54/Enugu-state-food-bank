@@ -184,3 +184,73 @@ export async function generateQr(request: Request, response: Response): Promise<
     response.status(500).json({ error: 'QR generation failed' });
   }
 }
+
+export async function usersByGovernmentEntity(request: Request, response: Response) {
+    const government_entity: string = (request.query.government_entity as string) || (request.body?.government_entity as string);
+
+    if (!government_entity) {
+        return response.status(400).json({ status: "error", message: 'government_entity is required' });
+    }
+
+    try {
+        const users = await prisma.user.findMany({
+            where: { government_entity },
+            select: {
+                id: true,
+                firstname: true,
+                lastname: true,
+                email: true,
+                phone: true,
+                employee_id: true,
+                verification_id: true,
+                government_entity: true,
+                role: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true
+            }
+        });
+
+        const total = users.length;
+
+        if (total === 0) {
+            return response.status(200).json({ message: 'No users found for the provided government_entity', total, data: users });
+        }
+
+        return response.status(200).json({ message: 'Users fetched', total, data: users });
+    } catch (error: any) {
+        console.error(error);
+        const status = error.statusCode || 500;
+        return response.status(status).json({
+            status: "error",
+            message: error.message || "Unexpected error"
+        });
+    }
+}
+
+export async function listGovernmentEntities(request: Request, response: Response) {
+    try {
+        const rows = await prisma.user.findMany({
+            select: { government_entity: true },
+        });
+
+        const entities = Array.from(new Set(
+            rows
+                .map(r => r.government_entity)
+                .filter((e): e is string => e != null)
+        ));
+
+        if (entities.length === 0) {
+            return response.status(200).json({ message: 'No government entities found', data: [] });
+        }
+
+        return response.status(200).json({ message: 'Government entities fetched', data: entities });
+    } catch (error: any) {
+        console.error(error);
+        return response.status(500).json({
+            status: "error",
+            message: error.message || "Unexpected error"
+        });
+    }
+}
+

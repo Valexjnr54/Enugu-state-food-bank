@@ -132,7 +132,7 @@ model User {
   email                   String?          @unique
   phone                   String?          @unique
   level                   String
-  employee_id             String           @unique
+  employee_id             String?          @unique
   verification_id         String           @unique
   government_entity       String
   salary_per_month        Float

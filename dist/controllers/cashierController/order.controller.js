@@ -22,7 +22,7 @@ async function create_order(request, response) {
 }
 async function all_order(request, response) {
     try {
-        const { userId } = request.body;
+        const userId = request.params.id;
         const items = await (0, order_service_1.allOrderByUser)(userId);
         return response.status(200).json({
             message: items.length ? "Order item(s) fetched" : "No order items found",
@@ -36,7 +36,7 @@ async function all_order(request, response) {
 }
 async function single_order(request, response) {
     const id = request.query.order_id;
-    const { userId } = request.body;
+    const userId = request.query.userId;
     if (!id) {
         return response.status(400).json({ status: "error", message: 'Order ID is expected' });
     }

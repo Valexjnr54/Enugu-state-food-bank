@@ -4,7 +4,7 @@ exports.getSingleUser = getSingleUser;
 const models_1 = require("../../models");
 const prisma = new models_1.PrismaClient;
 async function getSingleUser(request, response) {
-    const { identifier } = request.body;
+    const identifier = request.query.identifier;
     if (!identifier) {
         return response.status(400).json({
             error: 'Missing identifier',

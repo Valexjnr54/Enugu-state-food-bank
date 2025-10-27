@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminRouter = void 0;
 const express_1 = __importDefault(require("express"));
+const adminMiddleware_1 = require("../../middlewares/adminMiddleware");
+const authenticationMiddleware_1 = require("../../middlewares/authenticationMiddleware");
 const product_controller_1 = require("../../controllers/adminController/product.controller");
 const multerMiddleware_1 = require("../../middlewares/multerMiddleware");
 const product_variant_controller_1 = require("../../controllers/adminController/product.variant.controller");
@@ -19,7 +21,7 @@ const compliance_controller_1 = require("../../controllers/adminController/compl
 const fulfillment_officer_controller_1 = require("../../controllers/adminController/fulfillment.officer.controller");
 const cashier_controller_1 = require("../../controllers/adminController/cashier.controller");
 exports.adminRouter = express_1.default.Router();
-// adminRouter.use(authenticateJWT, adminOnly);
+exports.adminRouter.use(authenticationMiddleware_1.authenticateJWT, adminMiddleware_1.adminOnly);
 //Product Route Start
 exports.adminRouter.get('/products', product_controller_1.getAllProduct);
 exports.adminRouter.get('/product', product_controller_1.getSingleProduct);

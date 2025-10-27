@@ -155,7 +155,7 @@ export async function updateCartItem(request: Request, response: Response) {
 // GET /cart
 export async function cartItems(request: Request, response: Response) {
   try {
-    const { userId } = request.body;
+    const userId  = request.params.id;
     const items = await CartService.getAllByUser(userId);
 
     return response.status(200).json({

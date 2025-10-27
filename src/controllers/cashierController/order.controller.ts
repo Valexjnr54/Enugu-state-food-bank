@@ -22,7 +22,7 @@ export async function create_order(request: Request, response: Response) {
 
 export async function all_order(request: Request, response: Response) {
   try {
-      const { userId } = request.body;
+      const userId  = request.params.id;
       const items = await allOrderByUser(userId);
   
       return response.status(200).json({
@@ -37,7 +37,7 @@ export async function all_order(request: Request, response: Response) {
 
 export async function single_order(request: Request, response: Response) {
   const id: string = request.query.order_id as string;
-  const { userId } = request.body;
+  const userId: string = request.query.userId as string;
   
   if (!id) {
     return response.status(400).json({status:"error", message: 'Order ID is expected' }); 

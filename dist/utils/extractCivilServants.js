@@ -37,36 +37,66 @@ const XLSX = __importStar(require("xlsx"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 class EmployeeDataExtractor {
-    constructor(inputDirectory, outputFile) {
+    constructor(inputDirectory, outputDirectory) {
         this.inputDirectory = inputDirectory;
-        this.outputFile = outputFile;
+        this.outputDirectory = outputDirectory;
+    }
+    getHeaderIndex(headers, possibleNames) {
+        const names = Array.isArray(possibleNames) ? possibleNames : [possibleNames];
+        // try exact match first
+        for (const name of names) {
+            const idx = headers.indexOf(name);
+            if (idx !== -1)
+                return idx;
+        }
+        // then case-insensitive trimmed match
+        const normalizedHeaders = headers.map(h => String(h || '').trim().toLowerCase());
+        for (const name of names) {
+            const idx = normalizedHeaders.indexOf(String(name || '').trim().toLowerCase());
+            if (idx !== -1)
+                return idx;
+        }
+        return -1;
     }
     readExcelFile(filePath) {
         try {
             const workbook = XLSX.readFile(filePath);
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            // Convert to JSON with proper header mapping
             const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-            if (data.length < 2) {
-                console.warn(`File ${filePath} has no data rows`);
+            if (!Array.isArray(data) || data.length < 1) {
+                console.warn(`File ${filePath} has no data`);
                 return [];
             }
-            const headers = data[0];
+            const headers = data[0].map(h => (h === undefined || h === null) ? '' : String(h));
             const rows = data.slice(1);
             const employeeRecords = [];
             for (const row of rows) {
                 if (!Array.isArray(row) || row.length === 0)
                     continue;
+                const getString = (possibleHeaders) => {
+                    const idx = this.getHeaderIndex(headers, possibleHeaders);
+                    return idx !== -1 && row[idx] !== undefined && row[idx] !== null ? String(row[idx]).trim() : '';
+                };
+                const getNumber = (possibleHeaders) => {
+                    const idx = this.getHeaderIndex(headers, possibleHeaders);
+                    if (idx === -1 || row[idx] === undefined || row[idx] === null)
+                        return 0;
+                    const val = row[idx];
+                    if (typeof val === 'number')
+                        return val;
+                    const num = parseFloat(String(val).replace(/[^\d.-]/g, ''));
+                    return isNaN(num) ? 0 : num;
+                };
                 const record = {
-                    EmploymentNumber: this.getStringValue(row, headers, 'EmploymentNumber'),
-                    Verification_no: this.getStringValue(row, headers, 'Verification_no'),
-                    Surname: this.getStringValue(row, headers, 'Surname'),
-                    FirstName: this.getStringValue(row, headers, 'First Name'),
-                    MiddleName: this.getStringValue(row, headers, 'Middle Name'),
-                    GradeStep: this.getStringValue(row, headers, 'Grade/Step'),
-                    MDA: this.getStringValue(row, headers, 'MDA'),
-                    MONTHLY_PAY: this.getNumberValue(row, headers, 'MONTHLY_PAY')
+                    EmploymentNumber: getString(['EmploymentNumber', 'Employment Number', 'EmpNo', 'Emp ID']),
+                    Verification_no: getString(['Verification_no', 'Verification no', 'Verification No', 'Verification']),
+                    Surname: getString(['Surname', 'LastName', 'Last Name', 'Lastname']),
+                    FirstName: getString(['First Name', 'FirstName', 'Firstname', 'GivenName']),
+                    MiddleName: getString(['Middle Name', 'MiddleName', 'Middlename']),
+                    GradeStep: getString(['Grade/Step', 'Grade Step', 'GradeStep', 'Grade']),
+                    MDA: getString(['MDA', 'Agency', 'Department']),
+                    MONTHLY_PAY: getNumber(['MONTHLY_PAY', 'Monthly Pay', 'MONTHLY PAY', 'Salary', 'PAY'])
                 };
                 employeeRecords.push(record);
             }
@@ -76,23 +106,6 @@ class EmployeeDataExtractor {
             console.error(`Error reading file ${filePath}:`, error);
             return [];
         }
-    }
-    getStringValue(row, headers, headerName) {
-        const index = headers.indexOf(headerName);
-        return index !== -1 && row[index] !== undefined ? String(row[index] || '') : '';
-    }
-    getNumberValue(row, headers, headerName) {
-        const index = headers.indexOf(headerName);
-        if (index === -1 || row[index] === undefined)
-            return 0;
-        const value = row[index];
-        if (typeof value === 'number')
-            return value;
-        if (typeof value === 'string') {
-            const num = parseFloat(value.replace(/[^\d.-]/g, ''));
-            return isNaN(num) ? 0 : num;
-        }
-        return 0;
     }
     extractData(records) {
         return records.map(record => ({
@@ -107,47 +120,56 @@ class EmployeeDataExtractor {
             salary_per_month: record.MONTHLY_PAY
         }));
     }
-    writeToCSV(extractedData) {
-        if (extractedData.length === 0) {
-            console.log('No data to write to CSV');
-            return;
-        }
-        const headers = Object.keys(extractedData[0]);
-        const csvRows = [headers.join(',')];
+    writeToCSV(extractedData, csvPath) {
+        const headers = [
+            'firstname',
+            'lastname',
+            'email',
+            'phone',
+            'level',
+            'employee_id',
+            'verification_id',
+            'government_entity',
+            'salary_per_month'
+        ];
+        const csvRows = [];
+        csvRows.push(headers.join(','));
         for (const employee of extractedData) {
             const row = headers.map(header => {
                 const value = employee[header];
-                if (value === null)
-                    return ''; // Output empty string for null
-                if (typeof value === 'string')
-                    return value.replace(/"/g, ''); // No quotes, remove any embedded quotes
-                return value; // numbers (salary_per_month) output as-is
+                if (value === null || value === undefined)
+                    return '';
+                if (typeof value === 'string') {
+                    // remove newlines and quotes to keep CSV simple
+                    return String(value).replace(/"/g, '').replace(/\r?\n/g, ' ');
+                }
+                return String(value);
             });
             csvRows.push(row.join(','));
         }
-        fs.writeFileSync(this.outputFile, csvRows.join('\n'));
-        console.log(`CSV file created successfully: ${this.outputFile}`);
-        console.log(`Total records processed: ${extractedData.length}`);
+        fs.mkdirSync(path.dirname(csvPath), { recursive: true });
+        fs.writeFileSync(csvPath, csvRows.join('\n'), { encoding: 'utf8' });
+        console.log(`CSV saved: ${csvPath} (records: ${extractedData.length})`);
     }
     processFiles() {
         try {
             const files = fs.readdirSync(this.inputDirectory);
-            const excelFiles = files.filter(file => file.endsWith('.xlsx') || file.endsWith('.xls'));
+            const excelFiles = files.filter(file => file.toLowerCase().endsWith('.xlsx') || file.toLowerCase().endsWith('.xls'));
             if (excelFiles.length === 0) {
-                console.log('No Excel files found in the directory');
+                console.log('No Excel files found in the directory:', this.inputDirectory);
                 return;
             }
             console.log(`Found ${excelFiles.length} Excel file(s) to process`);
-            let allExtractedData = [];
             for (const file of excelFiles) {
                 const filePath = path.join(this.inputDirectory, file);
                 console.log(`Processing file: ${file}`);
                 const records = this.readExcelFile(filePath);
                 const extractedData = this.extractData(records);
-                allExtractedData = [...allExtractedData, ...extractedData];
+                const baseName = path.parse(file).name;
+                const csvFilePath = path.join(this.outputDirectory, `${baseName}.csv`);
+                this.writeToCSV(extractedData, csvFilePath);
                 console.log(`Processed ${records.length} records from ${file}`);
             }
-            this.writeToCSV(allExtractedData);
         }
         catch (error) {
             console.error('Error processing files:', error);
@@ -155,7 +177,7 @@ class EmployeeDataExtractor {
     }
 }
 // Usage
-const inputDir = path.resolve(__dirname, '../../public/civil_servants_2/input'); // Directory containing Excel files
-const outputFile = path.resolve(__dirname, '../../public/civil_servants_2/extracted_employee_data.csv');
-const extractor = new EmployeeDataExtractor(inputDir, outputFile);
+const inputDir = path.resolve(__dirname, '../../public/civil_servants_2/input');
+const outputDir = path.resolve(__dirname, '../../public/civil_servants_2/output'); // separate CSVs per Excel file
+const extractor = new EmployeeDataExtractor(inputDir, outputDir);
 extractor.processFiles();

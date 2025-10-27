@@ -161,7 +161,7 @@ async function updateCartItem(request, response) {
 // GET /cart
 async function cartItems(request, response) {
     try {
-        const { userId } = request.body;
+        const userId = request.params.id;
         const items = await CartService.getAllByUser(userId);
         return response.status(200).json({
             message: items.length ? "Cart item(s) fetched" : "No cart items found",

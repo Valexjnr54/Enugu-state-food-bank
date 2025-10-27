@@ -10670,7 +10670,7 @@ export namespace Prisma {
     email: string | null
     phone: string | null
     level: string
-    employee_id: string
+    employee_id: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -10791,7 +10791,7 @@ export namespace Prisma {
       email: string | null
       phone: string | null
       level: string
-      employee_id: string
+      employee_id: string | null
       verification_id: string
       government_entity: string
       salary_per_month: number
@@ -25367,7 +25367,7 @@ export namespace Prisma {
     email?: StringNullableFilter<"User"> | string | null
     phone?: StringNullableFilter<"User"> | string | null
     level?: StringFilter<"User"> | string
-    employee_id?: StringFilter<"User"> | string
+    employee_id?: StringNullableFilter<"User"> | string | null
     verification_id?: StringFilter<"User"> | string
     government_entity?: StringFilter<"User"> | string
     salary_per_month?: FloatFilter<"User"> | number
@@ -25397,7 +25397,7 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     level?: SortOrder
-    employee_id?: SortOrder
+    employee_id?: SortOrderInput | SortOrder
     verification_id?: SortOrder
     government_entity?: SortOrder
     salary_per_month?: SortOrder
@@ -25461,7 +25461,7 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     level?: SortOrder
-    employee_id?: SortOrder
+    employee_id?: SortOrderInput | SortOrder
     verification_id?: SortOrder
     government_entity?: SortOrder
     salary_per_month?: SortOrder
@@ -25493,7 +25493,7 @@ export namespace Prisma {
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     level?: StringWithAggregatesFilter<"User"> | string
-    employee_id?: StringWithAggregatesFilter<"User"> | string
+    employee_id?: StringNullableWithAggregatesFilter<"User"> | string | null
     verification_id?: StringWithAggregatesFilter<"User"> | string
     government_entity?: StringWithAggregatesFilter<"User"> | string
     salary_per_month?: FloatWithAggregatesFilter<"User"> | number
@@ -27118,7 +27118,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -27148,7 +27148,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -27178,7 +27178,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -27208,7 +27208,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -27238,7 +27238,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -27262,7 +27262,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -27286,7 +27286,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -33096,7 +33096,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -33125,7 +33125,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -33224,7 +33224,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -33253,7 +33253,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -33370,7 +33370,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -33399,7 +33399,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -33661,7 +33661,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -33690,7 +33690,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -34404,7 +34404,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -34433,7 +34433,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -34527,7 +34527,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -34556,7 +34556,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -34865,7 +34865,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -34894,7 +34894,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -35037,7 +35037,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -35066,7 +35066,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -35193,7 +35193,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -35222,7 +35222,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -35365,7 +35365,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -35394,7 +35394,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -35470,7 +35470,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -35499,7 +35499,7 @@ export namespace Prisma {
     email?: string | null
     phone?: string | null
     level: string
-    employee_id: string
+    employee_id?: string | null
     verification_id: string
     government_entity: string
     salary_per_month: number
@@ -35544,7 +35544,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number
@@ -35573,7 +35573,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     level?: StringFieldUpdateOperationsInput | string
-    employee_id?: StringFieldUpdateOperationsInput | string
+    employee_id?: NullableStringFieldUpdateOperationsInput | string | null
     verification_id?: StringFieldUpdateOperationsInput | string
     government_entity?: StringFieldUpdateOperationsInput | string
     salary_per_month?: FloatFieldUpdateOperationsInput | number

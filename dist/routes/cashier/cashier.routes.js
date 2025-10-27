@@ -16,7 +16,7 @@ exports.cashierRouter.get('/user', user_controller_1.getSingleUser);
 //User Route End
 // Order Route Starts
 exports.cashierRouter.post('/create-order', order_controller_1.create_order);
-exports.cashierRouter.get('/all-order', order_controller_1.all_order);
+exports.cashierRouter.get('/all-order/:id', order_controller_1.all_order);
 exports.cashierRouter.get('/single-order', order_controller_1.single_order);
 // Order Route Ends
 //Cart Route Starts
@@ -24,5 +24,5 @@ exports.cashierRouter.post('/cart/add-to-cart', cart_controller_1.addToCart);
 exports.cashierRouter.delete('/cart/remove-from-cart/:id', cart_controller_1.removeFromCart);
 exports.cashierRouter.delete('/cart/remove-all-from-cart', cart_controller_1.removeAllFromCart);
 exports.cashierRouter.patch("/cart/update-cart/:id", cart_controller_1.updateCartItem);
-exports.cashierRouter.get('/cart', cart_controller_1.cartItems);
+exports.cashierRouter.get('/cart/:id', cart_controller_1.cartItems);
 //Cart Route Ends

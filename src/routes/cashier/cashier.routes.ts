@@ -15,7 +15,7 @@ cashierRouter.get('/user', getSingleUser);
 
 // Order Route Starts
 cashierRouter.post('/create-order', create_order);
-cashierRouter.get('/all-order', all_order)
+cashierRouter.get('/all-order/:id', all_order)
 cashierRouter.get('/single-order', single_order)
 // Order Route Ends
 
@@ -24,5 +24,5 @@ cashierRouter.post('/cart/add-to-cart', addToCart);
 cashierRouter.delete('/cart/remove-from-cart/:id', removeFromCart);
 cashierRouter.delete('/cart/remove-all-from-cart', removeAllFromCart);
 cashierRouter.patch("/cart/update-cart/:id", updateCartItem);
-cashierRouter.get('/cart', cartItems);
+cashierRouter.get('/cart/:id', cartItems);
 //Cart Route Ends

@@ -37,7 +37,8 @@ async function createOrder(userId, addressId) {
             total: price * item.quantity
         };
     });
-    const totalAmount = orderItems.reduce((sum, i) => sum + i.total, 0);
+    let totalAmount = orderItems.reduce((sum, i) => sum + i.total, 0);
+    totalAmount += 500;
     // 3. Create Order + Items + Tracking
     const order = await prisma.order.create({
         data: {
