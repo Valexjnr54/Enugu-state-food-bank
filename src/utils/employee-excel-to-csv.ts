@@ -40,6 +40,21 @@ class EmployeeDataExtractor {
     return String(value).trim().toLowerCase();
   }
 
+   private cleanMDA(value: string): string {
+    if (!value) return '';
+    let s = String(value).replace(/\u00A0/g, ' ').trim();
+    // ensure month words attached to words are separated (e.g. "PRESSSeptember2025" -> "PRESS September 2025")
+    s = s.replace(/([A-Za-z])(?=(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?))/ig, '$1 ');
+    // remove month names
+    s = s.replace(/\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b/ig, '');
+    // remove 4-digit years and simple date fragments like "01-2025" or "2025/01"
+    s = s.replace(/\b(19|20)\d{2}\b/g, '').replace(/\b\d{1,2}[-\/]\d{2,4}\b/g, '');
+    // remove standalone digits and common separators leftover
+    s = s.replace(/[_\-.]/g, ' ').replace(/\d+/g, '');
+    // collapse spaces, trim, and return
+    return s.replace(/\s+/g, ' ').trim();
+  }
+
   private getHeaderIndex(headers: string[], possibleNames: string[] | string): number {
     const names = Array.isArray(possibleNames) ? possibleNames : [possibleNames];
     const normalizedHeaders = headers.map(h => this.normalize(h));
@@ -53,6 +68,29 @@ class EmployeeDataExtractor {
       if (idx !== -1) return idx;
     }
     return -1;
+  }
+
+  // New helper: parse currency-like strings (e.g. "N129,890.18", "₦ 129,890.18", "(N129,890.18)")
+  private parseCurrency(value: unknown): number {
+    if (value === undefined || value === null) return 0;
+    let s = String(value).replace(/\u00A0/g, ' ').trim(); // normalize NBSP
+
+    // detect parentheses representing negative values: "(N129,890.18)" -> negative
+    const isParensNegative = /^\(.*\)$/.test(s);
+    if (isParensNegative) s = s.replace(/^\(|\)$/g, '').trim();
+
+    // remove common currency symbols/letters and any non-digit, non-separator characters except - . , and spaces
+    s = s.replace(/[\u20A6\u00A3\u0024\u20AC\u00A5₦£$€¥]/g, ''); // common currency symbols
+    s = s.replace(/[A-Za-z\u2013\u2014]/g, ''); // remove letters and dashes
+    s = s.replace(/[^0-9.,\-\s]/g, '').trim();
+
+    // find the first numeric-like sequence
+    const match = s.match(/-?\d{1,3}(?:[,\s]\d{3})*(?:\.\d+)?|-?\d+(?:\.\d+)?/);
+    if (!match) return 0;
+    const numStr = match[0].replace(/[,\s]/g, ''); // remove thousand separators/spaces
+    const n = parseFloat(numStr);
+    const result = Number.isFinite(n) ? n : 0;
+    return isParensNegative ? -Math.abs(result) : result;
   }
 
   private readExcelFile(filePath: string): EmployeeRecord[] {
@@ -83,19 +121,31 @@ class EmployeeDataExtractor {
         return [];
       }
 
-      // 2️⃣ Extract Department (MDA) from lines above header
+      // 2️⃣ Extract Department (MDA) from file name (preferred) — fallback to scanning lines above header
       let MDA = '';
-      for (let i = headerRowIndex - 1; i >= 0; i--) {
-        const line = Array.isArray(data[i]) ? data[i].join(' ') : String(data[i] || '');
-        const match = line.match(/department[:\s-]*([\w\s().\/&-]+)/i);
-        if (match && match[1]) {
-          MDA = match[1].trim();
-          break;
-        }
-        // fallback: if a non-empty line that doesn't look like header, use it
-        if (!MDA && line.trim()) {
-          // keep scanning upward but remember a candidate (don't break immediately)
-          MDA = line.trim();
+      try {
+        const fileBase = path.parse(filePath).name || '';
+        // convert common separators to spaces and normalize
+        const fileBaseNormalized = fileBase.replace(/[_\-.]+/g, ' ').replace(/\s+/g, ' ').trim();
+        MDA = this.cleanMDA(fileBaseNormalized);
+      } catch (e) {
+        MDA = '';
+      }
+      
+      // If filename is empty or generic, fallback to scanning lines above header
+      if (!MDA || /^(input|output|data|sheet|file)$/i.test(MDA)) {
+        for (let i = headerRowIndex - 1; i >= 0; i--) {
+          const line = Array.isArray(data[i]) ? data[i].join(' ') : String(data[i] || '');
+          const match = line.match(/department[:\s-]*([\w\s().\/&-]+)/i);
+          if (match && match[1]) {
+            MDA = this.cleanMDA(match[1].trim());
+            break;
+          }
+          // fallback: if a non-empty line that doesn't look like header, use it
+          if (!MDA && line.trim()) {
+            // keep scanning upward but remember a candidate (don't break immediately)
+            MDA = this.cleanMDA(line.trim());
+          }
         }
       }
 
@@ -120,14 +170,17 @@ class EmployeeDataExtractor {
           return val === '' ? null : val;
         };
 
-        const getNumber = (possibleHeaders: string[] | string): number => {
-          const idx = this.getHeaderIndex(headers, possibleHeaders);
-          if (idx === -1 || row[idx] === undefined || row[idx] === null) return 0;
-          const val = row[idx];
-          if (typeof val === 'number') return val;
-          const num = parseFloat(String(val).replace(/[^\d.-]/g, ''));
-          return isNaN(num) ? 0 : num;
-        };
+        const net_pay = getString(['Net Pay', 'Net_Pay', 'NetPay']);
+        // skip rows that look like summary lines
+        if (net_pay.toLowerCase().includes('total') || net_pay.toLowerCase().includes('count')) {
+          continue;
+        }
+
+        const netPay = this.parseCurrency(net_pay);
+        if (netPay === 0) {
+          // likely a non-data row
+          continue;
+        }
 
         const record: EmployeeRecord = {
           EmploymentNumber: getNullableString(['EmploymentNumber', 'Employment Number', 'EmpNo', 'Emp ID']),
@@ -137,12 +190,33 @@ class EmployeeDataExtractor {
           MiddleName: getString(['Middle Name', 'MiddleName']),
           GradeStep: getString(['Grade/Step', 'Grade Step', 'GradeStep', 'Grade']),
           MDA: MDA,
-          MONTHLY_PAY: getNumber(['MONTHLY_PAY', 'Monthly Pay', 'MONTHLY PAY', 'Salary', 'PAY'])
+          MONTHLY_PAY: netPay
         };
 
         // skip rows without a verification id
         if (!record.Verification_no) continue;
 
+        // normalize a few fields for heuristics
+        const vNorm = this.normalize(record.Verification_no);
+        const fNorm = this.normalize(record.FirstName);
+        const sNorm = this.normalize(record.Surname);
+        const gNorm = this.normalize(record.GradeStep);
+
+        // skip rows that look like repeated headers or summary/count lines
+        if (
+          vNorm.includes('verification') || // e.g. "Verification No" header row repeated
+          fNorm.includes('first name') ||   // e.g. "First Name Middle Name" header row
+          sNorm.includes('surname') ||      // e.g. "Surname" header row
+          gNorm.includes('grade') ||        // e.g. "Grade/Step" header row
+          vNorm.startsWith('count') ||      // e.g. "Count: 72" summary lines
+          vNorm.includes('count:') 
+        ) {
+          continue;
+        }
+
+        // skip rows where firstname is empty (per request)
+        if (!record.FirstName || record.FirstName.trim() === '') continue;
+ 
         employeeRecords.push(record);
       }
 
@@ -162,7 +236,8 @@ class EmployeeDataExtractor {
       level: record.GradeStep || '',
       employee_id: record.EmploymentNumber,
       verification_id: record.Verification_no,
-      government_entity: record.MDA || '',
+      // ensure month/year fragments are removed from MDA before emitting
+      government_entity: this.cleanMDA(record.MDA || ''),
       salary_per_month: record.MONTHLY_PAY || 0
     }));
   }
@@ -194,6 +269,11 @@ class EmployeeDataExtractor {
       const row = headers.map(header => {
         const value = employee[header as keyof ExtractedEmployee];
         if (value === null || value === undefined) return '';
+        // Emit salary_per_month as a plain numeric value (no quoting) to ensure CSV contains a number
+        if (header === 'salary_per_month') {
+          // ensure numeric output and avoid quoting
+          return typeof value === 'number' ? String(value) : this.escapeCSVCell(String(value));
+        }
         return this.escapeCSVCell(String(value));
       });
       csvRows.push(row.join(','));

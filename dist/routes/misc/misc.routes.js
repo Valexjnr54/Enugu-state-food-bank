@@ -13,3 +13,5 @@ exports.miscRouter.get('/delivery_order', misc_controller_1.single_order);
 exports.miscRouter.post('/confirm-user-for-delivery', misc_controller_1.confirm_user);
 exports.miscRouter.post('/confirm-delivery-order', misc_controller_1.confirm_delivery_order);
 exports.miscRouter.get('/generate-qr-code', misc_controller_1.generateQr);
+exports.miscRouter.get('/user-by-government-entity', misc_controller_1.usersByGovernmentEntity);
+exports.miscRouter.get('/government-entity', misc_controller_1.listGovernmentEntities);

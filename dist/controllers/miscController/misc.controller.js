@@ -42,6 +42,8 @@ exports.single_order = single_order;
 exports.confirm_user = confirm_user;
 exports.confirm_delivery_order = confirm_delivery_order;
 exports.generateQr = generateQr;
+exports.usersByGovernmentEntity = usersByGovernmentEntity;
+exports.listGovernmentEntities = listGovernmentEntities;
 const models_1 = require("../../models");
 const ProductService = __importStar(require("../../services/adminServices/product.service"));
 const order_service_1 = require("../../services/userServices/order.service");
@@ -203,5 +205,64 @@ async function generateQr(request, response) {
             response.send(png);
         }
         response.status(500).json({ error: 'QR generation failed' });
+    }
+}
+async function usersByGovernmentEntity(request, response) {
+    const government_entity = request.query.government_entity || request.body?.government_entity;
+    if (!government_entity) {
+        return response.status(400).json({ status: "error", message: 'government_entity is required' });
+    }
+    try {
+        const users = await prisma.user.findMany({
+            where: { government_entity },
+            select: {
+                id: true,
+                firstname: true,
+                lastname: true,
+                email: true,
+                phone: true,
+                employee_id: true,
+                verification_id: true,
+                government_entity: true,
+                role: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true
+            }
+        });
+        const total = users.length;
+        if (total === 0) {
+            return response.status(200).json({ message: 'No users found for the provided government_entity', total, data: users });
+        }
+        return response.status(200).json({ message: 'Users fetched', total, data: users });
+    }
+    catch (error) {
+        console.error(error);
+        const status = error.statusCode || 500;
+        return response.status(status).json({
+            status: "error",
+            message: error.message || "Unexpected error"
+        });
+    }
+}
+async function listGovernmentEntities(request, response) {
+    try {
+        const rows = await prisma.user.findMany({
+            select: { government_entity: true },
+        });
+        const entities = Array.from(new Set(rows
+            .map(r => r.government_entity)
+            .filter((e) => e != null)));
+        if (entities.length === 0) {
+            return response.status(200).json({ message: 'No government entities found', data: [] });
+        }
+        return response.status(200).json({ message: 'Government entities fetched', data: entities });
+    }
+    catch (error) {
+        console.error(error);
+        return response.status(500).json({
+            status: "error",
+            message: error.message || "Unexpected error"
+        });
     }
 }
